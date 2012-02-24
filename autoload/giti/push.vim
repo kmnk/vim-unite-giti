@@ -11,10 +11,14 @@ set cpo&vim
 
 function! giti#push#run(...)"{{{
   if len(a:000) == 2
-    return giti#system_with_confirm('push ' . a:1 . ' ' . a:2)
+    let res = giti#system_with_confirm('push ' . a:1 . ' ' . a:2)
   else
-    return giti#system_with_confirm('push')
+    let res = giti#system_with_confirm('push')
   endif
+  if v:shell_error
+    echoerr res
+  endif
+  return res
 endfunction"}}}
 
 " local functions {{{
