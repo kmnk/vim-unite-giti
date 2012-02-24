@@ -56,6 +56,16 @@ function! s:kind.action_table.amend.func(candidates)"{{{
   return giti#commit#amend()
 endfunction"}}}
 
+let s:kind.action_table.checkout = {
+\ 'description' : 'discard unstaged changes of selected files',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 0,
+\ 'is_invalidate_cache' : 1,
+\}
+function! s:kind.action_table.checkout.func(candidates)"{{{
+  return giti#checkout#run(map(a:candidates, 'v:val.action__path'))
+endfunction"}}}
+
 " }}}
 
 " local functions {{{

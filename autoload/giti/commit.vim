@@ -20,13 +20,11 @@ endfunction"}}}
 
 " local functions {{{
 function! s:run(command, files)"{{{
-    let editor_save = $EDITOR
-    let $EDITOR = ''
   call giti#system(a:command . ' -- ' . join(a:files))
-    let $EDITOR = editor_save
   execute printf('%s %sCOMMIT_EDITMSG', s:edit_command, giti#dir())
   setlocal filetype=gitcommit bufhidden=wipe
   augroup GitiCommit
+    autocmd BufWritePre <buffer> g/^#\|^\s*$/d
     execute printf('autocmd BufWritePost <buffer> call giti#system("%s") | ' .
 \                  'autocmd! GitiCommit * <buffer>',
 \     a:command . ' -F ' . expand('%') . ' -- ' . join(a:files))
