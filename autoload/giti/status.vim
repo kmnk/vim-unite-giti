@@ -24,13 +24,19 @@ function! giti#status#run()"{{{
 endfunction"}}}
 
 function! giti#status#list()"{{{
-  return map(
-\   split(giti#system('status -s'), '\n'),
-\   's:build_status_data(v:val)'
-\ )
+  return map(s:get_list(), 's:build_status_data(v:val)')
 endfunction"}}}
 
 " local functions {{{
+
+function! s:get_list()
+  let res = giti#system('status -s')
+  if v:shell_error
+    echoerr res
+    return []
+  endif
+  return split(res, '\n')
+endfunction
 
 function! s:build_status_data(line)"{{{
   let matches = matchlist(a:line, '^\(.\)\(.\)\s*\(.\+\)$')
