@@ -18,25 +18,31 @@ function! giti#branch#list()"{{{
 endfunction"}}}
 
 function! giti#branch#delete(branch)"{{{
+  return giti#system('branch -d ' . a:branch)
 endfunction"}}}
 
-function! giti#branch#add(branch)"{{{
+function! giti#branch#delete_force(branch)"{{{
+  return giti#system('branch -D ' . a:branch)
+endfunction"}}}
+
+function! giti#branch#create(branch)"{{{
+  return giti#checkout#create(branch)
 endfunction"}}}
 
 function! giti#branch#switch(branch)"{{{
-  call giti#checkout#run(branch)
+  return giti#checkout#run(branch)
 endfunction"}}}
 
 " local function {{{
 function! s:build_branch_data(line)"{{{
   return {
-\   'name' : substitute(a:line, '^\*\?\s\(.\+\)', '\1', ''),
+\   'name' : substitute(a:line, '^*\?\s*\(.\+\)', '\1', ''),
 \   'is_current' : s:is_current(a:line),
 \ }
 endfunction"}}}
 
 function! s:is_current(line)"{{{
-  return match(a:line, '^\*\s\*.\+$') ? 1 : 0
+  return match(a:line, '^*\s*.\+$') < 0 ? 0 : 1
 endfunction"}}}
 
 

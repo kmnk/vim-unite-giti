@@ -17,20 +17,27 @@ let s:source = {
 
 function! s:source.gather_candidates(args, context)"{{{
   call unite#print_message('[giti/branch]')
-  return extend(map(giti#branch#list(), '{
+  return map(giti#branch#list(), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
-\   "kind"   : ["jump_list"],
-\   "action__path" : v:val.name,
-\   "action__line" : 1,
-\ }'), [{
-\   "word" : "(execute other action)",
-\   "source" : s:source.name,
-\   "kind"   : "jump_list",
-\   "action__path" : "./",
-\   "action__line" : 1,
-\ }])
+\   "kind"   : "giti/branch",
+\   "action__name" : v:val.name,
+\   "action__is_new" : 0,
+\ }')
 endfunction"}}}
+
+function! s:source.change_candidates(args, context)
+  if !strlen(a:context.input)
+    return []
+  endif
+  return [{
+\   "word"   : "[new branch]" . a:context.input,
+\   "source" : s:source.name,
+\   "kind"   : "giti/branch",
+\   "action__name" : a:context.input,
+\   "action__is_new" : 1,
+\ }]
+endfunction
 
 " local functions {{{
 let s:word_format = '%s %s'

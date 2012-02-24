@@ -11,7 +11,17 @@ let s:edit_command = 'tabnew'
 " }}}
 
 function! giti#checkout#run(files)"{{{
-  return giti#system('checkout ' . join(a:files))
+  return giti#system('checkout -- ' . join(a:files))
+endfunction"}}}
+
+function! giti#checkout#switch(name)"{{{
+  return giti#system('checkout ' . a:name)
+endfunction"}}}
+
+function! giti#checkout#create(name)"{{{
+  echo 'carete new branch [' . a:name . ']'
+  let start_point = input('start-point(optional) : ')
+  return giti#system('checkout -b ' . a:name . ' ' . start_point)
 endfunction"}}}
 
 " local functions {{{

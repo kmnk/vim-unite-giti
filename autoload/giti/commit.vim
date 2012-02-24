@@ -31,7 +31,6 @@ function! s:run(command, files)"{{{
 endfunction"}}}
 " }}}
 
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
