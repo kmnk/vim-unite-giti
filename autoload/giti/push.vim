@@ -18,6 +18,7 @@ function! giti#push#run(...)"{{{
   if v:shell_error
     echoerr res
   endif
+  echo res
   return res
 endfunction"}}}
 
