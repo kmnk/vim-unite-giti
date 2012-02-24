@@ -27,6 +27,13 @@ function! giti#dir()"{{{
   return b:giti_dir
 endfunction"}}}
 
+function! giti#edit_command()"{{{
+  if !exists('g:giti_edit_command')
+    let g:giti_edit_command = 'tabnew'
+  endif
+  return g:giti_edit_command
+endfunction"}}}
+
 " local functions {{{
 " }}}
 

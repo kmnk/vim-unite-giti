@@ -7,7 +7,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
-let s:edit_command = 'tabnew'
 " }}}
 
 function! giti#commit#run(files)"{{{
@@ -21,7 +20,7 @@ endfunction"}}}
 " local functions {{{
 function! s:run(command, files)"{{{
   call giti#system(a:command . ' -- ' . join(a:files))
-  execute printf('%s %sCOMMIT_EDITMSG', s:edit_command, giti#dir())
+  execute printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir())
   setlocal filetype=gitcommit bufhidden=wipe
   augroup GitiCommit
     autocmd BufWritePre <buffer> g/^#\|^\s*$/d

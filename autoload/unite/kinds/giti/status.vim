@@ -66,6 +66,24 @@ function! s:kind.action_table.checkout.func(candidates)"{{{
   return giti#checkout#run(map(a:candidates, 'v:val.action__path'))
 endfunction"}}}
 
+let s:kind.action_table.diff = {
+\ 'description' : 'diff selected files',
+\ 'is_selectable' : 1,
+\}
+function! s:kind.action_table.diff.func(candidates)"{{{
+  return giti#diff#run(map(a:candidates, 'v:val.action__path'))
+endfunction"}}}
+let s:kind.alias_table.di = 'diff'
+
+let s:kind.action_table.diff_cached = {
+\ 'description' : 'diff --cached selected files',
+\ 'is_selectable' : 1,
+\}
+function! s:kind.action_table.diff_cached.func(candidates)"{{{
+  return giti#diff#cached(map(a:candidates, 'v:val.action__path'))
+endfunction"}}}
+let s:kind.alias_table.dc = 'diff_cached'
+
 " }}}
 
 " local functions {{{
