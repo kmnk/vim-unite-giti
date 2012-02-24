@@ -11,9 +11,9 @@ set cpo&vim
 
 function! giti#push#run(...)"{{{
   if len(a:000) == 2
-    return giti#system('push ' . a:0 . ' ' . a:1)
+    return giti#system_with_confirm('push ' . a:1 . ' ' . a:2)
   else
-    return giti#system('push')
+    return giti#system_with_confirm('push')
   endif
 endfunction"}}}
 

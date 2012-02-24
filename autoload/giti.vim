@@ -17,6 +17,15 @@ function! giti#system(arg)"{{{
   return system('git ' . a:arg)
 endfunction"}}}
 
+function! giti#system_with_confirm(arg)"{{{
+  let command = 'git ' . a:arg
+  if input('execute "' . command . '" ? [y/n] : ') == 'y'
+    return system(command)
+  endif
+  echo 'canceled'
+  return
+endfunction"}}}
+
 function! giti#dir()"{{{
   if !exists('b:giti_dir')
     let b:giti_dir = giti#system('rev-parse --git-dir')
