@@ -14,8 +14,8 @@ function! giti#commit#run(files)"{{{
   call s:run('commit', a:files)
 endfunction"}}}
 
-function! giti#commit#amend(files)"{{{
-  call s:run('commit --amend', a:files)
+function! giti#commit#amend()"{{{
+  call s:run('commit --amend', [])
 endfunction"}}}
 
 " local functions {{{

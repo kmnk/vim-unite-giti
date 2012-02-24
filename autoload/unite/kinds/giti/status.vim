@@ -53,7 +53,7 @@ let s:kind.action_table.amend = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.amend.func(candidates)"{{{
-  return giti#commit#amend(map(a:candidates, 'v:val.action__path'))
+  return giti#commit#amend()
 endfunction"}}}
 
 " }}}
