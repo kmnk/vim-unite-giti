@@ -9,12 +9,20 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#diff#run(files)"{{{
-  call s:run('diff', a:files)
+function! giti#diff#run(...)"{{{
+  if len(a:000) > 0
+    call s:run('diff', a:1)
+  else
+    call s:run('diff', [])
+  endif
 endfunction"}}}
 
-function! giti#diff#cached(files)"{{{
-  call s:run('diff --cached', a:files)
+function! giti#diff#cached(...)"{{{
+  if len(a:000) > 0
+    call s:run('diff --cached', a:1)
+  else
+    call s:run('diff --cached', [])
+  endif
 endfunction"}}}
 
 " local functions {{{
