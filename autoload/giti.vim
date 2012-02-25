@@ -46,7 +46,6 @@ endfunction"}}}
 " local functions {{{
 " }}}
 
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__

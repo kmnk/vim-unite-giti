@@ -13,22 +13,37 @@ function! giti#commit#run(files)"{{{
   call s:run('commit', a:files)
 endfunction"}}}
 
+function! giti#commit#dry_run(files)"{{{
+  call s:run('commit --dry-run', a:files)
+endfunction"}}}
+
 function! giti#commit#amend()"{{{
   call s:run('commit --amend', [])
 endfunction"}}}
 
 " local functions {{{
 function! s:run(command, files)"{{{
+  call s:make_commit_editmsg(a:command, a:files)
+  call s:edit_commit_editmsg(a:command, a:files)
+endfunction"}}}
+
+function! s:make_commit_editmsg(command, files)"{{{
   call giti#system(a:command . ' -- ' . join(a:files))
+endfunction"}}}
+
+function! s:edit_commit_editmsg(command, files)"{{{
   execute printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir())
   setlocal filetype=gitcommit bufhidden=wipe
-  augroup GitiCommit
+  augroup GitiCommit"{{{
     autocmd BufWritePre <buffer> g/^#\|^\s*$/d
-    execute printf('autocmd BufWritePost <buffer> call giti#system("%s") | ' .
-\                  'autocmd! GitiCommit * <buffer>',
-\     a:command . ' -F ' . expand('%') . ' -- ' . join(a:files))
-  augroup END
+    execute printf(
+\     'autocmd BufWritePost <buffer> call giti#system("%s") | ' .
+\     'autocmd! GitiCommit * <buffer>',
+\     a:command . ' -F ' . expand('%') . ' -- ' . join(a:files)
+\   )
+  augroup END"}}}
 endfunction"}}}
+
 " }}}
 
 let &cpo = s:save_cpo
