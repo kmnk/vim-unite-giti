@@ -34,9 +34,18 @@
 - delete
 
 
+## SEE ALSO
+
+- [unite.vim][unite.vim]
+- [neobundle.vim][neobundle.vim]
+
+
 ## TODO
 
 - implement *giti/log* source
 - implement *git config* function
 - implement *git merge* function
 - and other ...
+
+[unite.vim]: https://github.com/Shougo/unite.vim "unite.vim"
+[neobundle.vim]: https://github.com/Shougo/neobundle.vim "neobundle.vim"
