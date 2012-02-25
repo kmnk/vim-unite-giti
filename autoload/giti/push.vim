@@ -17,8 +17,21 @@ function! giti#push#run(...)"{{{
   endif
   if v:shell_error
     echoerr res
+  else
+    echo res
   endif
-  echo res
+  return res
+endfunction"}}}
+
+function! git#push#expressly()"{{{
+  let repository = input("repository: ")
+  let refspec    = input("refspec: ")
+  let res = giti#system_with_confirm('push ' . repository . ' ' . refspec)
+  if v:shell_error
+    echoerr res
+  else
+    echo res
+  endif
   return res
 endfunction"}}}
 
