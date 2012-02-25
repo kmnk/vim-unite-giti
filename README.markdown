@@ -1,5 +1,7 @@
 # vim-unite-giti
 
+*vim-unite-giti* is unite source for using git.
+
 ## Usage
 
 ### Install
@@ -7,24 +9,26 @@
     NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 
 
-### Command
+### Sources
 
-    Unite giti/status
-    Unite giti/branch
+- giti/status
+- giti/branch
 
 
-#### giti/status
+### Kinds
+
+#### *giti/status* actions
 
 - add
 - reset
-- checkout
 - commit
 - amend
+- checkout
 - diff
-- diff_cached
+- diff\_cached
 
 
-#### giti/branch
+#### *giti/branch* actions
 
 - run
 - delete
@@ -32,4 +36,5 @@
 
 ## TODO
 
-- and other..
+- implement *giti/log* source
+- and other ...
