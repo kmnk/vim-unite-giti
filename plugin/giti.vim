@@ -24,7 +24,11 @@ endfunction"}}}
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
   let args = split(a:arg)
-  call giti#push#run(args[0], args[1])
+  if len(args) == 2
+    call giti#push#run(args[0], args[1])
+  else
+    call giti#push#run()
+  endif
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
