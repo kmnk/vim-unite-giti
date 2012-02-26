@@ -13,12 +13,12 @@ set cpo&vim
 
 command! -nargs=+ Giti call s:call_giti_system(<q-args>)
 function! s:call_giti_system(arg)"{{{
-  call giti#system(a:arg)
+  echo giti#system(a:arg)
 endfunction"}}}
 
 command! -nargs=+ GitiWithConfirm call s:call_giti_system_with_confirm(<q-args>)
 function! s:call_giti_system_with_confirm(arg)"{{{
-  call giti#system_with_confirm(a:arg)
+  echo giti#system_with_confirm(a:arg)
 endfunction"}}}
 
 command! -nargs=+ GitiPush call s:call_giti_push(<q-args>)
