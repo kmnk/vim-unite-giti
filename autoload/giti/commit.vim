@@ -10,15 +10,15 @@ set cpo&vim
 " }}}
 
 function! giti#commit#run(files)"{{{
-  call s:run('commit', a:files)
+  return s:run('commit', a:files)
 endfunction"}}}
 
 function! giti#commit#dry_run(files)"{{{
-  call s:run('commit --dry-run', a:files)
+  return s:run('commit --dry-run', a:files)
 endfunction"}}}
 
 function! giti#commit#amend()"{{{
-  call s:run('commit --amend', [])
+  return s:run('commit --amend', [])
 endfunction"}}}
 
 " local functions {{{

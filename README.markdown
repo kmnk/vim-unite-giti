@@ -20,6 +20,8 @@
 #### *giti/status* actions
 
 - add
+- rm
+- rm\_cached
 - reset
 - commit
 - amend
