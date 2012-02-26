@@ -23,7 +23,7 @@ function! giti#push#run(...)"{{{
   return res
 endfunction"}}}
 
-function! git#push#expressly()"{{{
+function! giti#push#expressly()"{{{
   let repository = input("repository: ")
   let refspec    = input("refspec: ")
   let res = giti#system_with_confirm('push ' . repository . ' ' . refspec)
