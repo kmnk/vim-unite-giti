@@ -25,7 +25,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__path" : v:val.path,
 \   "action__line" : 1,
 \ }'), [{
-\   "word" : "(execute other action)",
+\   "word" : "(execute any action)",
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
 \   "action__path" : "./",
