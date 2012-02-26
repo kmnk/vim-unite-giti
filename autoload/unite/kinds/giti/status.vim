@@ -84,16 +84,6 @@ function! s:kind.action_table.diff_cached.func(candidates)"{{{
 endfunction"}}}
 let s:kind.alias_table.dic = 'diff_cached'
 
-let s:kind.action_table.rm = {
-\ 'description' : 'rm selected files',
-\ 'is_selectable' : 1,
-\ 'is_quit' : 0,
-\ 'is_invalidate_cache' : 1,
-\}
-function! s:kind.action_table.rm.func(candidates)"{{{
-  return giti#rm#run(map(a:candidates, 'v:val.action__path'))
-endfunction"}}}
-
 let s:kind.action_table.rm_cached = {
 \ 'description' : 'rm --cached selected files',
 \ 'is_selectable' : 1,
