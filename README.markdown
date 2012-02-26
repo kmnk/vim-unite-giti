@@ -20,7 +20,6 @@
 #### *giti/status* actions
 
 - add
-- rm
 - rm\_cached
 - reset
 - commit
@@ -34,6 +33,13 @@
 
 - run
 - delete
+
+
+### CUSTOM ACTION
+
+#### on *file* kind
+
+- git\_rm
 
 
 ## SEE ALSO
