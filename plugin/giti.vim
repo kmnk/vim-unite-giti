@@ -43,7 +43,6 @@ endfunction"}}}
 
 " }}}
 
-
 " local functions {{{
 " }}}
 
