@@ -31,6 +31,16 @@ function! s:call_giti_push_expressly(arg)"{{{
   call giti#push#expressly(split(a:arg))
 endfunction"}}}
 
+command! -nargs=+ GitDiff call s:call_giti_diff(<q-args>)
+function! s:call_giti_diff(arg)"{{{
+  call giti#diff#run(split(a:arg))
+endfunction"}}}
+
+command! -nargs=+ GitDiffCached call s:call_giti_diff_cached(<q-args>)
+function! s:call_giti_diff_cached(arg)"{{{
+  call giti#diff#cached(split(a:arg))
+endfunction"}}}
+
 " }}}
 
 
