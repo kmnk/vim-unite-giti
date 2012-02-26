@@ -7,6 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#kinds#giti#define()"{{{
+  call s:add_rm_action_on_file_kind()
   return map(
 \   map(s:get_commands(), 's:to_define_func(v:val)'),
 \   'call(v:val, [])'
@@ -27,6 +28,17 @@ endfunction"}}}
 function! s:to_define_func(command)"{{{
   return 'unite#kinds#giti#' . a:command . '#define'
 endfunction}}}
+
+function! s:add_rm_action_on_file_kind()"{{{
+  let git_rm = {
+\   'description' : 'git rm selected files',
+\   'is_selectable' : 1,
+\ }
+  function! git_rm.func(candidates)
+    return giti#rm#run(map(a:candidates, 'v:val.action__path'))
+  endfunction
+  call unite#custom_action('file', 'git_rm', git_rm)
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
