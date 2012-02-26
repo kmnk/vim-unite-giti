@@ -23,8 +23,8 @@ endfunction"}}}
 
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
-  let [repository, refspec] = split(a:arg)
-  call giti#push#run(repository, refspec)
+  let args = split(a:arg)
+  call giti#push#run(args[0], args[1])
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
