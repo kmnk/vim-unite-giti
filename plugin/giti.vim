@@ -23,12 +23,13 @@ endfunction"}}}
 
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
-  call giti#push#run(split(a:arg))
+  let [repository, refspec] = split(a:arg)
+  call giti#push#run(repository, refspec)
 endfunction"}}}
 
-command! -nargs=* GitiPushExpressly call s:call_giti_push_expressly(<q-args>)
-function! s:call_giti_push_expressly(arg)"{{{
-  call giti#push#expressly(split(a:arg))
+command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
+function! s:call_giti_push_expressly()"{{{
+  call giti#push#expressly()
 endfunction"}}}
 
 command! -nargs=* GitiDiff call s:call_giti_diff(<q-args>)
