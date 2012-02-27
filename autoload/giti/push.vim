@@ -10,32 +10,46 @@ set cpo&vim
 " }}}
 
 function! giti#push#run(...)"{{{
-  if len(a:000) == 2
-    let res = giti#system_with_confirm('push ' . a:1 . ' ' . a:2)
-  else
-    let res = giti#system_with_confirm('push')
+  let repository = ''
+  let refspec = ''
+
+  if exists('a:000[0]')
+    repository = a:000[0]
   endif
-  if v:shell_error
-    echoerr res
-  else
-    echo res
+  if exists('a:000[1]')
+    refspec = a:000[0]
   endif
+
+  let res = s:run(repository, refspec)
+
+  call s:handle_error(res)
+
   return res
 endfunction"}}}
 
 function! giti#push#expressly()"{{{
   let repository = input("repository: ")
   let refspec    = input("refspec: ")
-  let res = giti#system_with_confirm('push ' . repository . ' ' . refspec)
+
+  let res = s:run(repository, refspec)
+
+  call s:handle_error(res)
+
+  return res
+endfunction"}}}
+
+" local functions {{{
+function! s:run(repository, refspec)"{{{
+  return giti#system_with_confirm(join(['push', a:repository, a:refspec])
+endfunction"}}}
+
+function! s:handle_error(res)"{{{
   if v:shell_error
     echoerr res
   else
     echo res
   endif
-  return res
 endfunction"}}}
-
-" local functions {{{
 " }}}
 
 let &cpo = s:save_cpo
