@@ -40,6 +40,10 @@ function! giti#config#remove(key)"{{{
   return giti#system_with_confirm('config --remove-section ' . a:key)
 endfunction"}}}
 
+function! giti#config#add(key, value)"{{{
+  return giti#system_with_confirm('config --add ' . a:key . ' ' a:value)
+endfunction"}}}
+
 " local functions {{{
 
 function! s:get_list()
