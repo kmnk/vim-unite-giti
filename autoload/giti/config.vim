@@ -49,7 +49,7 @@ function! giti#config#remove(key, ...)"{{{
 \ ]))
 endfunction"}}}
 
-function! giti#config#add(key, value)"{{{
+function! giti#config#add(key, value, ...)"{{{
   let location = s:get_location_option(a:000)
   return giti#system_with_confirm(join([
 \   'config', '--add', location, a:key, a:value
