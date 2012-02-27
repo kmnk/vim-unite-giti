@@ -59,7 +59,6 @@
 ## TODO
 
 - implement *giti/log* source
-- implement *git config* function
 - implement *git merge* function
 - and other ...
 
