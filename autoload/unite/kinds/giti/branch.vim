@@ -12,7 +12,7 @@ endfunction"}}}
 
 let s:kind = {
 \ 'name' : 'giti/branch',
-\ 'default_action' : 'switch',
+\ 'default_action' : 'run',
 \ 'action_table' : {},
 \ 'alias_table' : {},
 \}

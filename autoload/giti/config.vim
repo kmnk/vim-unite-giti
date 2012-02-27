@@ -23,29 +23,22 @@ endfunction"}}}
 
 function! giti#config#read(key, ...)"{{{
   let location = s:get_location_option(a:000)
-  return giti#system_with_confirm(join([
-\   'config', location, key
+  return giti#system(join([
+\   'config', location, a:key
 \ ]))
 endfunction"}}}
 
 function! giti#config#write(key, value, ...)"{{{
   let location = s:get_location_option(a:000)
   return giti#system_with_confirm(join([
-\   'config', location, key, value
-\ ]))
-endfunction"}}}
-
-function! giti#config#rename(old_key, new_key, ...)"{{{
-  let location = s:get_location_option(a:000)
-  return giti#system_with_confirm(join([
-\   'config', '--rename-section', location, a:old_key, a:new_key
+\   'config', location, a:key, a:value
 \ ]))
 endfunction"}}}
 
 function! giti#config#remove(key, ...)"{{{
   let location = s:get_location_option(a:000)
   return giti#system_with_confirm(join([
-\   'config', '--remove-section', location, a:key
+\   'config', '--unset', location, a:key
 \ ]))
 endfunction"}}}
 
@@ -66,7 +59,7 @@ function! s:has_location(rests)"{{{
 endfunction"}}}
 
 function! s:get_location_option(rests)"{{{
-  if s:has_location(rests)
+  if s:has_location(a:rests)
     return '--' . a:rests[0]
   else
     return ''
