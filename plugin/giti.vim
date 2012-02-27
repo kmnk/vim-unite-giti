@@ -23,17 +23,30 @@ endfunction"}}}
 
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
-  let args = split(a:arg)
-  if len(args) == 2
-    call giti#push#run(args[0], args[1])
-  else
-    call giti#push#run()
-  endif
+  let [repository, refspec] = s:map_param(a:arg)
+  call giti#push#run(repository, refspec)
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
 function! s:call_giti_push_expressly()"{{{
   call giti#push#expressly()
+endfunction"}}}
+
+command! -nargs=* GitiPull call s:call_giti_pull(<q-args>)
+function! s:call_giti_pull(arg)"{{{
+  let [repository, refspec] = s:map_param(a:arg)
+  call giti#pull#run(repository, refspec)
+endfunction"}}}
+
+command! -nargs=* GitiPullSquash call s:call_giti_pull_squash(<q-args>)
+function! s:call_giti_pull_squash(arg)"{{{
+  let [repository, refspec] = s:map_param(a:arg)
+  call giti#pull#squash(repository, refspec)
+endfunction"}}}
+
+command! -nargs=0 GitiPullExpressly call s:call_giti_pull_expressly()
+function! s:call_giti_pull_expressly()"{{{
+  call giti#pull#expressly()
 endfunction"}}}
 
 command! -nargs=* GitiDiff call s:call_giti_diff(<q-args>)
@@ -49,6 +62,21 @@ endfunction"}}}
 " }}}
 
 " local functions {{{
+function! s:map_param(param)"{{{
+  let params = split(a:param)
+
+  let repository = ''
+  let refspec = ''
+
+  if exists('a:params[0]')
+    let repository = a:params[0]
+  endif
+  if exists('a:params[1]')
+    let refspec = a:params[1]
+  endif
+
+  return [repository, refspec]
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
