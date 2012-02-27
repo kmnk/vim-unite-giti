@@ -68,11 +68,11 @@ function! s:map_param(param)"{{{
   let repository = ''
   let refspec = ''
 
-  if exists('a:params[0]')
-    let repository = a:params[0]
+  if exists('params[0]')
+    let repository = params[0]
   endif
-  if exists('a:params[1]')
-    let refspec = a:params[1]
+  if exists('params[1]')
+    let refspec = params[1]
   endif
 
   return [repository, refspec]
