@@ -41,7 +41,6 @@ endfunction"}}}
 " local functions {{{
 function! s:run(repository, refspec)"{{{
   return giti#system_with_confirm(join(['push', a:repository, a:refspec]))
-  return res
 endfunction"}}}
 
 function! s:handle_error(res)"{{{
