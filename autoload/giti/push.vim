@@ -14,10 +14,10 @@ function! giti#push#run(...)"{{{
   let refspec = ''
 
   if exists('a:000[0]')
-    repository = a:000[0]
+    let repository = a:000[0]
   endif
   if exists('a:000[1]')
-    refspec = a:000[0]
+    let refspec = a:000[1]
   endif
 
   let res = s:run(repository, refspec)
@@ -40,14 +40,15 @@ endfunction"}}}
 
 " local functions {{{
 function! s:run(repository, refspec)"{{{
-  return giti#system_with_confirm(join(['push', a:repository, a:refspec])
+  return giti#system_with_confirm(join(['push', a:repository, a:refspec]))
+  return res
 endfunction"}}}
 
 function! s:handle_error(res)"{{{
   if v:shell_error
-    echoerr res
+    echoerr a:res
   else
-    echo res
+    echo a:res
   endif
 endfunction"}}}
 " }}}
