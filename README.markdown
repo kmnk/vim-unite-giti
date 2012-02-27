@@ -13,6 +13,7 @@
 
 - giti/status
 - giti/branch
+- giti/config
 
 
 ### Kinds
@@ -31,8 +32,15 @@
 
 #### *giti/branch* actions
 
-- run
+- switch
 - delete
+
+
+#### *giti/config* actions
+
+- yank\_value
+- write
+- remove
 
 
 ### CUSTOM ACTION
