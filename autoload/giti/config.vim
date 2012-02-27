@@ -14,7 +14,6 @@ function! giti#config#run()"{{{
 endfunction"}}}
 
 function! giti#config#list()"{{{
-  echo map(s:get_list('local'),  's:build_config_data(v:val, "local")')
   return extend(extend(
 \   map(s:get_list('global'), 's:build_config_data(v:val, "global")'),
 \   map(s:get_list('system'), 's:build_config_data(v:val, "system")')),
@@ -22,37 +21,59 @@ function! giti#config#list()"{{{
 \ )
 endfunction"}}}
 
-function! giti#config#read(key)"{{{
-  return giti#system('config ' . a:key)
+function! giti#config#read(key, ...)"{{{
+  let location = s:get_location_option(a:000)
+  return giti#system_with_confirm(join([
+\   'config', location, key
+\ ]))
 endfunction"}}}
 
-function! giti#config#write(key, value)"{{{
-  return giti#system_with_confirm('config ' . a:key . ' ' . a:value)
+function! giti#config#write(key, value, ...)"{{{
+  let location = s:get_location_option(a:000)
+  return giti#system_with_confirm(join([
+\   'config', location, key, value
+\ ]))
 endfunction"}}}
 
-function! giti#config#rename(old_key, new_key)"{{{
-  return giti#system_with_confirm(printf(
-\   'config --rename-section %s %s',
-\   a:old_key, a:new_key
-\ ))
+function! giti#config#rename(old_key, new_key, ...)"{{{
+  let location = s:get_location_option(a:000)
+  return giti#system_with_confirm(join([
+\   'config', '--rename-section', location, a:old_key, a:new_key
+\ ]))
 endfunction"}}}
 
-function! giti#config#delete(key)"{{{
-  return giti#config#remove(a:key)
-endfunction"}}}
-
-function! giti#config#remove(key)"{{{
-  return giti#system_with_confirm('config --remove-section ' . a:key)
+function! giti#config#remove(key, ...)"{{{
+  let location = s:get_location_option(a:000)
+  return giti#system_with_confirm(join([
+\   'config', '--remove-section', location, a:key
+\ ]))
 endfunction"}}}
 
 function! giti#config#add(key, value)"{{{
-  return giti#system_with_confirm('config --add ' . a:key . ' ' a:value)
+  let location = s:get_location_option(a:000)
+  return giti#system_with_confirm(join([
+\   'config', '--add', location, a:key, a:value
+\ ]))
 endfunction"}}}
 
 " local functions {{{
 
+function! s:has_location(rests)"{{{
+  if len(a:rests) == 1
+    return 1
+  endif
+  return 0
+endfunction"}}}
 
-function! s:get_list(...)
+function! s:get_location_option(rests)"{{{
+  if s:has_location(rests)
+    return '--' . a:rests[0]
+  else
+    return ''
+  endif
+endfunction"}}}
+
+function! s:get_list(...)"{{{
   let location = ''
   if len(a:000) == 1
     let location = '--' . a:1
@@ -62,7 +83,7 @@ function! s:get_list(...)
     return []
   endif
   return split(res, '\n')
-endfunction
+endfunction"}}}
 
 function! s:build_config_data(line, ...)"{{{
   let splited = split(a:line, '=')
