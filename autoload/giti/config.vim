@@ -14,7 +14,12 @@ function! giti#config#run()"{{{
 endfunction"}}}
 
 function! giti#config#list()"{{{
-  return map(s:get_list(), 's:build_config_data(v:val)')
+  echo map(s:get_list('local'),  's:build_config_data(v:val, "local")')
+  return extend(extend(
+\   map(s:get_list('global'), 's:build_config_data(v:val, "global")'),
+\   map(s:get_list('system'), 's:build_config_data(v:val, "system")')),
+\   map(s:get_list('local'),  's:build_config_data(v:val, "local")')
+\ )
 endfunction"}}}
 
 function! giti#config#read(key)"{{{
@@ -46,23 +51,34 @@ endfunction"}}}
 
 " local functions {{{
 
-function! s:get_list()
-  let res = giti#system('config -l')
+
+function! s:get_list(...)
+  let location = ''
+  if len(a:000) == 1
+    let location = '--' . a:1
+  endif
+  let res = giti#system('config ' . location . ' -l')
   if v:shell_error
-    echoerr res
     return []
   endif
   return split(res, '\n')
 endfunction
 
-function! s:build_config_data(line)"{{{
+function! s:build_config_data(line, ...)"{{{
   let splited = split(a:line, '=')
   if len(splited) != 2
     echoerr 'invalid config line :' . a:line
   endif
+
+  let location = ''
+  if len(a:000) == 1
+    let location = a:1
+  endif
+
   return {
-\   'key'   : splited[0],
-\   'value' : splited[1],
+\   'key'      : splited[0],
+\   'value'    : splited[1],
+\   'location' : location,
 \ }
 endfunction"}}}
 
