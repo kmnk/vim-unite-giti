@@ -11,9 +11,14 @@
 
 ### Sources
 
+- giti
+    - view sources of giti
 - giti/status
+    - view status of current repository
 - giti/branch
+    - view branches on current repository
 - giti/config
+    - view config
 
 
 ### Kinds
