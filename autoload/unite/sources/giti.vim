@@ -7,10 +7,25 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#sources#giti#define()"{{{
-  return map(
+  return extend([s:source], map(
 \   map(s:get_commands(), 's:to_define_func(v:val)'),
 \   'call(v:val, [])'
-\ )
+\ ))
+endfunction"}}}
+
+let s:source = {
+\ 'name' : 'giti',
+\ 'description' : 'disp giti sources',
+\}
+
+function! s:source.gather_candidates(args, context)"{{{
+  call unite#print_message('[giti] giti sources')
+  return map(s:get_commands(), '{
+\   "word"   : v:val,
+\   "source" : s:source.name,
+\   "kind"   : "source",
+\   "action__source_name" : "giti/" . v:val,
+\ }')
 endfunction"}}}
 
 " local functions {{{
