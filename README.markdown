@@ -63,6 +63,7 @@
 
 ## TODO
 
+- implement *giti/log* source
 - implement *git merge* function
 - and other ...
 
