@@ -17,6 +17,8 @@
     - view status of current repository
 - giti/branch
     - view branches on current repository
+- giti/log
+    - view log on current repository
 - giti/config
     - view config
 
@@ -39,6 +41,12 @@
 
 - switch
 - delete
+
+
+#### *giti/log# actions
+
+- view
+- diff
 
 
 #### *giti/config* actions
