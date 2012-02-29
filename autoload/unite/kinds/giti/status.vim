@@ -84,6 +84,15 @@ function! s:kind.action_table.diff_cached.func(candidates)"{{{
 endfunction"}}}
 let s:kind.alias_table.dic = 'diff_cached'
 
+let s:kind.action_table.diff_head = {
+\ 'description' : 'diff HEAD selected files',
+\ 'is_selectable' : 1,
+\}
+function! s:kind.action_table.diff_head.func(candidates)"{{{
+  return giti#diff#head(map(a:candidates, 'v:val.action__path'))
+endfunction"}}}
+let s:kind.alias_table.dih = 'diff_head'
+
 let s:kind.action_table.rm_cached = {
 \ 'description' : 'rm --cached selected files',
 \ 'is_selectable' : 1,

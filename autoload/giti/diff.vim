@@ -10,19 +10,15 @@ set cpo&vim
 " }}}
 
 function! giti#diff#run(...)"{{{
-  if len(a:000) > 0
-    call s:run('diff', a:1)
-  else
-    call s:run('diff', [])
-  endif
+  call s:run('diff', len(a:000) > 0 ? a:1 : [])
 endfunction"}}}
 
 function! giti#diff#cached(...)"{{{
-  if len(a:000) > 0
-    call s:run('diff --cached', a:1)
-  else
-    call s:run('diff --cached', [])
-  endif
+  call s:run('diff --cached', len(a:000) > 0 ? a:1 : [])
+endfunction"}}}
+
+function! giti#diff#head(...)"{{{
+  call s:run('diff HEAD', len(a:000) > 0 ? a:1 : [])
 endfunction"}}}
 
 " local functions {{{
