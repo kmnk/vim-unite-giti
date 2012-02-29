@@ -17,7 +17,15 @@ let s:source = {
 
 function! s:source.gather_candidates(args, context)"{{{
   call unite#print_message('[giti/log] ' . s:build_title())
-  return map(giti#log#list(''), '{
+  let file = ''
+  if len(a:args) > 0
+    let file = a:args[0]
+  endif
+  let line_count = ''
+  if len(a:args) == 2
+    let line_count = a:args[1]
+  endif
+  return map(giti#log#list(line_count, file), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/log",

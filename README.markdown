@@ -63,7 +63,7 @@
 
 ## TODO
 
-- extend *giti/log* source
+- extend *giti/log* source (and write document about it)
 - implement *git merge* function
 - and other ...
 
