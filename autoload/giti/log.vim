@@ -8,18 +8,29 @@ set cpo&vim
 
 " variables {{{
 let s:default_line_count = 3
-let s:pretty_format = "%H:%P:%an<%ae>[%ad]:%cn<%ce>[%cd]:%s"
+let s:pretty_format = "%H:%h:%P:%an<%ae>[%ad]:%cn<%ce>[%cd]:%s"
 " }}}
 
 function! giti#log#run(...)"{{{
-  return giti#system(
-\   printf('log -%d ', s:default_line_count) .
+  return giti#system(printf(
+\   'log -%d %s',
+\   s:default_line_count,
+\   len(a:000) > 0 ? a:1 : ''
+\ ))
+endfunction"}}}
+
+function! giti#log#full(...)"{{{
+  return giti#system(printf(
+\   'log %s',
 \   len(a:000) > 0 ? a:1 : ''
 \ )
 endfunction"}}}
 
-function! giti#log#full(...)"{{{
-  return giti#system('log ' . len(a:000) > 0 ? a:1 : '')
+function! giti#log#line(...)"{{{
+  return giti#system_with_confirm(printf(
+\   'log --pretty=oneline --graph %s',
+\   len(a:000) > 0 ? a:1 : ''
+\ ))
 endfunction"}}}
 
 function! giti#log#list(...)"{{{
@@ -48,13 +59,14 @@ endfunction"}}}
 
 function! s:build_log_data(line)"{{{
   let matches
-\   = matchlist(a:line, '^\(.\+\):\(.\+\):\(.\+\):\(.\+\):\(.\+\)$')
+\   = matchlist(a:line, '^\(.\+\):\(.\+\):\(.\+\):\(.\+\):\(.\+\):\(.\+\)$')
   return {
 \   'hash'        : matches[1],
-\   'parent_hash' : matches[2],
-\   'author'      : s:build_user_data(matches[3]),
-\   'committer'   : s:build_user_data(matches[4]),
-\   'comment'     : matches[5],
+\   'hash'        : matches[2],
+\   'parent_hash' : matches[3],
+\   'author'      : s:build_user_data(matches[4]),
+\   'committer'   : s:build_user_data(matches[5]),
+\   'comment'     : matches[6],
 \ }
 endfunction"}}}
 
