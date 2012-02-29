@@ -21,6 +21,11 @@ function! giti#diff#head(...)"{{{
   call s:run('diff HEAD', len(a:000) > 0 ? a:1 : [])
 endfunction"}}}
 
+function! giti#diff#specify(from, to, ...)"{{{
+  call s:run(printf('diff %s..%s', a:from, a:to),
+\            len(a:000) > 0 ? a:1 : [])
+endfunction"}}}
+
 " local functions {{{
 function! s:run(command, files)"{{{
   let diff = giti#system(a:command . ' -- ' . join(a:files))
