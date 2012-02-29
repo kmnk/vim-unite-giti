@@ -39,7 +39,7 @@ function! s:build_word(val)"{{{
   return printf(s:word_format,
 \   '[' . a:val.index . ']',
 \   '[' . a:val.work  . ']',
-\   v:val.path)
+\   a:val.path)
 endfunction"}}}
 function! s:build_title()"{{{
   return printf('    ' . s:word_format,
