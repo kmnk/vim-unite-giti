@@ -24,29 +24,29 @@ endfunction"}}}
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  call giti#push#run(repository, refspec)
+  echo giti#push#run(repository, refspec)
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
 function! s:call_giti_push_expressly()"{{{
-  call giti#push#expressly()
+  echo giti#push#expressly()
 endfunction"}}}
 
 command! -nargs=* GitiPull call s:call_giti_pull(<q-args>)
 function! s:call_giti_pull(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  call giti#pull#run(repository, refspec)
+  echo giti#pull#run(repository, refspec)
 endfunction"}}}
 
 command! -nargs=* GitiPullSquash call s:call_giti_pull_squash(<q-args>)
 function! s:call_giti_pull_squash(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  call giti#pull#squash(repository, refspec)
+  echo giti#pull#squash(repository, refspec)
 endfunction"}}}
 
 command! -nargs=0 GitiPullExpressly call s:call_giti_pull_expressly()
 function! s:call_giti_pull_expressly()"{{{
-  call giti#pull#expressly()
+  echo giti#pull#expressly()
 endfunction"}}}
 
 command! -nargs=* GitiDiff call s:call_giti_diff(<q-args>)

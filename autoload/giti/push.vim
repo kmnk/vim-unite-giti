@@ -47,8 +47,6 @@ endfunction"}}}
 function! s:handle_error(res)"{{{
   if v:shell_error
     echoerr a:res
-  else
-    echo a:res
   endif
 endfunction"}}}
 " }}}
