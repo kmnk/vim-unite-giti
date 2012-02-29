@@ -16,8 +16,7 @@ let s:source = {
 \}
 
 function! s:source.gather_candidates(args, context)"{{{
-  call unite#print_message('[giti/status]')
-  call unite#print_message(s:build_title())
+  call unite#print_message('[giti/status] ' . s:build_title())
   return extend(map(giti#status#list(), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
@@ -42,7 +41,7 @@ function! s:build_word(val)"{{{
 \   a:val.path)
 endfunction"}}}
 function! s:build_title()"{{{
-  return printf('    ' . s:word_format,
+  return printf(s:word_format,
 \   'IndexStatus',
 \   'WorkStatus',
 \   'FilePath')
