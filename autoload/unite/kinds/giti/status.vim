@@ -29,15 +29,16 @@ function! s:kind.action_table.add.func(candidates)"{{{
   return giti#add#run(map(a:candidates, 'v:val.action__path'))
 endfunction"}}}
 
-let s:kind.action_table.reset = {
-\ 'description' : 'reset selected files',
+let s:kind.action_table.reset_head = {
+\ 'description' : "reset selected files' Index to HEAD",
 \ 'is_selectable' : 1,
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.reset.func(candidates)"{{{
+function! s:kind.action_table.reset_head.func(candidates)"{{{
   return giti#reset#run(map(a:candidates, 'v:val.action__path'))
 endfunction"}}}
+let s:kind.alias_table.reset = 'reset_head'
 
 let s:kind.action_table.commit = {
 \ 'description' : 'commit selected files',
