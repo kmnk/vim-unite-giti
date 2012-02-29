@@ -59,6 +59,16 @@ function! s:call_giti_diff_cached(arg)"{{{
   call giti#diff#cached(split(a:arg))
 endfunction"}}}
 
+command! -nargs=* GitiLog call s:call_giti_log(<q-args>)
+function! s:call_giti_log(arg)"{{{
+  echo giti#log#run(a:arg)
+endfunction"}}}
+
+command! -nargs=* GitiLogLine call s:call_giti_log_line(<q-args>)
+function! s:call_giti_log_line(arg)"{{{
+  echo giti#log#line(a:arg)
+endfunction"}}}
+
 " }}}
 
 " local functions {{{

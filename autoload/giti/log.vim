@@ -17,21 +17,21 @@ function! giti#log#run(...)"{{{
   return giti#system(printf(
 \   'log -%d %s',
 \   g:giti_log_default_line_count,
-\   len(a:000) > 0 ? a:1 : ''
+\   a:0 > 0 ? a:1 : ''
 \ ))
 endfunction"}}}
 
 function! giti#log#full(...)"{{{
   return giti#system(printf(
 \   'log %s',
-\   len(a:000) > 0 ? a:1 : ''
+\   a:0 > 0 ? a:1 : ''
 \ )
 endfunction"}}}
 
 function! giti#log#line(...)"{{{
-  return giti#system_with_confirm(printf(
+  return giti#system(printf(
 \   'log --pretty=oneline --graph %s',
-\   len(a:000) > 0 ? a:1 : ''
+\   a:0 > 0 ? a:1 : ''
 \ ))
 endfunction"}}}
 
