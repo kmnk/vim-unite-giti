@@ -22,8 +22,13 @@ function! giti#diff#head(...)"{{{
 endfunction"}}}
 
 function! giti#diff#specify(from, to, ...)"{{{
-  call s:run(printf('diff %s..%s', a:from, a:to),
-\            len(a:000) > 0 ? a:1 : [])
+  if a:to == ''
+    call s:run(printf('diff %s', a:from),
+\              len(a:000) > 0 ? a:1 : [])
+  else
+    call s:run(printf('diff %s..%s', a:from, a:to),
+\              len(a:000) > 0 ? a:1 : [])
+  endif
 endfunction"}}}
 
 " local functions {{{

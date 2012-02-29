@@ -35,6 +35,26 @@ function! s:kind.action_table.view.func(candidate)"{{{
   echo        'Comment:    ' . data.comment
 endfunction"}}}
 
+let s:kind.action_table.diff = {
+\ 'description' : 'git diff',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\}
+function! s:kind.action_table.diff.func(candidates)"{{{
+  let from = ''
+  let to   = ''
+  if len(a:candidates) == 1
+    let from = a:candidates[0].action__data.hash
+  elseif len(a:candidates) == 2
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[1].action__data.hash
+  else
+    call unite#print_error('too many commits selected')
+  endif
+  call giti#diff#specify(from, to)
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
