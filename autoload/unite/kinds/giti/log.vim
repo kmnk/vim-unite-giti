@@ -45,7 +45,8 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   let from = ''
   let to   = ''
   if len(a:candidates) == 1
-    let from = a:candidates[0].action__data.hash
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[0].action__data.parent_hash
   elseif len(a:candidates) == 2
     let to   = a:candidates[0].action__data.hash
     let from = a:candidates[1].action__data.hash
