@@ -24,10 +24,16 @@ let s:kind.action_table.run = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.run.func(candidate)"{{{
+  let res
   if a:candidate.action__is_new
-    return giti#checkout#create(a:candidate.action__name)
+    let res = giti#checkout#create(a:candidate.action__name)
   else
-    return giti#checkout#switch(a:candidate.action__name)
+    let res = giti#checkout#switch(a:candidate.action__name)
+  endif
+  if !v:shell_error
+    echoerr res
+  else
+    echo res
   endif
 endfunction"}}}
 let s:kind.alias_table.switch = 'run'
@@ -40,7 +46,12 @@ let s:kind.action_table.delete = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete.func(candidate)"{{{
-  return giti#branch#delete(a:candidate.action__name)
+  let res = giti#branch#delete(a:candidate.action__name)
+  if !v:shell_error
+    echoerr res
+  else
+    echo res
+  endif
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
