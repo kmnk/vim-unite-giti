@@ -46,9 +46,9 @@ endfunction"}}}
 " local functions {{{
 function! s:handle_error(res)"{{{
   if v:shell_error
-    echoerr res
+    echoerr a:res
   else
-  return res
+  return a:res
 endfunction
 " }}}
 
