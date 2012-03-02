@@ -28,7 +28,7 @@ endfunction"}}}
 " local functions {{{
 function! s:run(command, files)"{{{
   let files = len(a:files) > 0 ? join(a:files) : '.'
-  return giti#system(a:command . ' -- ' . files)
+  return giti#system_with_confirm(a:command . ' -- ' . files)
 endfunction"}}}
 " }}}
 
