@@ -9,12 +9,20 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#run(arg, option)"{{{
+function! giti#run(arg, ...)"{{{
+  let option = {}
+  if a:0 > 0
+    let option = a:1
+  endif
   return giti#system(a:arg, option)
 endfunction"}}}
 
-function! giti#system(arg, option)"{{{
-  if exists('a:option.ignore_error') && a:option.ignore_error
+function! giti#system(arg, ...)"{{{
+  let option = {}
+  if a:0 > 0
+    let option = a:1
+  endif
+  if exists('option.ignore_error') && option.ignore_error
     return system('git ' . a:arg)
   else
     return s:handle_error(system('git ' . a:arg))
@@ -50,7 +58,9 @@ endfunction"}}}
 " local functions {{{
 function! s:handle_error(res)"{{{
   if v:shell_error
-    echoerr a:res
+    for line in split(a:res, '\n')
+      echoerr line
+    endfor
   else
   return a:res
 endfunction"}}}
