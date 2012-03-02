@@ -20,21 +20,14 @@ function! giti#push#run(...)"{{{
     let refspec = a:000[1]
   endif
 
-  let res = s:run('push', repository, refspec)
-
-  call s:handle_error(res)
-
-  return res
+  return s:run('push', repository, refspec)
 endfunction"}}}
 
 function! giti#push#expressly()"{{{
   let repository = input("repository: ")
   let refspec    = input("refspec: ")
 
-  let res = s:run('push', repository, refspec)
-
-  call s:handle_error(res)
-  return res
+  return s:run('push', repository, refspec)
 endfunction"}}}
 
 " local functions {{{
@@ -42,12 +35,6 @@ function! s:run(command, repository, refspec)"{{{
   return giti#system_with_confirm(
 \   join(filter([a:command, a:repository, a:refspec], 'v:val!=""'))
 \ )
-endfunction"}}}
-
-function! s:handle_error(res)"{{{
-  if v:shell_error
-    echoerr a:res
-  endif
 endfunction"}}}
 " }}}
 

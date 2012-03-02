@@ -14,7 +14,7 @@ function! giti#run(arg)"{{{
 endfunction"}}}
 
 function! giti#system(arg)"{{{
-  return system('git ' . a:arg)
+  return s:handle_error(system('git ' . a:arg))
 endfunction"}}}
 
 function! giti#system_with_confirm(arg)"{{{
@@ -22,7 +22,7 @@ function! giti#system_with_confirm(arg)"{{{
   if input('execute "' . command . '" ? [y/n] : ') == 'y'
     return system(command)
   endif
-  echo 'canceled'
+    echo 'canceled'
   return
 endfunction"}}}
 
@@ -44,6 +44,12 @@ function! giti#edit_command()"{{{
 endfunction"}}}
 
 " local functions {{{
+function! s:handle_error(res)"{{{
+  if v:shell_error
+    echoerr res
+  else
+  return res
+endfunction
 " }}}
 
 let &cpo = s:save_cpo
