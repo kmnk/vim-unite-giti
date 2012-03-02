@@ -71,7 +71,7 @@ function! s:get_list(...)"{{{
   if len(a:000) == 1
     let location = '--' . a:1
   endif
-  let res = giti#system('config ' . location . ' -l')
+  let res = giti#system('config ' . location . ' -l', {'ignore_error' : 1})
   if v:shell_error
     return []
   endif

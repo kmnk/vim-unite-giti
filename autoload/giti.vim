@@ -9,12 +9,16 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#run(arg)"{{{
-  return giti#system(a:arg)
+function! giti#run(arg, option)"{{{
+  return giti#system(a:arg, option)
 endfunction"}}}
 
-function! giti#system(arg)"{{{
-  return s:handle_error(system('git ' . a:arg))
+function! giti#system(arg, option)"{{{
+  if exists('a:option.ignore_error') && a:option.ignore_error
+    return system('git ' . a:arg)
+  else
+    return s:handle_error(system('git ' . a:arg))
+  endif
 endfunction"}}}
 
 function! giti#system_with_confirm(arg)"{{{
@@ -49,7 +53,8 @@ function! s:handle_error(res)"{{{
     echoerr a:res
   else
   return a:res
-endfunction
+endfunction"}}}
+
 " }}}
 
 let &cpo = s:save_cpo
