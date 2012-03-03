@@ -7,7 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#sources#giti#branch#define()"{{{
-  return s:source
+  return [s:source, unite#sources#giti#branch#new#define()]
 endfunction"}}}
 
 let s:source = {

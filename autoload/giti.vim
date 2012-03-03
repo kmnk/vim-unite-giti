@@ -29,10 +29,10 @@ function! giti#system(arg, ...)"{{{
   endif
 endfunction"}}}
 
-function! giti#system_with_confirm(arg)"{{{
+function! giti#system_with_confirm(arg, ...)"{{{
   let command = 'git ' . a:arg
   if input('execute "' . command . '" ? [y/n] : ') == 'y'
-    return system(command)
+    return giti#system(a:arg, a:0 > 0 ? a:1 : {})
   endif
     echo 'canceled'
   return

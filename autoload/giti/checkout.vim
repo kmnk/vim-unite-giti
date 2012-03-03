@@ -22,7 +22,7 @@ function! giti#checkout#create(name, ...)"{{{
   echo 'carete new branch [' . a:name . ']'
 
   let start_point = ''
-  if a:0 > 1
+  if a:0 > 0
     let start_point = a:1
   else
     let start_point = input('start-point(optional) : ')
