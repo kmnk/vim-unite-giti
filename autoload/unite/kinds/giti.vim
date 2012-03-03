@@ -16,8 +16,9 @@ function! unite#kinds#giti#define()"{{{
     elseif type([]) == type(kind)
       call extend(kinds, kind)
     endif
+    unlet kind
   endfor
-  return add(kinds, s:kind)
+  return kinds
 endfunction"}}}
 
 " local functions {{{

@@ -15,6 +15,7 @@ function! unite#sources#giti#define()"{{{
     elseif type([]) == type(source)
       call extend(sources, source)
     endif
+    unlet source
   endfor
   return add(sources, s:source)
 endfunction"}}}
