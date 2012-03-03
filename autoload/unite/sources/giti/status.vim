@@ -18,19 +18,19 @@ let s:source = {
 function! s:source.gather_candidates(args, context)"{{{
   call unite#print_message('[giti/status] ')
   call unite#print_message('    ' . s:build_title())
-  return extend(map(giti#status#list(), '{
+  return add(map(giti#status#list(), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
 \   "action__path" : v:val.path,
 \   "action__line" : 1,
-\ }'), [{
+\ }'), {
 \   "word" : "(execute any action)",
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
 \   "action__path" : "./",
 \   "action__line" : 1,
-\ }])
+\ })
 endfunction"}}}
 
 " local functions {{{
