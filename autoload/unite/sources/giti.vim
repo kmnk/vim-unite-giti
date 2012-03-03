@@ -7,10 +7,16 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#sources#giti#define()"{{{
-  return add(map(
-\   map(s:get_commands(), 's:to_define_func(v:val)'),
-\   'call(v:val, [])'
-\ ), s:source)
+  let sources = []
+  for command in s:get_commands()
+    let source = call(s:to_define_func(command), [])
+    if type({}) == type(source)
+      call add(sources, source)
+    elseif type([]) == type(source)
+      call extend(sources, source)
+    endif
+  endfor
+  return add(sources, s:source)
 endfunction"}}}
 
 let s:source = {
