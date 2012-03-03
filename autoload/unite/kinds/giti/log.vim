@@ -56,6 +56,16 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   call giti#diff#specify(from, to)
 endfunction"}}}
 
+let s:kind.action_table.revert = {
+\ 'description' : 'git revert this commit',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\}
+function! s:kind.action_table.revert.func(candidate)"{{{
+  call giti#revert#run(a:candidate.action__data.hash)
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
