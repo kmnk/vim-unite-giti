@@ -8,10 +8,16 @@ set cpo&vim
 
 function! unite#kinds#giti#define()"{{{
   call s:add_rm_action_on_file_kind()
-  return map(
-\   map(s:get_commands(), 's:to_define_func(v:val)'),
-\   'call(v:val, [])'
-\ )
+  let kinds = []
+  for command in s:get_commands()
+    let kind = call(s:to_define_func(command), [])
+    if type({}) == type(kind)
+      call add(kinds, kind)
+    elseif type([]) == type(kind)
+      call extend(kinds, kind)
+    endif
+  endfor
+  return add(kinds, s:kind)
 endfunction"}}}
 
 " local functions {{{
