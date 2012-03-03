@@ -9,8 +9,8 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#reset#run(files)"{{{
-  return giti#reset#head(a:files)
+function! giti#reset#hard(hash)"{{{
+  echo giti#system_with_confirm(printf('reset --hard %s', a:hash))
 endfunction"}}}
 
 function! giti#reset#head(files)"{{{

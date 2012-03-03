@@ -66,6 +66,17 @@ function! s:kind.action_table.revert.func(candidate)"{{{
   call giti#revert#run(a:candidate.action__data.hash)
 endfunction"}}}
 
+let s:kind.action_table.reset = {
+\ 'description' : 'git reset --hard this commit',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\}
+function! s:kind.action_table.reset.func(candidate)"{{{
+  call giti#reset#hard(a:candidate.action__data.hash)
+endfunction"}}}
+let s:kind.alias_table.reset_hard = 'reset'
+
 " }}}
 
 " local functions {{{
