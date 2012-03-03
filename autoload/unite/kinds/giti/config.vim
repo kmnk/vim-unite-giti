@@ -43,8 +43,9 @@ let s:kind.action_table.write = {
 \}
 function! s:kind.action_table.write.func(candidate)"{{{
   let location = s:get_location(a:candidate.action__location)
-  echo 'write "' . a:candidate.action__key . '" on ' . location
-  let value = input('value : ')
+  echo printf('write "%s" on %s', a:candidate.action__key  , location)
+  echo printf('current value: %s', a:candidate.action__value)
+  let value = input('new value: ')
   let res = giti#config#write(a:candidate.action__key, value, location)
   if v:shell_error
     echoerr res
