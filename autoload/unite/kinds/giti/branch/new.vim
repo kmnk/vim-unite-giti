@@ -24,8 +24,13 @@ let s:kind.action_table.run = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.run.func(candidate)"{{{
-  let res = giti#checkout#create(a:candidate.action__name,
-\                                a:candidate.action__start_point)
+  let res = ''
+  if a:candidate.action__start_point == ''
+    let res = giti#checkout#create(a:candidate.action__name)
+  else
+    let res = giti#checkout#create(a:candidate.action__name,
+\                                  a:candidate.action__start_point)
+  endif
   if !v:shell_error
     echoerr res
   else

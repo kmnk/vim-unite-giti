@@ -26,7 +26,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__name" : a:args[0],
 \   "action__start_point" : v:val.name,
 \ }'), {
-\   "word" : "(no start point)",
+\   "word" : "(input start point)",
 \   "source" : s:source.name,
 \   "kind"   : "giti/branch/new",
 \   "action__name" : a:args[0],
