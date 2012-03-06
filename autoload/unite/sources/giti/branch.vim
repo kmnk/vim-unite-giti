@@ -40,11 +40,11 @@ function! s:source.change_candidates(args, context)
 endfunction
 
 " local functions {{{
-let s:word_format = '%s %s'
+let s:word_format = '% 1s%s'
 function! s:build_word(val)"{{{
   return printf('%s %s',
-\   a:val.name,
-\   a:val.is_current ? '*current*' : '')
+\   a:val.is_current ? '*' : '',
+\   a:val.name)
 endfunction"}}}
 " }}}
 
