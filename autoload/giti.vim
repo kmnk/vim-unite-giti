@@ -55,6 +55,20 @@ function! giti#edit_command()"{{{
   return g:giti_edit_command
 endfunction"}}}
 
+function! giti#add_ignore(names)"{{{
+  if len(a:names) <= 0
+    return
+  endif
+  let lines = join(a:names, "\n")
+  execute printf('%s %s/.gitignore',
+\   giti#edit_command(),
+\   fnamemodify(giti#dir(), ':h:h')
+\ )
+  keepjumps normal G
+  put=lines
+  keepjumps normal g;
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res)"{{{
   if v:shell_error

@@ -105,6 +105,21 @@ function! s:kind.action_table.rm_cached.func(candidates)"{{{
 endfunction"}}}
 let s:kind.alias_table.rmc = 'rm_cached'
 
+let s:kind.action_table.ignore = {
+\ 'description' : 'ignore selected files',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.ignore.func(candidates)"{{{
+  call giti#add_ignore(
+\   map(a:candidates, '
+\     fnamemodify(v:val.action__path, ":t")
+\   ')
+\ )
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
