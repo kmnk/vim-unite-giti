@@ -72,6 +72,7 @@
 ## TODO
 
 - extend *giti/log* source (and write document about it)
+- implement *git_pull* and *git_pull_squash* custom actions
 - implement *git merge* function
 - and other ...
 
