@@ -42,12 +42,7 @@ let s:kind.action_table.delete = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete.func(candidate)"{{{
-  let res = giti#branch#delete(a:candidate.action__name)
-  if !v:shell_error
-    echoerr res
-  else
-    echo res
-  endif
+  echo giti#branch#delete(a:candidate.action__name)
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
@@ -57,12 +52,7 @@ let s:kind.action_table.delete_force = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete_force.func(candidate)"{{{
-  let res = giti#branch#delete_force(a:candidate.action__name)
-  if !v:shell_error
-    echoerr res
-  else
-    echo res
-  endif
+  echo giti#branch#delete_force(a:candidate.action__name)
 endfunction"}}}
 
 " }}}
