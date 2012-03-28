@@ -29,12 +29,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
     let context.input = ''
     call unite#start([['giti/branch/new', a:candidate.action__name]], context)
   else
-    let res = giti#checkout#switch(a:candidate.action__name)
-    if !v:shell_error
-      echoerr res
-    else
-      echo res
-    endif
+    echo giti#checkout#switch(a:candidate.action__name)
   endif
 endfunction"}}}
 let s:kind.alias_table.switch = 'run'
