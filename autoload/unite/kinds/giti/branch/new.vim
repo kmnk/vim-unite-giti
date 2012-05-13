@@ -31,11 +31,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
     let res = giti#checkout#create(a:candidate.action__name,
 \                                  a:candidate.action__start_point)
   endif
-  if !v:shell_error
-    echoerr res
-  else
-    echo res
-  endif
+  echo res
 endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'
