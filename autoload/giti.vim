@@ -9,14 +9,6 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#run(arg, ...)"{{{
-  let option = {}
-  if a:0 > 0
-    let option = a:1
-  endif
-  return giti#system(a:arg, option)
-endfunction"}}}
-
 function! giti#system(arg, ...)"{{{
   let option = {}
   if a:0 > 0
