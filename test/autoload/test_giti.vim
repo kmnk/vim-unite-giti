@@ -22,6 +22,16 @@ function! s:tc.test_system()"{{{
   call self.assert_throw('Vim(echoerr)', 'call giti#system("hoge")')
 endfunction"}}}
 
+function! s:tc.setup_system_with_specifics()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.teardown_system_with_specifics()"{{{
+  function! giti#system_with_specifics(arg)"{{{
+    let b:system_with_specifics_called_with = a:arg
+    return 'mocked_system_with_specifics'
+  endfunction"}}}
+endfunction"}}}
 function! s:tc.test_system_with_specifics()"{{{
   call self.assert_match('git version \d\+\.\d\+\.\d\+',
 \                        giti#system_with_specifics({

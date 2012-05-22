@@ -7,6 +7,10 @@ function! giti#system(command)"{{{
   let b:system_called_with = a:command
   return 'mocked_system'
 endfunction"}}}
+function! giti#system_with_specifics(arg)"{{{
+  let b:system_with_specifics_called_with = a:arg
+  return 'mocked_system_with_specifics'
+endfunction"}}}
 function! giti#execute(command)"{{{
   let b:execute_called_with = a:command
   return 'mocked_execute'
