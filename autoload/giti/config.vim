@@ -30,23 +30,32 @@ endfunction"}}}
 
 function! giti#config#write(key, value, ...)"{{{
   let location = s:get_location_option(a:000)
-  return giti#system_with_confirm(join([
-\   'config', location, a:key, a:value
-\ ]))
+  return giti#system_with_specifics({
+\   'command' : join([
+\     'config', location, a:key, a:value
+\   ]),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#config#remove(key, ...)"{{{
   let location = s:get_location_option(a:000)
-  return giti#system_with_confirm(join([
-\   'config', '--unset', location, a:key
-\ ]))
+  return giti#system_with_specifics({
+\   'command' : join([
+\     'config', '--unset', location, a:key
+\   ]),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#config#add(key, value, ...)"{{{
   let location = s:get_location_option(a:000)
-  return giti#system_with_confirm(join([
-\   'config', '--add', location, a:key, a:value
-\ ]))
+  return giti#system_with_specifics({
+\   'command' : join([
+\     'config', '--add', location, a:key, a:value
+\   ]),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 " local functions {{{
@@ -71,7 +80,10 @@ function! s:get_list(...)"{{{
   if len(a:000) == 1
     let location = '--' . a:1
   endif
-  let res = giti#system('config ' . location . ' -l', {'ignore_error' : 1})
+  let res = giti#system_with_specifics({
+\   'command'      : 'config ' . location . ' -l',
+\   'ignore_error' : 1,
+\ })
   if v:shell_error
     return []
   endif

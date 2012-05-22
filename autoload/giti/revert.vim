@@ -20,7 +20,10 @@ function! s:run(hash)"{{{
 endfunction"}}}
 
 function! s:make_revert_editmsg(hash)"{{{
-  call giti#system(printf('revert %s', a:hash), {'ignore_error' : 1})
+  call giti#system_with_specifics({
+\   'command'      : printf('revert %s', a:hash),
+\   'ignore_error' : 1,
+\ })
 endfunction"}}}
 
 function! s:edit_revert_editmsg(hash)"{{{

@@ -18,7 +18,10 @@ endfunction"}}}
 
 command! -nargs=* GitiWithConfirm call s:call_giti_system_with_confirm(<q-args>)
 function! s:call_giti_system_with_confirm(arg)"{{{
-  echo giti#system_with_confirm(a:arg)
+  echo giti#system_with_specifics({
+\   'command' : a:arg,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)

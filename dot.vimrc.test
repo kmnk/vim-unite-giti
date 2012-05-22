@@ -1,3 +1,17 @@
 syntax on
 set runtimepath+=~/.bundle/vim-unittest/  " edit this on test
 set runtimepath+=./
+
+" mock
+function! giti#system(command)"{{{
+  let b:system_called_with = a:command
+  return 'mocked_system'
+endfunction"}}}
+function! giti#execute(command)"{{{
+  let b:execute_called_with = a:command
+  return 'mocked_execute'
+endfunction"}}}
+function! giti#put(string)"{{{
+  let b:put_called_with = a:string
+  return 'mocked_put'
+endfunction"}}}

@@ -18,11 +18,17 @@ function! giti#branch#list()"{{{
 endfunction"}}}
 
 function! giti#branch#delete(branch)"{{{
-  return giti#system_with_confirm('branch -d ' . a:branch)
+  return giti#system_with_specifics({
+\   'command' : 'branch -d ' . a:branch,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#branch#delete_force(branch)"{{{
-  return giti#system_with_confirm('branch -D ' . a:branch)
+  return giti#system_with_specifics({
+\   'command' : 'branch -D ' . a:branch,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#branch#create(branch)"{{{

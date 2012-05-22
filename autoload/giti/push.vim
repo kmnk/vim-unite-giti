@@ -32,9 +32,10 @@ endfunction"}}}
 
 " local functions {{{
 function! s:run(command, repository, refspec)"{{{
-  return giti#system_with_confirm(
-\   join(filter([a:command, a:repository, a:refspec], 'v:val!=""'))
-\ )
+  return giti#system_with_specifics({
+\   'command' : join(filter([a:command, a:repository, a:refspec], 'v:val!=""')),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 " }}}
 

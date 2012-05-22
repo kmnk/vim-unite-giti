@@ -10,7 +10,10 @@ set cpo&vim
 " }}}
 
 function! giti#reset#hard(hash)"{{{
-  echo giti#system_with_confirm(printf('reset --hard %s', a:hash))
+  echo giti#system_with_specifics({
+\   'command'      : printf('reset --hard %s', a:hash),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#reset#head(files)"{{{
