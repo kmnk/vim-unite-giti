@@ -7,7 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! giti#branch#run()"{{{
-  call unit#giti#branch#list()
+  call giti#branch#list()
 endfunction"}}}
 
 function! giti#branch#list()"{{{
