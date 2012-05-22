@@ -1,0 +1,3 @@
+syntax on
+set runtimepath+=~/.bundle/vim-unittest/  " edit this on test
+set runtimepath+=./
