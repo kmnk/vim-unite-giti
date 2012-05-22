@@ -43,7 +43,7 @@
 - delete
 
 
-#### *giti/log# actions
+#### *giti/log* actions
 
 - view
 - diff
