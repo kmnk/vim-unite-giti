@@ -18,21 +18,21 @@ function! giti#system(command)"{{{
   return giti#system_with_specifics({ 'command' : a:command })
 endfunction"}}}
 
-function! giti#system_with_specifics(arg)"{{{
+function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
     echoerr 'Not a git repository'
   endif
 
-  if exists('a:arg.with_confirm') && a:arg.with_confirm
-    if !s:is_confirmed(a:arg)
+  if exists('a:param.with_confirm') && a:param.with_confirm
+    if !s:is_confirmed(a:param)
       echo 'canceled'
       return
     endif
   endif
 
-  let ret = system('git ' . a:arg.command)
+  let ret = system('git ' . a:param.command)
 
-  if exists('a:arg.ignore_error') && a:arg.ignore_error
+  if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
   else
     return s:handle_error(ret)
@@ -88,8 +88,8 @@ function! s:handle_error(res)"{{{
   return a:res
 endfunction"}}}
 
-function! s:is_confirmed(arg)
-  let command = 'git ' . a:arg
+function! s:is_confirmed(param)
+  let command = 'git ' . a:param.command
   return input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction
 " }}}
