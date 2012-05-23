@@ -28,7 +28,7 @@ function! giti#branch#delete_force(branch)"{{{
 endfunction"}}}
 
 function! giti#branch#create(branch)"{{{
-  return giti#checkout#create(a:branch)
+  return giti#checkout#create({'name' : a:branch})
 endfunction"}}}
 
 function! giti#branch#switch(branch)"{{{
