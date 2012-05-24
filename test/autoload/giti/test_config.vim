@@ -14,9 +14,9 @@ endfunction"}}}
 
 function! s:tc.test_list()"{{{
   call self.assert_equal(giti#config#list(), [
-\   {'key' : 'hoge', 'value' : 'fuga', 'location' : '--global'},
-\   {'key' : 'hoge', 'value' : 'fuga', 'location' : '--system'},
-\   {'key' : 'hoge', 'value' : 'fuga', 'location' : '--local' },
+\   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'global'},
+\   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'system'},
+\   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'local' },
 \ ])
   call self.assert_throw('E118', 'call giti#config#list("")')
 endfunction"}}}
