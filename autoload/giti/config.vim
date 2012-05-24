@@ -105,7 +105,7 @@ function! s:build_config_data(arg)"{{{
     echoerr 'invalid config line :' . line
   endif
 
-  let location = exists('a:arg.location') ? '--' . a:arg.location
+  let location = exists('a:arg.location') ? a:arg.location
 \                                         : ''
 
   return {
