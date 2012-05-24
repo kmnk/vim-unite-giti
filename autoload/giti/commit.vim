@@ -35,7 +35,7 @@ function! s:make_commit_editmsg(command, files)"{{{
 endfunction"}}}
 
 function! s:edit_commit_editmsg(command, files)"{{{
-  execute printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir())
+  call giti#execute(printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir()))
   setlocal filetype=gitcommit bufhidden=wipe
   augroup GitiCommit"{{{
     autocmd BufWritePre <buffer> g/^#\|^\s*$/d
