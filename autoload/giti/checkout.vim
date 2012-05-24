@@ -24,7 +24,7 @@ function! giti#checkout#create(param)"{{{
   echo 'carete new branch [' . name . ']'
 
   let start_point = ''
-  if !exists(a:param.start_point)
+  if exists(a:param.start_point)
     let start_point = a:param.start_point
   else
     let start_point = input('start-point (optional) : ')
