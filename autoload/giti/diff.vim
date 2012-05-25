@@ -9,42 +9,45 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#diff#run(...)"{{{
-  call s:run('diff', len(a:000) > 0 ? a:1 : [])
+function! giti#diff#run(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  return s:run({'command' : 'diff', 'files' : files})
 endfunction"}}}
 
-function! giti#diff#cached(...)"{{{
-  call s:run('diff --cached', len(a:000) > 0 ? a:1 : [])
+function! giti#diff#cached(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  return s:run({'command' : 'diff --cached', 'files' : files})
 endfunction"}}}
 
-function! giti#diff#head(...)"{{{
-  call s:run('diff HEAD', len(a:000) > 0 ? a:1 : [])
+function! giti#diff#head(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  return s:run({'command' : 'diff HEAD', 'files' : files})
 endfunction"}}}
 
-function! giti#diff#specify(from, to, ...)"{{{
-  if a:to == ''
-    call s:run(printf('diff %s', a:from),
-\              len(a:000) > 0 ? a:1 : [])
-  else
-    call s:run(printf('diff %s..%s', a:from, a:to),
-\              len(a:000) > 0 ? a:1 : [])
-  endif
+function! giti#diff#specify(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  let command
+\   = !exists('a:param.to') ? printf('diff %s', a:param.from)
+\   : a:param.to == ''      ? printf('diff %s', a:param.from)
+\   :                         printf('diff %s..%s', a:param.from, a:param.to)
+  return s:run({'command' : command, 'files' : files})
 endfunction"}}}
 
 " local functions {{{
-function! s:run(command, files)"{{{
-  let diff = giti#system(a:command . ' -- ' . join(a:files))
+function! s:run(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  let diff = giti#system(a:param.command . ' -- ' . join(files))
   if !strlen(diff)
     echo 'no difference'
     return
   endif
-  execute printf('%s', giti#edit_command())
+  call giti#execute(printf('%s', giti#edit_command()))
   put!=diff
-  setlocal filetype=diff buftype=nofile readonly nomodifiable nofoldenable
+  setlocal filetype=diff buftype=nofile
   keepjumps normal gg
+  return 1
 endfunction"}}}
 " }}}
-
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

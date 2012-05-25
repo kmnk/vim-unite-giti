@@ -53,7 +53,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   else
     call unite#print_error('too many commits selected')
   endif
-  call giti#diff#specify(from, to)
+  call giti#diff#specify({'from' : from, 'to' : to})
 endfunction"}}}
 
 let s:kind.action_table.revert = {

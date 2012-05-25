@@ -41,42 +41,42 @@ function! giti#config#list()"{{{
 \ )
 endfunction"}}}
 
-function! giti#config#read(arg)"{{{
-  let location = exists('a:arg.location') ? '--' . a:arg.location
+function! giti#config#read(param)"{{{
+  let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system(join([
-\   'config', location, a:arg.key
+\   'config', location, a:param.key
 \ ]))
 endfunction"}}}
 
-function! giti#config#write(arg)"{{{
-  let location = exists('a:arg.location') ? '--' . a:arg.location
+function! giti#config#write(param)"{{{
+  let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
 \   'command' : join([
-\     'config', location, a:arg.key, a:arg.value
+\     'config', location, a:param.key, a:param.value
 \   ]),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
 
-function! giti#config#remove(arg)"{{{
-  let location = exists('a:arg.location') ? '--' . a:arg.location
-\                                         : ''
+function! giti#config#remove(param)"{{{
+  let location = exists('a:param.location') ? '--' . a:param.location
+\                                           : ''
   return giti#system_with_specifics({
 \   'command' : join([
-\     'config', '--unset', location, a:arg.key
+\     'config', '--unset', location, a:param.key
 \   ]),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
 
-function! giti#config#add(arg)"{{{
-  let location = exists('a:arg.location') ? '--' . a:arg.location
+function! giti#config#add(param)"{{{
+  let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
 \   'command' : join([
-\     'config', '--add', location, a:arg.key, a:arg.value
+\     'config', '--add', location, a:param.key, a:param.value
 \   ]),
 \   'with_confirm' : 1,
 \ })
@@ -84,8 +84,8 @@ endfunction"}}}
 
 " local functions {{{
 
-function! s:get_list(arg)"{{{
-  let location = exists('a:arg.location') ? '--' . a:arg.location
+function! s:get_list(param)"{{{
+  let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   let res = giti#system_with_specifics({
 \   'command'      : 'config ' . location . ' -l',
@@ -97,16 +97,16 @@ function! s:get_list(arg)"{{{
   return split(res, '\n')
 endfunction"}}}
 
-function! s:build_config_data(arg)"{{{
-  let line = a:arg.line
+function! s:build_config_data(param)"{{{
+  let line = a:param.line
 
   let splited = split(line, '=')
   if len(splited) != 2
     echoerr 'invalid config line :' . line
   endif
 
-  let location = exists('a:arg.location') ? a:arg.location
-\                                         : ''
+  let location = exists('a:param.location') ? a:param.location
+\                                           : ''
 
   return {
 \   'key'      : splited[0],

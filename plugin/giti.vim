@@ -54,12 +54,12 @@ endfunction"}}}
 
 command! -nargs=* GitiDiff call s:call_giti_diff(<q-args>)
 function! s:call_giti_diff(arg)"{{{
-  call giti#diff#run(split(a:arg))
+  call giti#diff#run({'files' : split(a:arg)})
 endfunction"}}}
 
 command! -nargs=* GitiDiffCached call s:call_giti_diff_cached(<q-args>)
 function! s:call_giti_diff_cached(arg)"{{{
-  call giti#diff#cached(split(a:arg))
+  call giti#diff#cached({'files' : split(a:arg)})
 endfunction"}}}
 
 command! -nargs=* GitiLog call s:call_giti_log(<q-args>)
