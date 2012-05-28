@@ -7,55 +7,47 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
-if !exists('g:giti_log_default_count')
+if !exists('g:giti_log_default_line_count')
   let g:giti_log_default_line_count = 50
 endif
 let s:pretty_format = "%H::%P::%an<%ae>[%ad]::%cn<%ce>[%cd]::%s"
 " }}}
 
 function! giti#log#run(...)"{{{
-  return giti#system(printf(
-\   'log -%d %s',
-\   g:giti_log_default_line_count,
-\   a:0 > 0 ? a:1 : ''
+  let file = a:0 > 0 ? a:1 : ''
+  return giti#system(printf('log -%d %s',
+\   g:giti_log_default_line_count, file
 \ ))
 endfunction"}}}
 
 function! giti#log#full(...)"{{{
-  return giti#system(printf(
-\   'log %s',
-\   a:0 > 0 ? a:1 : ''
-\ )
+  let file = a:0 > 0 ? a:1 : ''
+  return giti#system(printf('log %s', file))
 endfunction"}}}
 
 function! giti#log#line(...)"{{{
-  return giti#system(printf(
-\   'log --pretty=oneline --graph %s',
-\   a:0 > 0 ? a:1 : ''
-\ ))
+  let file = a:0 > 0 ? a:1 : ''
+  return giti#system(printf('log --pretty=oneline --graph %s', file))
 endfunction"}}}
 
 function! giti#log#list(...)"{{{
-  return map(
-\   s:get_list(
-\     a:0 > 0 && a:1 > 0 ? a:1 : g:giti_log_default_line_count,
-\     a:0 == 2           ? a:2 : ''
-\   ),
-\   's:build_log_data(v:val)'
-\ )
+  let param = a:0 > 0 ? a:1 : {}
+  return map(s:get_list(param), '
+\   s:build_log_data(v:val)
+\ ')
 endfunction"}}}
 
 " local functions {{{
 
-function! s:get_list(line_count, file)"{{{
+function! s:get_list(param)"{{{
+  let line_count
+\   = exists('a:param.line_count') ? a:param.line_count
+\                                : g:giti_log_default_line_count
+  let file = exists('a:param.file') ? a:param.file : ''
   let res = giti#system(printf(
 \   'log -%d --date=relative --pretty=format:"%s" %s',
-\   a:line_count, s:pretty_format, a:file
+\   line_count, s:pretty_format, file
 \ ))
-  if v:shell_error
-    echoerr res
-    return []
-  endif
   return split(res, '\n')
 endfunction"}}}
 
