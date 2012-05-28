@@ -9,31 +9,28 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#push#run(...)"{{{
-  let repository = ''
-  let refspec = ''
-
-  if exists('a:000[0]')
-    let repository = a:000[0]
-  endif
-  if exists('a:000[1]')
-    let refspec = a:000[1]
-  endif
-
-  return s:run('push', repository, refspec)
+function! giti#push#run(param)"{{{
+  let arg = a:param
+  let arg.command = 'push'
+  return s:run(arg)
 endfunction"}}}
 
 function! giti#push#expressly()"{{{
-  let repository = input("repository: ")
-  let refspec    = input("refspec: ")
-
-  return s:run('push', repository, refspec)
+  let arg = {}
+  let arg.command = 'push'
+  let arg.repository = input("repository: ")
+  let arg.refspec    = input("refspec: ")
+  return s:run(arg)
 endfunction"}}}
 
 " local functions {{{
-function! s:run(command, repository, refspec)"{{{
+function! s:run(param)"{{{
   return giti#system_with_specifics({
-\   'command' : join(filter([a:command, a:repository, a:refspec], 'v:val!=""')),
+\   'command' : printf('%s %s %s',
+\     exists('a:param.command')    ? a:param.command    : '',
+\     exists('a:param.repository') ? a:param.repository : '',
+\     exists('a:param.refspec')    ? a:param.refspec    : '',
+\   ),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
