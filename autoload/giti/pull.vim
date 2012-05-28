@@ -10,23 +10,23 @@ set cpo&vim
 " }}}
 
 function! giti#pull#run(param)"{{{
-  let param = a:param
-  let param.command = 'pull'
-  return s:run(param)
+  let arg = a:param
+  let arg.command = 'pull'
+  return s:run(arg)
 endfunction"}}}
 
 function! giti#pull#squash(param)"{{{
-  let param = a:param
-  let a:param.command = 'pull --squash'
-  return s:run(param)
+  let arg = a:param
+  let arg.command = 'pull --squash'
+  return s:run(arg)
 endfunction"}}}
 
 function! giti#pull#expressly()"{{{
-  let param = {}
-  let param.command = 'pull'
-  let param.repository = input("repository: ")
-  let param.refspec    = input("refspec: ")
-  return s:run(param)
+  let arg = {}
+  let arg.command = 'pull'
+  let arg.repository = input("repository: ")
+  let arg.refspec    = input("refspec: ")
+  return s:run(arg)
 endfunction"}}}
 
 " local functions {{{
