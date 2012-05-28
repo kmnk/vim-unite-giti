@@ -38,13 +38,19 @@ endfunction"}}}
 command! -nargs=* GitiPull call s:call_giti_pull(<q-args>)
 function! s:call_giti_pull(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#pull#run(repository, refspec)
+  echo giti#pull#run({
+\   'repository' : repository,
+\   'refspec'    : refspec,
+\ })
 endfunction"}}}
 
 command! -nargs=* GitiPullSquash call s:call_giti_pull_squash(<q-args>)
 function! s:call_giti_pull_squash(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#pull#squash(repository, refspec)
+  echo giti#pull#squash({
+\   'repository' : repository,
+\   'refspec'    : refspec,
+\ })
 endfunction"}}}
 
 command! -nargs=0 GitiPullExpressly call s:call_giti_pull_expressly()
