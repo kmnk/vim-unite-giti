@@ -73,7 +73,7 @@ let s:kind.action_table.reset = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.reset.func(candidate)"{{{
-  call giti#reset#hard(a:candidate.action__data.hash)
+  call giti#reset#hard({'hash' : a:candidate.action__data.hash})
 endfunction"}}}
 let s:kind.alias_table.reset_hard = 'reset'
 

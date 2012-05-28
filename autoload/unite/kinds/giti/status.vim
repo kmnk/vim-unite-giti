@@ -36,7 +36,7 @@ let s:kind.action_table.reset_head = {
 \ 'is_invalidate_cache' : 1,
 \}
 function! s:kind.action_table.reset_head.func(candidates)"{{{
-  return giti#reset#head(map(a:candidates, 'v:val.action__path'))
+  return giti#reset#head({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.reset = 'reset_head'
 
