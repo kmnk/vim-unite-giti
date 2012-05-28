@@ -27,7 +27,7 @@ endfunction"}}}
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#push#run(repository, refspec)
+  echo giti#push#run({'repository' : repository, 'refspec' : refspec})
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
