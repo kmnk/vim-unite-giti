@@ -24,6 +24,8 @@ function! s:tc.test_run()"{{{
   call giti#pull#run({ 'refspec' : 'fuga' })
   call self.assert_equal(b:system_with_specifics_called_with,
 \                        {'command' : 'pull  fuga', 'with_confirm' : 1})
+  call self.assert_throw('E118', 'call giti#pull#run("", "")')
+  call self.assert_throw('E119', 'call giti#pull#run()')
 endfunction"}}}
 
 function! s:tc.test_squash()"{{{
@@ -49,6 +51,8 @@ function! s:tc.test_squash()"{{{
   call self.assert_equal(b:system_with_specifics_called_with,
 \                        {'command'      : 'pull --squash  fuga',
 \                         'with_confirm' : 1})
+  call self.assert_throw('E118', 'call giti#pull#squash("", "")')
+  call self.assert_throw('E119', 'call giti#pull#squash()')
 endfunction"}}}
 
 unlet s:tc

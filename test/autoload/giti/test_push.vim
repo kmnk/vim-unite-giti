@@ -24,6 +24,8 @@ function! s:tc.test_run()"{{{
   call giti#push#run({ 'refspec' : 'fuga' })
   call self.assert_equal(b:system_with_specifics_called_with,
 \                        {'command' : 'push  fuga', 'with_confirm' : 1})
+  call self.assert_throw('E118', 'call giti#push#run("", "")')
+  call self.assert_throw('E119', 'call giti#push#run()')
 endfunction"}}}
 
 unlet s:tc

@@ -21,6 +21,8 @@ function! s:tc.test_hard()"{{{
   call giti#reset#hard({'hash' : 'hoge', 'files' : []})
   call self.assert_equal(b:system_with_specifics_called_with,
 \                        {'command' : 'reset --hard hoge ', 'with_confirm' : 1})
+  call self.assert_throw('E118', 'call giti#reset#head("", "")')
+  call self.assert_throw('E119', 'call giti#reset#head()')
 endfunction"}}}
 
 function! s:tc.head()"{{{
@@ -34,6 +36,8 @@ function! s:tc.head()"{{{
   call giti#reset#head({'files' : []})
   call self.assert_equal(b:system_called_with,
 \                        'reset HEAD .')
+  call self.assert_throw('E118', 'call giti#reset#hard("", "")')
+  call self.assert_throw('E119', 'call giti#reset#hard()')
 endfunction"}}}
 
 unlet s:tc
