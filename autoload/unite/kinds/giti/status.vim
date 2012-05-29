@@ -101,7 +101,7 @@ let s:kind.action_table.rm_cached = {
 \ 'is_invalidate_cache' : 1,
 \}
 function! s:kind.action_table.rm_cached.func(candidates)"{{{
-  return giti#rm#cached(map(a:candidates, 'v:val.action__path'))
+  return giti#rm#cached({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.rmc = 'rm_cached'
 
