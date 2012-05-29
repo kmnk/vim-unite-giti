@@ -42,7 +42,7 @@ function! s:add_rm_action_on_file_kind()"{{{
 \   'is_selectable' : 1,
 \ }
   function! git_rm.func(candidates)
-    return giti#rm#run(map(a:candidates, 'v:val.action__path'))
+    return giti#rm#run({'files' : map(a:candidates, 'v:val.action__path')})
   endfunction
   call unite#custom_action('file', 'git_rm', git_rm)
 endfunction"}}}

@@ -28,11 +28,14 @@ function! s:run(command, files)"{{{
 endfunction"}}}
 
 function! s:make_commit_editmsg(command, files)"{{{
-  call giti#system(a:command . ' -- ' . join(a:files), {'ignore_error' : 1})
+  call giti#system_with_specifics({
+\   'command'      : a:command . ' -- ' . join(a:files),
+\   'ignore_error' : 1,
+\ })
 endfunction"}}}
 
 function! s:edit_commit_editmsg(command, files)"{{{
-  execute printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir())
+  call giti#execute(printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir()))
   setlocal filetype=gitcommit bufhidden=wipe
   augroup GitiCommit"{{{
     autocmd BufWritePre <buffer> g/^#\|^\s*$/d

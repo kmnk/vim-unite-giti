@@ -9,26 +9,23 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#rm#run(...)"{{{
-  if len(a:000) > 0
-    return s:run('rm', a:1)
-  else
-    return s:run('rm', [])
-  endif
+function! giti#rm#run(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  return s:run({'command' : 'rm', 'files' : files})
 endfunction"}}}
 
-function! giti#rm#cached(...)"{{{
-  if len(a:000) > 0
-    return s:run('rm --cached', a:1)
-  else
-    return s:run('rm --cached', [])
-  endif
+function! giti#rm#cached(param)"{{{
+  let files = exists('a:param.files') ? a:param.files : []
+  return s:run({'command' : 'rm --cached', 'files' : files})
 endfunction"}}}
 
 " local functions {{{
-function! s:run(command, files)"{{{
-  let files = len(a:files) > 0 ? join(a:files) : '.'
-  return giti#system_with_confirm(a:command . ' -- ' . files)
+function! s:run(param)"{{{
+  let files = len(a:param.files) > 0 ? join(a:param.files) : '.'
+  return giti#system_with_specifics({
+\   'command' : a:param.command . ' -- ' . files,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 " }}}
 

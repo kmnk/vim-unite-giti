@@ -6,10 +6,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! giti#branch#run()"{{{
-  call unit#giti#branch#list()
-endfunction"}}}
-
 function! giti#branch#list()"{{{
   return map(
 \   split(giti#system('branch'), '\n'),
@@ -18,34 +14,42 @@ function! giti#branch#list()"{{{
 endfunction"}}}
 
 function! giti#branch#delete(branch)"{{{
-  return giti#system_with_confirm('branch -d ' . a:branch)
+  return giti#system_with_specifics({
+\   'command' : 'branch -d ' . a:branch,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#branch#delete_force(branch)"{{{
-  return giti#system_with_confirm('branch -D ' . a:branch)
+  return giti#system_with_specifics({
+\   'command' : 'branch -D ' . a:branch,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#branch#create(branch)"{{{
-  return giti#checkout#create(branch)
+  return giti#checkout#create({'name' : a:branch})
 endfunction"}}}
 
 function! giti#branch#switch(branch)"{{{
-  return giti#checkout#run(branch)
+  return giti#checkout#switch(a:branch)
 endfunction"}}}
 
 " local function {{{
 function! s:build_branch_data(line)"{{{
   return {
-\   'name' : substitute(a:line, '^*\?\s*\(.\+\)', '\1', ''),
+\   'name' : s:pickup_branch_name(a:line),
 \   'is_current' : s:is_current(a:line),
 \ }
 endfunction"}}}
 
+function! s:pickup_branch_name(line)
+  return substitute(a:line, '^*\?\s*\(.\+\)', '\1', '')
+endfunction
+
 function! s:is_current(line)"{{{
   return match(a:line, '^*\s*.\+$') < 0 ? 0 : 1
 endfunction"}}}
-
-
 
 " }}}
 

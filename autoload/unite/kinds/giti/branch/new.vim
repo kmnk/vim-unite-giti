@@ -24,14 +24,11 @@ let s:kind.action_table.run = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.run.func(candidate)"{{{
-  let res = ''
-  if a:candidate.action__start_point == ''
-    let res = giti#checkout#create(a:candidate.action__name)
-  else
-    let res = giti#checkout#create(a:candidate.action__name,
-\                                  a:candidate.action__start_point)
+  let arg = { 'name' : a:candidate.action__name }
+  if a:candidate.action__start_point != ''
+    let arg.start_point = a:candidate.action__start_point
   endif
-  echo res
+  echo giti#checkout#create(arg)
 endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'

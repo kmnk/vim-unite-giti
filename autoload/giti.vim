@@ -9,40 +9,41 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#run(arg, ...)"{{{
-  let option = {}
-  if a:0 > 0
-    let option = a:1
-  endif
-  return giti#system(a:arg, option)
+function! giti#is_git_repository(...)"{{{
+  let path = a:0 > 0 ? a:1 : getcwd()
+  return finddir('.git', path . ';') != '' ? 1 : 0
 endfunction"}}}
 
-function! giti#system(arg, ...)"{{{
-  let option = {}
-  if a:0 > 0
-    let option = a:1
+function! giti#system(command)"{{{
+  return giti#system_with_specifics({ 'command' : a:command })
+endfunction"}}}
+
+function! giti#system_with_specifics(param)"{{{
+  if !giti#is_git_repository()
+    echoerr 'Not a git repository'
   endif
-  if exists('option.ignore_error') && option.ignore_error
-    return system('git ' . a:arg)
+
+  if exists('a:param.with_confirm') && a:param.with_confirm
+    if !s:is_confirmed(a:param)
+      echo 'canceled'
+      return
+    endif
+  endif
+
+  let ret = system('git ' . a:param.command)
+
+  if exists('a:param.ignore_error') && a:param.ignore_error
+    return ret
   else
-    return s:handle_error(system('git ' . a:arg))
+    return s:handle_error(ret)
   endif
-endfunction"}}}
-
-function! giti#system_with_confirm(arg, ...)"{{{
-  let command = 'git ' . a:arg
-  if input('execute "' . command . '" ? [y/n] : ') == 'y'
-    return giti#system(a:arg, a:0 > 0 ? a:1 : {})
-  endif
-    echo 'canceled'
-  return
 endfunction"}}}
 
 function! giti#dir()"{{{
   if !exists('b:giti_dir')
     let b:giti_dir = giti#system('rev-parse --git-dir')
     if !v:shell_error
-        let b:giti_dir = fnamemodify(split(b:giti_dir, '\n')[0], ':p')
+      let b:giti_dir = fnamemodify(split(b:giti_dir, '\n')[0], ':p')
     endif
   endif
   return b:giti_dir
@@ -60,13 +61,21 @@ function! giti#add_ignore(names)"{{{
     return
   endif
   let lines = join(a:names, "\n")
-  execute printf('%s %s/.gitignore',
+  call giti#execute(printf(
+\   '%s %s/.gitignore',
 \   giti#edit_command(),
 \   fnamemodify(giti#dir(), ':h:h')
-\ )
+\ ))
   keepjumps normal G
-  put=lines
+  call giti#put(join(a:names, "\n"))
   keepjumps normal g;
+endfunction"}}}
+
+function! giti#execute(command)"{{{
+  execute a:command
+endfunction"}}}
+function! giti#put(string)"{{{
+  put=a:string
 endfunction"}}}
 
 " local functions {{{
@@ -75,10 +84,14 @@ function! s:handle_error(res)"{{{
     for line in split(a:res, '\n')
       echoerr line
     endfor
-  else
+  endif
   return a:res
 endfunction"}}}
 
+function! s:is_confirmed(param)
+  let command = 'git ' . a:param.command
+  return input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction
 " }}}
 
 let &cpo = s:save_cpo

@@ -18,13 +18,16 @@ endfunction"}}}
 
 command! -nargs=* GitiWithConfirm call s:call_giti_system_with_confirm(<q-args>)
 function! s:call_giti_system_with_confirm(arg)"{{{
-  echo giti#system_with_confirm(a:arg)
+  echo giti#system_with_specifics({
+\   'command' : a:arg,
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 command! -nargs=* GitiPush call s:call_giti_push(<q-args>)
 function! s:call_giti_push(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#push#run(repository, refspec)
+  echo giti#push#run({'repository' : repository, 'refspec' : refspec})
 endfunction"}}}
 
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
@@ -35,13 +38,19 @@ endfunction"}}}
 command! -nargs=* GitiPull call s:call_giti_pull(<q-args>)
 function! s:call_giti_pull(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#pull#run(repository, refspec)
+  echo giti#pull#run({
+\   'repository' : repository,
+\   'refspec'    : refspec,
+\ })
 endfunction"}}}
 
 command! -nargs=* GitiPullSquash call s:call_giti_pull_squash(<q-args>)
 function! s:call_giti_pull_squash(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
-  echo giti#pull#squash(repository, refspec)
+  echo giti#pull#squash({
+\   'repository' : repository,
+\   'refspec'    : refspec,
+\ })
 endfunction"}}}
 
 command! -nargs=0 GitiPullExpressly call s:call_giti_pull_expressly()
@@ -51,12 +60,12 @@ endfunction"}}}
 
 command! -nargs=* GitiDiff call s:call_giti_diff(<q-args>)
 function! s:call_giti_diff(arg)"{{{
-  call giti#diff#run(split(a:arg))
+  call giti#diff#run({'files' : split(a:arg)})
 endfunction"}}}
 
 command! -nargs=* GitiDiffCached call s:call_giti_diff_cached(<q-args>)
 function! s:call_giti_diff_cached(arg)"{{{
-  call giti#diff#cached(split(a:arg))
+  call giti#diff#cached({'files' : split(a:arg)})
 endfunction"}}}
 
 command! -nargs=* GitiLog call s:call_giti_log(<q-args>)

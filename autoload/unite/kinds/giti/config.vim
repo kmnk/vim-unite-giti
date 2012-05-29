@@ -46,10 +46,11 @@ function! s:kind.action_table.write.func(candidate)"{{{
   echo printf('write "%s" on %s', a:candidate.action__key  , location)
   echo printf('current value: %s', a:candidate.action__value)
   let value = input('new value: ', a:candidate.action__value)
-  let res = giti#config#write(a:candidate.action__key, value, location)
-  if v:shell_error
-    echoerr res
-  endif
+  let res = giti#config#write({
+\   'key'      : a:candidate.action__key,
+\   'value'    : value,
+\   'location' : location,
+\ })
 endfunction"}}}
 
 let s:kind.action_table.remove = {
@@ -61,10 +62,10 @@ let s:kind.action_table.remove = {
 function! s:kind.action_table.remove.func(candidates)"{{{
   for candidate in a:candidates
     let location = s:get_location(candidate.action__location)
-    let res = giti#config#remove(candidate.action__key, location)
-    if v:shell_error
-      echoerr res
-    endif
+    let res = giti#config#remove({
+\     'key'      : candidate.action__key,
+\     'location' : location,
+\   })
   endfor
 endfunction"}}}
 
@@ -82,10 +83,11 @@ function! s:create_new_config(candidate)"{{{
   echo 'create new config "' . a:candidate.action__key . '"'
   let location = s:get_location(input('location(default is "local") : '))
   let value    = input('value : ')
-  let res = giti#config#add(a:candidate.action__key, value, location)
-  if v:shell_error
-    echoerr res
-  endif
+  let res = giti#config#add({
+\   'key'      : a:candidate.action__key,
+\   'value'    : value,
+\   'location' : location,
+\ })
 endfunction"}}}
 " }}}
 

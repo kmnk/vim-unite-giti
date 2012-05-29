@@ -18,17 +18,19 @@ function! giti#checkout#switch(name)"{{{
   return giti#system('checkout ' . a:name)
 endfunction"}}}
 
-function! giti#checkout#create(name, ...)"{{{
-  echo 'carete new branch [' . a:name . ']'
+function! giti#checkout#create(param)"{{{
+  let name = a:param.name
+
+  echo 'carete new branch [' . name . ']'
 
   let start_point = ''
-  if a:0 > 0
-    let start_point = a:1
+  if exists('a:param.start_point')
+    let start_point = a:param.start_point
   else
-    let start_point = input('start-point(optional) : ')
+    let start_point = input('start-point (optional) : ')
   endif
 
-  return giti#system('checkout -b ' . a:name . ' ' . start_point)
+  return giti#system('checkout -b ' . name . ' ' . start_point)
 endfunction"}}}
 
 " local functions {{{

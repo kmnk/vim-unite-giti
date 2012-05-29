@@ -53,7 +53,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   else
     call unite#print_error('too many commits selected')
   endif
-  call giti#diff#specify(from, to)
+  call giti#diff#specify({'from' : from, 'to' : to})
 endfunction"}}}
 
 let s:kind.action_table.revert = {
@@ -63,7 +63,7 @@ let s:kind.action_table.revert = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.revert.func(candidate)"{{{
-  call giti#revert#run(a:candidate.action__data.hash)
+  call giti#revert#run([a:candidate.action__data.hash])
 endfunction"}}}
 
 let s:kind.action_table.reset = {
@@ -73,7 +73,7 @@ let s:kind.action_table.reset = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.reset.func(candidate)"{{{
-  call giti#reset#hard(a:candidate.action__data.hash)
+  call giti#reset#hard({'hash' : a:candidate.action__data.hash})
 endfunction"}}}
 let s:kind.alias_table.reset_hard = 'reset'
 

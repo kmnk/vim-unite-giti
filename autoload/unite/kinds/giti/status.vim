@@ -36,7 +36,7 @@ let s:kind.action_table.reset_head = {
 \ 'is_invalidate_cache' : 1,
 \}
 function! s:kind.action_table.reset_head.func(candidates)"{{{
-  return giti#reset#head(map(a:candidates, 'v:val.action__path'))
+  return giti#reset#head({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.reset = 'reset_head'
 
@@ -72,7 +72,7 @@ let s:kind.action_table.diff = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.diff.func(candidates)"{{{
-  return giti#diff#run(map(a:candidates, 'v:val.action__path'))
+  return giti#diff#run({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.di = 'diff'
 
@@ -81,7 +81,7 @@ let s:kind.action_table.diff_cached = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.diff_cached.func(candidates)"{{{
-  return giti#diff#cached(map(a:candidates, 'v:val.action__path'))
+  return giti#diff#cached({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.dic = 'diff_cached'
 
@@ -90,7 +90,7 @@ let s:kind.action_table.diff_head = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.diff_head.func(candidates)"{{{
-  return giti#diff#head(map(a:candidates, 'v:val.action__path'))
+  return giti#diff#head({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.dih = 'diff_head'
 
@@ -101,7 +101,7 @@ let s:kind.action_table.rm_cached = {
 \ 'is_invalidate_cache' : 1,
 \}
 function! s:kind.action_table.rm_cached.func(candidates)"{{{
-  return giti#rm#cached(map(a:candidates, 'v:val.action__path'))
+  return giti#rm#cached({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.rmc = 'rm_cached'
 

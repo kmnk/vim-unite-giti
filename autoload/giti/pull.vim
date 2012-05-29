@@ -9,49 +9,40 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#pull#run(...)"{{{
-  let [repository, refspec] = s:map_param(a:000)
-
-  return s:run('pull', repository, refspec)
+function! giti#pull#run(param)"{{{
+  let arg = a:param
+  let arg.command = 'pull'
+  return s:run(arg)
 endfunction"}}}
 
-function! giti#pull#squash(...)"{{{
-  let [repository, refspec] = s:map_param(a:000)
-
-  return s:run('pull --squash', repository, refspec)
+function! giti#pull#squash(param)"{{{
+  let arg = a:param
+  let arg.command = 'pull --squash'
+  return s:run(arg)
 endfunction"}}}
 
 function! giti#pull#expressly()"{{{
-  let repository = input("repository: ")
-  let refspec    = input("refspec: ")
-
-  return s:run('pull', repository, refspec)
+  let arg = {}
+  let arg.command = 'pull'
+  let arg.repository = input("repository: ")
+  let arg.refspec    = input("refspec: ")
+  return s:run(arg)
 endfunction"}}}
 
 " local functions {{{
 
-function! s:map_param(params)"{{{
-  let repository = ''
-  let refspec = ''
-
-  if exists('a:params[0]')
-    let repository = a:params[0]
-  endif
-  if exists('a:params[1]')
-    let refspec = a:params[1]
-  endif
-
-  return [repository, refspec]
-endfunction"}}}
-
-function! s:run(command, repository, refspec)"{{{
-  return giti#system_with_confirm(
-\   join(filter([a:command, a:repository, a:refspec], 'v:val!=""'))
-\ )
+function! s:run(param)"{{{
+  return giti#system_with_specifics({
+\   'command' : printf('%s %s %s',
+\     exists('a:param.command')    ? a:param.command    : '',
+\     exists('a:param.repository') ? a:param.repository : '',
+\     exists('a:param.refspec')    ? a:param.refspec    : '',
+\   ),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
-
