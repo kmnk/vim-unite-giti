@@ -63,7 +63,7 @@ let s:kind.action_table.revert = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.revert.func(candidate)"{{{
-  call giti#revert#run(a:candidate.action__data.hash)
+  call giti#revert#run([a:candidate.action__data.hash])
 endfunction"}}}
 
 let s:kind.action_table.reset = {
