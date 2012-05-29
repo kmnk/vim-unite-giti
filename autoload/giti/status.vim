@@ -19,10 +19,6 @@ let s:symbol_meaning = {
 \}
 " }}}
 
-function! giti#status#run()"{{{
-  call giti#status#list()
-endfunction"}}}
-
 function! giti#status#list()"{{{
   return map(s:get_list(), 's:build_status_data(v:val)')
 endfunction"}}}
@@ -31,10 +27,6 @@ endfunction"}}}
 
 function! s:get_list()
   let res = giti#system('status -s')
-  if v:shell_error
-    echoerr res
-    return []
-  endif
   return split(res, '\n')
 endfunction
 
