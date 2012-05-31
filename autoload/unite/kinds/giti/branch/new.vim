@@ -37,7 +37,7 @@ let s:kind.action_table.checkout = {
 \ 'description' : 'checkout branch',
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
-}
+\}
 function! s:kind.action_table.checkout.func(candidate)"{{{
   echo giti#checkout#switch(a:candiddate.action__name)
 endfunction"}}}
