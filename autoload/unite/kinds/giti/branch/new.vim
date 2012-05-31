@@ -33,6 +33,16 @@ endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'
 
+let s:kind.action_table.checkout = {
+\ 'description' : 'checkout branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+}
+function! s:kind.action_table.checkout.func(candidate)"{{{
+  echo giti#checkout#switch(a:candiddate.action__name)
+endfunction"}}}
+let s:kind.alias_table.co = 'checkout'
+
 " }}}
 
 " local functions {{{
