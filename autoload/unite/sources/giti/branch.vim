@@ -26,6 +26,19 @@ function! s:source.gather_candidates(args, context)"{{{
 \ }')
 endfunction"}}}
 
+function! s:source.gather_candidates(args, context)"{{{
+  if !strlen(a:context.input)
+    return []
+  endif
+  return [{
+\   "word"   : "[checkout branch]" . a:context.input,
+\   "source" : s:source.name,
+\   "kind"   : "giti/branch",
+\   "action__name" : a:context.input,
+\   "action__is_new" : 0,
+\ }]
+endfunction"}}}
+
 function! s:source.change_candidates(args, context)
   if !strlen(a:context.input)
     return []
