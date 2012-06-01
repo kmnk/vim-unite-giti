@@ -26,7 +26,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \ }')
 endfunction"}}}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context)"{{{
   if !strlen(a:context.input)
     return []
   endif
