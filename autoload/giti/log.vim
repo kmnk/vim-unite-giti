@@ -15,19 +15,19 @@ let s:pretty_format = "%H::%P::%an<%ae>[%ad]::%cn<%ce>[%cd]::%s"
 
 function! giti#log#run(...)"{{{
   let file = a:0 > 0 ? a:1 : ''
-  return giti#system(printf('log -%d %s',
+  return giti#system(printf('log -%d -- %s',
 \   g:giti_log_default_line_count, file
 \ ))
 endfunction"}}}
 
 function! giti#log#full(...)"{{{
   let file = a:0 > 0 ? a:1 : ''
-  return giti#system(printf('log %s', file))
+  return giti#system(printf('log -- %s', file))
 endfunction"}}}
 
 function! giti#log#line(...)"{{{
   let file = a:0 > 0 ? a:1 : ''
-  return giti#system(printf('log --pretty=oneline --graph %s', file))
+  return giti#system(printf('log --pretty=oneline --graph -- %s', file))
 endfunction"}}}
 
 function! giti#log#list(...)"{{{
@@ -41,8 +41,9 @@ endfunction"}}}
 
 function! s:get_list(param)"{{{
   let line_count
-\   = exists('a:param.line_count') ? a:param.line_count
-\                                : g:giti_log_default_line_count
+\   = exists('a:param.line_count') && a:param.line_count > 0
+\     ? a:param.line_count
+\     : g:giti_log_default_line_count
   let file = exists('a:param.file') ? a:param.file : ''
   let res = giti#system(printf(
 \   'log -%d --date=relative --pretty=format:"%s" %s',

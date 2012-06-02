@@ -25,7 +25,7 @@ function! s:source.gather_candidates(args, context)"{{{
   if len(a:args) == 2
     let line_count = a:args[1]
   endif
-  return map(giti#log#list(line_count, file), '{
+  return map(giti#log#list({'file' : file, 'line_count' : line_count}), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/log",
