@@ -43,7 +43,7 @@ endfunction"}}}
 
 function! giti#config#read(param)"{{{
   let location = exists('a:param.location') ? '--' . a:param.location
-\                                         : ''
+\                                           : ''
   return giti#system(join([
 \   'config', location, a:param.key
 \ ]))
