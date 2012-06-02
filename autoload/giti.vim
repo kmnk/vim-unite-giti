@@ -35,7 +35,7 @@ function! giti#system_with_specifics(param)"{{{
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
   else
-    return s:handle_error(ret)
+    return s:handle_error(ret, a:param)
   endif
 endfunction"}}}
 
@@ -79,9 +79,10 @@ function! giti#put(string)"{{{
 endfunction"}}}
 
 " local functions {{{
-function! s:handle_error(res)"{{{
+function! s:handle_error(res, param)"{{{
   if v:shell_error
     for line in split(a:res, '\n')
+      echoerr 'System error: git ' . a:param.command
       echoerr line
     endfor
   endif
