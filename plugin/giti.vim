@@ -27,6 +27,7 @@ endfunction"}}}
 command! -nargs=* GitiFetch call s:call_giti_fetch(<q-args>)
 function! s:call_giti_fetch(arg)"{{{
   let [repository, refspec] = s:map_param(a:arg)
+  echo printf('Fetching "%s" ...', repository)
   echo giti#fetch#run({'repository' : repository})
 endfunction"}}}
 
