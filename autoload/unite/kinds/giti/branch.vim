@@ -55,6 +55,17 @@ function! s:kind.action_table.delete_force.func(candidate)"{{{
   echo giti#branch#delete_force(a:candidate.action__name)
 endfunction"}}}
 
+let s:kind.action_table.merge = {
+\ 'description' : 'merge this branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.merge.func(candidate)"{{{
+  echo giti#merge#run({ 'branch_name' : a:candidate.action__name })
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
