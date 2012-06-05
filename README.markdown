@@ -35,18 +35,24 @@
 - checkout
 - diff
 - diff\_cached
+- diff\_head
+- ignore
 
 
 #### *giti/branch* actions
 
 - switch
 - delete
+- delete\_force
+- merge
 
 
 #### *giti/log* actions
 
 - view
 - diff
+- revert
+- reset
 
 
 #### *giti/config* actions
