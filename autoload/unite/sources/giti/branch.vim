@@ -26,7 +26,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \ }')
 endfunction"}}}
 
-function! s:source.change_candidates(args, context)
+function! s:source.change_candidates(args, context)"{{{
   if !strlen(a:context.input)
     return []
   endif
@@ -43,7 +43,7 @@ function! s:source.change_candidates(args, context)
 \   "action__name" : a:context.input,
 \   "action__is_new" : 1,
 \ }]
-endfunction
+endfunction"}}}
 
 " local functions {{{
 let s:word_format = '% 1s %s'
