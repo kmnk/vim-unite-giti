@@ -9,25 +9,25 @@ endfunction"}}}
 
 function! s:tc.test_run()"{{{
   call self.assert_equal(giti#log#run(), 'mocked_system')
-  call self.assert_equal(b:system_called_with, 'log -1234 ')
+  call self.assert_equal(b:system_called_with, 'log -1234 -- ')
   call self.assert_equal(giti#log#run('hoge'), 'mocked_system')
-  call self.assert_equal(b:system_called_with, 'log -1234 hoge')
+  call self.assert_equal(b:system_called_with, 'log -1234 -- hoge')
 endfunction"}}}
 
 function! s:tc.test_full()"{{{
   call self.assert_equal(giti#log#full(), 'mocked_system')
-  call self.assert_equal(b:system_called_with, 'log ')
+  call self.assert_equal(b:system_called_with, 'log -- ')
   call self.assert_equal(giti#log#full('hoge'), 'mocked_system')
-  call self.assert_equal(b:system_called_with, 'log hoge')
+  call self.assert_equal(b:system_called_with, 'log -- hoge')
 endfunction"}}}
 
 function! s:tc.test_line()"{{{
   call self.assert_equal(giti#log#line(), 'mocked_system')
   call self.assert_equal(b:system_called_with,
-\                        'log --pretty=oneline --graph ')
+\                        'log --pretty=oneline --graph -- ')
   call self.assert_equal(giti#log#line('hoge'), 'mocked_system')
   call self.assert_equal(b:system_called_with,
-\                        'log --pretty=oneline --graph hoge')
+\                        'log --pretty=oneline --graph -- hoge')
 endfunction"}}}
 
 function! s:tc.setup_list()"{{{
