@@ -20,7 +20,7 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    echoerr 'Not a git repository'
+    throw 'Not a git repository'
   endif
 
   if exists('a:param.with_confirm') && a:param.with_confirm
