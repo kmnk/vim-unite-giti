@@ -21,6 +21,7 @@ endfunction"}}}
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
     throw 'Not a git repository'
+    return
   endif
 
   if exists('a:param.with_confirm') && a:param.with_confirm
@@ -81,12 +82,11 @@ endfunction"}}}
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if v:shell_error
-    for line in split(a:res, '\n')
-      echoerr 'System error: git ' . a:param.command
-      echoerr line
-    endfor
+    throw 'System error: git ' . a:param.command . "\n" . a:res
+    return
+  else
+    return a:res
   endif
-  return a:res
 endfunction"}}}
 
 function! s:is_confirmed(param)

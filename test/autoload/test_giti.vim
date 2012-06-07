@@ -19,7 +19,7 @@ endfunction"}}}
 function! s:tc.test_system()"{{{
   call self.assert_match('git version \d\+\.\d\+\.\d\+',
 \                        giti#system('version'))
-  call self.assert_throw('Vim(echoerr)', 'call giti#system("hoge")')
+  call self.assert_throw('System error: git hoge', 'call giti#system("hoge")')
 endfunction"}}}
 
 function! s:tc.setup_system_with_specifics()"{{{
