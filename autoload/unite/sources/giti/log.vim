@@ -30,6 +30,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "source" : s:source.name,
 \   "kind"   : "giti/log",
 \   "action__data" : v:val,
+\   "action__file" : file,
 \ }')
 endfunction"}}}
 

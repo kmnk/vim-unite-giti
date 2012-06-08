@@ -42,8 +42,9 @@ let s:kind.action_table.diff = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.diff.func(candidates)"{{{
-  let from = ''
-  let to   = ''
+  let from  = ''
+  let to    = ''
+  let files = [a:candidates[0].action__file]
   if len(a:candidates) == 1
     let to   = a:candidates[0].action__data.hash
     let from = a:candidates[0].action__data.parent_hash
@@ -53,7 +54,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   else
     call unite#print_error('too many commits selected')
   endif
-  call giti#diff#specify({'from' : from, 'to' : to})
+  call giti#diff#specify({'from' : from, 'to' : to, 'files' : files})
 endfunction"}}}
 
 let s:kind.action_table.revert = {
