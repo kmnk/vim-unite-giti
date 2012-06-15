@@ -77,8 +77,11 @@
 
 ## TODO
 
+- write document
 - extend *giti/log* source (and write document about it)
 - implement *git_pull* and *git_pull_squash* custom actions
+- implement *giti/stash* source
+- implement *giti/blame* source
 - and other ...
 
 [unite.vim]: https://github.com/Shougo/unite.vim "unite.vim"
