@@ -24,6 +24,8 @@ function! giti#system_with_specifics(param)"{{{
     return
   endif
 
+  let a:param.command = s:trim(a:param.command)
+
   if exists('a:param.with_confirm') && a:param.with_confirm
     if !s:is_confirmed(a:param)
       echo 'canceled'
@@ -93,6 +95,10 @@ function! s:is_confirmed(param)
   let command = 'git ' . a:param.command
   return input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction
+
+function! s:trim(string)"{{{
+  return substitute(a:string, '\([^ ]\+\)\s\+$', '\1', '')
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
