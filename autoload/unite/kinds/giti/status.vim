@@ -28,6 +28,7 @@ let s:kind.action_table.add = {
 function! s:kind.action_table.add.func(candidates)"{{{
   return giti#add#run(map(a:candidates, 'v:val.action__path'))
 endfunction"}}}
+let s:kind.alias_table.stage = 'add'
 
 let s:kind.action_table.reset_head = {
 \ 'description' : "reset selected files' Index to HEAD",
@@ -39,6 +40,8 @@ function! s:kind.action_table.reset_head.func(candidates)"{{{
   return giti#reset#head({'files' : map(a:candidates, 'v:val.action__path')})
 endfunction"}}}
 let s:kind.alias_table.reset = 'reset_head'
+let s:kind.alias_table.undo = 'reset_head'
+let s:kind.alias_table.unstage = 'reset_head'
 
 let s:kind.action_table.commit = {
 \ 'description' : 'commit selected files',
