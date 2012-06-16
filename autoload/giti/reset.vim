@@ -20,7 +20,10 @@ endfunction"}}}
 
 function! giti#reset#head(param)"{{{
   let files = exists('a:param.files') ? a:param.files : ['.']
-  return giti#system('reset HEAD ' . join(files))
+  return giti#system_with_specifics({
+\   'command' : 'reset HEAD ' . join(files),
+\   'ignore_error' : 1,
+\ })
 endfunction"}}}
 
 " local functions {{{
