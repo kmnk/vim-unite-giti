@@ -8,7 +8,7 @@ endfunction"}}}
 function! s:tc.setup_list()"{{{
   function! giti#system(command)"{{{
     let b:system_called_with = a:command
-    return 'XA hoge'
+    return 'RA hoge'
   endfunction"}}}
 endfunction"}}}
 function! s:tc.teardown_list()"{{{
@@ -22,7 +22,7 @@ function! s:tc.test_list()"{{{
 \   giti#status#list(),
 \   [{
 \     'path'  : 'hoge',
-\     'index' : 'Unknown',
+\     'index' : 'Renamed',
 \     'work'  : 'Added',
 \   }]
 \ )

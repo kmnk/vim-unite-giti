@@ -34,18 +34,10 @@ function! s:build_status_data(line)"{{{
   let matches = matchlist(a:line, '^\(.\)\(.\)\s*\(.\+\)$')
   return {
 \   'path'  : matches[3],
-\   'index' : s:get_symbol_meaning(matches[1]),
-\   'work'  : s:get_symbol_meaning(matches[2]),
+\   'index' : giti#status#symbol#name_of(matches[1]),
+\   'work'  : giti#status#symbol#name_of(matches[2]),
 \ }
 endfunction"}}}
-
-function! s:get_symbol_meaning(symbol)"{{{
-  if !exists('s:symbol_meaning["' . a:symbol . '"]')
-    return 'Unknown'
-  endif
-  return s:symbol_meaning[a:symbol]
-endfunction"}}}
-
 
 " }}}
 
