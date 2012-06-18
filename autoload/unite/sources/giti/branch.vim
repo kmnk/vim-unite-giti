@@ -17,7 +17,7 @@ let s:source = {
 
 function! s:source.gather_candidates(args, context)"{{{
   call unite#print_message('[giti/branch]')
-  return map(giti#branch#list(), '{
+  return map(sort(giti#branch#list(), 's:sort_by_is_current'), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/branch",
@@ -52,6 +52,13 @@ function! s:build_word(val)"{{{
 \   a:val.is_current ? '*' : '',
 \   a:val.name)
 endfunction"}}}
+
+function! s:sort_by_is_current(context1, context2)"{{{{
+  return a:context1.is_current ? -1
+\      : a:context2.is_current ? +1
+\      :                         0
+endfunction"}}}
+
 " }}}
 
 let &cpo = s:save_cpo
