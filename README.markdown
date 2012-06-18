@@ -82,6 +82,7 @@
 - implement *git_pull* and *git_pull_squash* custom actions
 - implement *giti/stash* source
 - implement *giti/blame* source
+- implement *giti/tag* source and kind
 - and other ...
 
 [unite.vim]: https://github.com/Shougo/unite.vim "unite.vim"
