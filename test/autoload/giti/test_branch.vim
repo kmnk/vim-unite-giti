@@ -13,10 +13,32 @@ function! s:tc.TEARDOWN()"{{{
   execute 'source ' . paths[0]
 endfunction"}}}
 
-function! s:tc.test_run()"{{{
-  call self.assert_equal(giti#branch#list(), [{'name': 'mocked_system', 'is_current': 0}])
+function! s:tc.test_list()"{{{
+  call self.assert_equal(
+\   [{
+\     'full_name'  : 'mocked_system',
+\     'name'       : 'mocked_system',
+\     'is_current' : 0,
+\     'is_remote'  : 0,
+\   }],
+\   giti#branch#list(),
+\ )
   call self.assert_equal('branch', b:system_called_with)
   call self.assert_throw('E118', 'call giti#branch#list("")')
+endfunction"}}}
+
+function! s:tc.test_list_all()"{{{
+  call self.assert_equal(
+\   [{
+\     'full_name'  : 'mocked_system',
+\     'name'       : 'mocked_system',
+\     'is_current' : 0,
+\     'is_remote'  : 0,
+\   }],
+\   giti#branch#list_all(),
+\ )
+  call self.assert_equal('branch -a', b:system_called_with)
+  call self.assert_throw('E118', 'call giti#branch#list_all("")')
 endfunction"}}}
 
 function! s:tc.test_delete()"{{{
