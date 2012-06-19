@@ -19,19 +19,26 @@ function! s:source.gather_candidates(args, context)"{{{
   call unite#print_message(printf(
 \   '[giti/branch/new] choose start point of new branch "%s"',
 \   a:args[0]))
-  return add(map(giti#branch#list(), '{
+  return map(giti#branch#list(), '{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/branch/new",
 \   "action__name" : a:args[0],
 \   "action__start_point" : v:val.name,
-\ }'), {
-\   "word" : "(input start point)",
+\ }')
+endfunction"}}}
+
+function! s:source.change_candidates(args, context)"{{{
+  if !strlen(a:context.input)
+    return []
+  endif
+  return [{
+\   "word"   : "[input start point] " . a:context.input,
 \   "source" : s:source.name,
 \   "kind"   : "giti/branch/new",
 \   "action__name" : a:args[0],
-\   "action__start_point" : '',
-\ })
+\   "action__start_point" : a:context.input,
+\ }]
 endfunction"}}}
 
 " local functions {{{
