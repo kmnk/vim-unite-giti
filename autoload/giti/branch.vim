@@ -57,7 +57,7 @@ function! s:pickup_full_branch_name(line)
 endfunction
 
 function! s:pickup_branch_name(line)
-  return substitute(a:line, '^*\?\s*\%(remotes/\)\?\([^ ]\+\).\*', '\1', '')
+  return substitute(a:line, '^*\?\s*\%(remotes/\)\?\([^ ]\+\).*', '\1', '')
 endfunction
 
 function! s:is_current(line)"{{{
