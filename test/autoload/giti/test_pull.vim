@@ -55,4 +55,31 @@ function! s:tc.test_squash()"{{{
   call self.assert_throw('E119', 'call giti#pull#squash()')
 endfunction"}}}
 
+function! s:tc.test_rebase()"{{{
+  call self.assert_equal(
+\   giti#pull#rebase({
+\     'repository' : 'hoge',
+\     'refspec'    : 'fuga',
+\   }),
+\   'mocked_system_with_specifics',
+\ )
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command'      : 'pull --rebase hoge fuga',
+\                         'with_confirm' : 1})
+  call giti#pull#rebase({})
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command'      : 'pull --rebase  ',
+\                         'with_confirm' : 1})
+  call giti#pull#rebase({ 'repository' : 'hoge' })
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command'      : 'pull --rebase hoge ',
+\                         'with_confirm' : 1})
+  call giti#pull#rebase({ 'refspec' : 'fuga' })
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command'      : 'pull --rebase  fuga',
+\                         'with_confirm' : 1})
+  call self.assert_throw('E118', 'call giti#pull#rebase("", "")')
+  call self.assert_throw('E119', 'call giti#pull#rebase()')
+endfunction"}}}
+
 unlet s:tc

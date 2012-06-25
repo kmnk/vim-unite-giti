@@ -21,6 +21,12 @@ function! giti#pull#squash(param)"{{{
   return s:run(arg)
 endfunction"}}}
 
+function! giti#pull#rebase(param)"{{{
+  let arg = a:param
+  let arg.command = 'pull --rebase'
+  return s:run(arg)
+endfunction"}}}
+
 function! giti#pull#expressly()"{{{
   let arg = {}
   let arg.command = 'pull'

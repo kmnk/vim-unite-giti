@@ -60,6 +60,15 @@ function! s:call_giti_pull_squash(arg)"{{{
 \ })
 endfunction"}}}
 
+command! -nargs=* GitiPullRebase call s:call_giti_pull_rebase(<q-args>)
+function! s:call_giti_pull_rebase(arg)"{{{
+  let [repository, refspec] = s:map_param(a:arg)
+  echo giti#pull#rebase({
+\   'repository' : repository,
+\   'refspec'    : refspec,
+\ })
+endfunction"}}}
+
 command! -nargs=0 GitiPullExpressly call s:call_giti_pull_expressly()
 function! s:call_giti_pull_expressly()"{{{
   echo giti#pull#expressly()
