@@ -76,7 +76,7 @@ let s:kind.action_table.reset_hard = {
 function! s:kind.action_table.reset_hard.func(candidate)"{{{
   call giti#reset#hard({'hash' : a:candidate.action__data.hash})
 endfunction"}}}
-let s:kind.alias_table.reset_hard = 'reset_hard'
+let s:kind.alias_table.reset_hard = 'reset'
 
 " }}}
 
