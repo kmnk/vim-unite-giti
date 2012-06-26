@@ -87,12 +87,14 @@ function! s:tc.teardown_new_buffer()"{{{
 endfunction"}}}
 function! s:tc.test_new_buffer()"{{{
   call self.assert(giti#new_buffer({}))
-  call self.assert_equal(b:execute_called_with, 'tabnew')
+  call self.assert_equal(b:execute_called_with, 'delete')
   call giti#new_buffer({'method' : 'foo'})
-  call self.assert_equal(b:execute_called_with, 'foo')
+  call self.assert_equal(b:execute_called_with, 'delete')
+  call giti#new_buffer({'method' : 'foo', 'file' : 'hoge fuga'})
+  call self.assert_equal(b:execute_called_with, 'delete')
 
   call giti#new_buffer({'string' : 'bar'})
-  call self.assert_equal(b:put_called_with_list, ['bar', 1])
+  call self.assert_equal(b:put_called_with_list, ['bar', ''])
 
   call giti#new_buffer({'filetype' : 'baz'})
   call self.assert_equal(b:execute_called_with, 'setlocal filetype=baz')

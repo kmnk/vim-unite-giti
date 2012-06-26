@@ -76,18 +76,7 @@ let s:kind.action_table.diff = {
 \}
 function! s:kind.action_table.diff.func(candidates)"{{{
   let diff = giti#diff#run({'files' : map(a:candidates, 'v:val.action__path')})
-
-  if !strlen(diff)
-    echo 'no difference'
-    return
-  endif
-
-  call giti#new_buffer({
-\   'method'   : giti#edit_command(),
-\   'string'   : diff,
-\   'filetype' : 'diff',
-\   'buftype'  : 'nofile',
-\ })
+  call giti#diff#view_git_diff(diff)
 endfunction"}}}
 let s:kind.alias_table.di = 'diff'
 
@@ -97,18 +86,7 @@ let s:kind.action_table.diff_cached = {
 \}
 function! s:kind.action_table.diff_cached.func(candidates)"{{{
   let diff = giti#diff#cached({'files' : map(a:candidates, 'v:val.action__path')})
-
-  if !strlen(diff)
-    echo 'no difference'
-    return
-  endif
-
-  call giti#new_buffer({
-\   'method'   : giti#edit_command(),
-\   'string'   : diff,
-\   'filetype' : 'diff',
-\   'buftype'  : 'nofile',
-\ })
+  call giti#diff#view_git_diff(diff)
 endfunction"}}}
 let s:kind.alias_table.dic = 'diff_cached'
 
@@ -118,20 +96,26 @@ let s:kind.action_table.diff_head = {
 \}
 function! s:kind.action_table.diff_head.func(candidates)"{{{
   let diff = giti#diff#head({'files' : map(a:candidates, 'v:val.action__path')})
-
-  if !strlen(diff)
-    echo 'no difference'
-    return
-  endif
-
-  call giti#new_buffer({
-\   'method'   : giti#edit_command(),
-\   'string'   : diff,
-\   'filetype' : 'diff',
-\   'buftype'  : 'nofile',
-\ })
+  call giti#diff#view_git_diff(diff)
 endfunction"}}}
 let s:kind.alias_table.dih = 'diff_head'
+
+let s:kind.action_table.vimdiff_head = {
+\ 'description' : 'diff HEAD selected file by vimdiff',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.vimdiff_head.func(candidate)"{{{
+  call giti#diff#view_vim_diff({
+\   'file' : a:candidate.action__path,
+\   'from' : 'HEAD',
+\   'to'   : '',
+\ })
+endfunction"}}}
+let s:kind.alias_table.vdih = 'vimdiff_head'
+let s:kind.alias_table.vdi  = 'vimdiff_head'
 
 let s:kind.action_table.rm_cached = {
 \ 'description' : 'rm --cached selected files',

@@ -68,6 +68,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
 \   'buftype'  : 'nofile',
 \ })
 endfunction"}}}
+let s:kind.alias_table.di = 'diff'
 
 let s:kind.action_table.revert = {
 \ 'description' : 'git revert this commit',
@@ -78,6 +79,36 @@ let s:kind.action_table.revert = {
 function! s:kind.action_table.revert.func(candidate)"{{{
   call giti#revert#run([a:candidate.action__data.hash])
 endfunction"}}}
+
+let s:kind.action_table.vimdiff = {
+\ 'description' : 'git diff by vimdiff',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\}
+function! s:kind.action_table.vimdiff.func(candidates)"{{{
+  let from  = ''
+  let to    = ''
+  let file  = len(a:candidates[0].action__file) > 0
+\               ? a:candidates[0].action__file
+\               : expand('%:p')
+  let relative_path = giti#to_relative_path(file)
+  if len(a:candidates) == 1
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[0].action__data.parent_hash
+  elseif len(a:candidates) == 2
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[1].action__data.hash
+  else
+    call unite#print_error('too many commits selected')
+  endif
+  call giti#diff#view_vim_diff({
+\   'file' : relative_path,
+\   'from' : from,
+\   'to'   : to,
+\ })
+endfunction"}}}
+let s:kind.alias_table.vdi = 'vimdiff'
 
 let s:kind.action_table.reset_hard = {
 \ 'description' : 'git reset --hard this commit',

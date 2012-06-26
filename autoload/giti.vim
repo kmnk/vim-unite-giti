@@ -14,6 +14,10 @@ function! giti#is_git_repository(...)"{{{
   return finddir('.git', path . ';') != '' ? 1 : 0
 endfunction"}}}
 
+function! giti#to_relative_path(absolute_path)"{{{
+  return substitute(a:absolute_path, getcwd() . '/\?\(.\+\)', '\1', '')
+endfunction"}}}
+
 function! giti#system(command)"{{{
   return giti#system_with_specifics({ 'command' : a:command })
 endfunction"}}}
@@ -86,15 +90,18 @@ function! giti#put(string, ...)"{{{
 endfunction"}}}
 
 function! giti#new_buffer(param)"{{{
-  if has_key(a:param, 'method')
-    call giti#execute(a:param.method)
-  else
-    call giti#execute(giti#edit_command())
+  call giti#execute(
+\   has_key(a:param, 'method') ? a:param.method : giti#edit_command()
+\ )
+
+  if has_key(a:param, 'file') && len(a:param.file) > 0
+    call giti#execute(printf('read %s', a:param.file))
+  elseif has_key(a:param, 'string')
+    call giti#put(a:param.string)
   endif
 
-  if has_key(a:param, 'string')
-    call giti#put(a:param.string, 1)
-  endif
+  keepjumps normal gg
+  call giti#execute('delete')
 
   if has_key(a:param, 'filetype')
     call giti#execute(printf('setlocal filetype=%s', a:param.filetype))
@@ -103,8 +110,6 @@ function! giti#new_buffer(param)"{{{
   if has_key(a:param, 'buftype')
     call giti#execute(printf('setlocal buftype=%s', a:param.buftype))
   endif
-
-  keepjumps normal gg
 
   return 1
 endfunction"}}}
@@ -125,7 +130,7 @@ function! s:is_confirmed(param)
 endfunction
 
 function! s:trim(string)"{{{
-  return substitute(a:string, '\([^ ]\+\)\s\+$', '\1', '')
+  return substitute(a:string, '\(.\+\)\s\+$', '\1', '')
 endfunction"}}}
 " }}}
 

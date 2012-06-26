@@ -33,6 +33,43 @@ function! giti#diff#specify(param)"{{{
   return s:run({'command' : command, 'files' : files})
 endfunction"}}}
 
+function! giti#diff#view_git_diff(diff)"{{{
+  if !strlen(a:diff)
+    echo 'no difference'
+    return
+  endif
+  call giti#new_buffer({
+\   'method'   : giti#edit_command(),
+\   'string'   : a:diff,
+\   'filetype' : 'diff',
+\   'buftype'  : 'nofile',
+\ })
+endfunction"}}}
+
+function! giti#diff#view_vim_diff(param)"{{{
+  let file = a:param.file
+  let from = a:param.from
+  let to   = a:param.to
+
+  call giti#new_buffer({
+\   'method'  : 'tabnew',
+\   'file'    : len(from) > 0 ? '' : file,
+\   'string'  : giti#system(printf('cat-file -p %s:%s', from, file)),
+\   'buftype' : 'nofile',
+\ })
+
+  diffthis
+
+  call giti#new_buffer({
+\   'method'  : 'vnew',
+\   'file'    : len(to) > 0 ? '' : file,
+\   'string'  : giti#system(printf('cat-file -p %s:%s', to, file)),
+\   'buftype' : 'nofile',
+\ })
+
+  diffthis
+endfunction"}}}
+
 " local functions {{{
 function! s:run(param)"{{{
   let files = exists('a:param.files') ? a:param.files : []
