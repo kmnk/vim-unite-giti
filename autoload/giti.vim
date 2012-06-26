@@ -77,8 +77,36 @@ endfunction"}}}
 function! giti#execute(command)"{{{
   execute a:command
 endfunction"}}}
-function! giti#put(string)"{{{
-  put=a:string
+function! giti#put(string, ...)"{{{
+  if a:0 > 0 && a:1
+    put!=a:string
+  else
+    put=a:string
+  endif
+endfunction"}}}
+
+function! giti#new_buffer(param)"{{{
+  if has_key(a:param, 'method')
+    call giti#execute(a:param.method)
+  else
+    call giti#execute(giti#edit_command())
+  endif
+
+  if has_key(a:param, 'string')
+    call giti#put(a:param.string, 1)
+  endif
+
+  if has_key(a:param, 'filetype')
+    call giti#execute(printf('setlocal filetype=%s', a:param.filetype))
+  endif
+
+  if has_key(a:param, 'buftype')
+    call giti#execute(printf('setlocal buftype=%s', a:param.buftype))
+  endif
+
+  keepjumps normal gg
+
+  return 1
 endfunction"}}}
 
 " local functions {{{
