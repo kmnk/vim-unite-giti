@@ -79,10 +79,11 @@
 
 - write document
 - extend *giti/log* source (and write document about it)
-- implement *git_pull* and *git_pull_squash* custom actions
-- implement *giti/stash* source
-- implement *giti/blame* source
+- extend *giti/diff* action (use vimdiff)
+- implement *giti/stash* source and kind
+- implement *giti/blame* source and kind (use scrollbind)
 - implement *giti/tag* source and kind
+- implement *git_pull* and *git_pull_squash* custom actions
 - and other ...
 
 [unite.vim]: https://github.com/Shougo/unite.vim "unite.vim"
