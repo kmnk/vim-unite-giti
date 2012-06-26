@@ -7,13 +7,14 @@ function! s:tc.TEARDOWN()"{{{
 endfunction"}}}
 
 function! s:tc.test_run()"{{{
-  call self.assert(giti#diff#run({'files' : []}))
+  call self.assert_equal(giti#diff#run({'files' : []}), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff -- ')
 
-  call self.assert(giti#diff#run({}))
+  call self.assert_equal(giti#diff#run({}), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff -- ')
 
-  call self.assert(giti#diff#run({'files' : ['hoge', 'fuga']}))
+  call self.assert_equal(giti#diff#run({'files' : ['hoge', 'fuga']}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff -- hoge fuga')
 
   call self.assert_throw('E118', 'call giti#diff#run("", "")')
@@ -37,13 +38,16 @@ function! s:tc.test_run_nodiff()"{{{
 endfunction"}}}
 
 function! s:tc.test_cached()"{{{
-  call self.assert(giti#diff#cached({'files' : []}))
+  call self.assert_equal(giti#diff#cached({'files' : []}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff --cached -- ')
 
-  call self.assert(giti#diff#cached({}))
+  call self.assert_equal(giti#diff#cached({}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff --cached -- ')
 
-  call self.assert(giti#diff#cached({'files' : ['hoge', 'fuga']}))
+  call self.assert_equal(giti#diff#cached({'files' : ['hoge', 'fuga']}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff --cached -- hoge fuga')
 
   call self.assert_throw('E118', 'call giti#diff#cached("", "")')
@@ -51,13 +55,16 @@ function! s:tc.test_cached()"{{{
 endfunction"}}}
 
 function! s:tc.test_head()"{{{
-  call self.assert(giti#diff#head({'files' : []}))
+  call self.assert_equal(giti#diff#head({'files' : []}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff HEAD -- ')
 
-  call self.assert(giti#diff#head({}))
+  call self.assert_equal(giti#diff#head({}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff HEAD -- ')
 
-  call self.assert(giti#diff#head({'files' : ['hoge', 'fuga']}))
+  call self.assert_equal(giti#diff#head({'files' : ['hoge', 'fuga']}),
+\                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff HEAD -- hoge fuga')
 
   call self.assert_throw('E118', 'call giti#diff#head("", "")')
@@ -65,37 +72,37 @@ function! s:tc.test_head()"{{{
 endfunction"}}}
 
 function! s:tc.test_specify()"{{{
-  call self.assert(giti#diff#specify({
+  call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'to'    : 'bar',
 \   'files' : ['hoge', 'fuga'],
-\ }))
+\ }), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff foo..bar -- hoge fuga')
 
-  call self.assert(giti#diff#specify({
+  call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'to'    : 'bar',
 \   'files' : [],
-\ }))
+\ }), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff foo..bar -- ')
 
-  call self.assert(giti#diff#specify({
+  call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'to'    : 'bar',
-\ }))
+\ }), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff foo..bar -- ')
 
-  call self.assert(giti#diff#specify({
+  call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'to'    : '',
 \   'files' : ['hoge', 'fuga'],
-\ }))
+\ }), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff foo -- hoge fuga')
 
-  call self.assert(giti#diff#specify({
+  call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'files' : ['hoge', 'fuga'],
-\ }))
+\ }), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff foo -- hoge fuga')
 
   call self.assert_throw('E118', 'call giti#diff#specify("", "")')

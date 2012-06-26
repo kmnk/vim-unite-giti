@@ -54,7 +54,19 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   else
     call unite#print_error('too many commits selected')
   endif
-  call giti#diff#specify({'from' : from, 'to' : to, 'files' : files})
+  let diff = giti#diff#specify({'from' : from, 'to' : to, 'files' : files})
+
+  if !strlen(diff)
+    echo 'no difference'
+    return
+  endif
+
+  call giti#new_buffer({
+\   'method'   : giti#edit_command(),
+\   'string'   : diff,
+\   'filetype' : 'diff',
+\   'buftype'  : 'nofile',
+\ })
 endfunction"}}}
 
 let s:kind.action_table.revert = {

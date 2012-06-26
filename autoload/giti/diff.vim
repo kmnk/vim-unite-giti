@@ -36,20 +36,7 @@ endfunction"}}}
 " local functions {{{
 function! s:run(param)"{{{
   let files = exists('a:param.files') ? a:param.files : []
-  let diff = giti#system(a:param.command . ' -- ' . join(files))
-
-  if !strlen(diff)
-    echo 'no difference'
-    return
-  endif
-
-  call giti#new_buffer({
-\   'method' : giti#edit_command(),
-\   'string' : diff,
-\   'filetype' : 'diff',
-\   'buftype'  : 'nofile',
-\ })
-  return 1
+  return giti#system(a:param.command . ' -- ' . join(files))
 endfunction"}}}
 " }}}
 
