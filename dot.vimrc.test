@@ -19,3 +19,6 @@ function! giti#put(string, ...)"{{{
   let b:put_called_with_list = [a:string, a:0 > 0 ? a:1 : '']
   return 'mocked_put'
 endfunction"}}}
+function! giti#diffthis()"{{{
+  return 'mocked_diffthis'
+endfunction"}}}

@@ -38,7 +38,7 @@ function! giti#diff#view_git_diff(diff)"{{{
     echo 'no difference'
     return
   endif
-  call giti#new_buffer({
+  return giti#new_buffer({
 \   'method'   : giti#edit_command(),
 \   'string'   : a:diff,
 \   'filetype' : 'diff',
@@ -58,7 +58,7 @@ function! giti#diff#view_vim_diff(param)"{{{
 \   'buftype' : 'nofile',
 \ })
 
-  diffthis
+  call giti#diffthis()
 
   call giti#new_buffer({
 \   'method'  : 'vnew',
@@ -67,7 +67,9 @@ function! giti#diff#view_vim_diff(param)"{{{
 \   'buftype' : 'nofile',
 \ })
 
-  diffthis
+  call giti#diffthis()
+
+  return 1
 endfunction"}}}
 
 " local functions {{{

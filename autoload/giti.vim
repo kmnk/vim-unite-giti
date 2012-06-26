@@ -114,6 +114,10 @@ function! giti#new_buffer(param)"{{{
   return 1
 endfunction"}}}
 
+function! giti#diffthis()"{{{
+  diffthis
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if v:shell_error

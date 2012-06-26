@@ -109,4 +109,22 @@ function! s:tc.test_specify()"{{{
   call self.assert_throw('E119', 'call giti#diff#specify()')
 endfunction"}}}
 
+function! s:tc.test_view_git_diff()"{{{
+  call self.assert(giti#diff#view_git_diff('hoge'))
+  call self.assert_equal('setlocal buftype=nofile', b:execute_called_with)
+  call self.assert_throw('E118', 'call giti#diff#view_git_diff("", "")')
+  call self.assert_throw('E119', 'call giti#diff#view_git_diff()')
+endfunction"}}}
+
+function! s:tc.test_view_vim_diff()"{{{
+  call self.assert(giti#diff#view_vim_diff({
+\   'from' : 'hoge',
+\   'to'   : 'fuga',
+\   'file' : 'piyo',
+\ }))
+  call self.assert_equal('setlocal buftype=nofile', b:execute_called_with)
+  call self.assert_throw('E118', 'call giti#diff#view_vim_diff("", "")')
+  call self.assert_throw('E119', 'call giti#diff#view_vim_diff()')
+endfunction"}}}
+
 unlet s:tc
