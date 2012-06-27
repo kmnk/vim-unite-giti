@@ -33,7 +33,7 @@ endfunction"}}}
 function! s:tc.setup_list()"{{{
   function! giti#system(command)"{{{
     let b:system_called_with = a:command
-    return 'aaaa::bbbb::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc]::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd]::eeee'
+    return '* | | ::aaaa::bbbb::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc]::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd]::eeee'
   endfunction"}}}
 endfunction
 function! s:tc.teardown_list()"{{{
@@ -44,6 +44,7 @@ function! s:tc.teardown_list()"{{{
 endfunction
 function! s:tc.test_list()"{{{
   call self.assert_equal(giti#log#list(), [{
+\   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
@@ -51,10 +52,11 @@ function! s:tc.test_list()"{{{
 \   'comment'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -1234 --date=relative --pretty=format:".\+" ',
+\   'log -1234 --graph --date=relative --pretty=format:".\+" ',
 \   b:system_called_with
 \ )
   call self.assert_equal(giti#log#list({'line_count' : 4321}), [{
+\   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
@@ -62,10 +64,11 @@ function! s:tc.test_list()"{{{
 \   'comment'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -4321 --date=relative --pretty=format:".\+" ',
+\   'log -4321 --graph --date=relative --pretty=format:".\+" ',
 \   b:system_called_with
 \ )
   call self.assert_equal(giti#log#list({'file' : 'hoge'}), [{
+\   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
@@ -73,7 +76,7 @@ function! s:tc.test_list()"{{{
 \   'comment'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -1234 --date=relative --pretty=format:".\+" hoge',
+\   'log -1234 --graph --date=relative --pretty=format:".\+" hoge',
 \   b:system_called_with
 \ )
 endfunction"}}}

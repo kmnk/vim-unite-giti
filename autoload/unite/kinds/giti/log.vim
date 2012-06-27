@@ -25,6 +25,11 @@ let s:kind.action_table.view = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.view.func(candidate)"{{{
+  if s:is_graph_only_line(a:candidate)
+    echo 'graph only line'
+    return
+  endif
+
   let data = a:candidate.action__data
   echo        'Hash:       ' . data.hash
   echo        'ParentHash: ' . data.parent_hash
@@ -42,6 +47,12 @@ let s:kind.action_table.diff = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.diff.func(candidates)"{{{
+  if s:is_graph_only_line(a:candidates[0])
+\ || s:is_graph_only_line(a:candidates[1])
+    echo 'graph only line'
+    return
+  endif
+
   let from  = ''
   let to    = ''
   let files = [a:candidates[0].action__file]
@@ -77,6 +88,11 @@ let s:kind.action_table.revert = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.revert.func(candidate)"{{{
+  if s:is_graph_only_line(a:candidate)
+    echo 'graph only line'
+    return
+  endif
+
   call giti#revert#run([a:candidate.action__data.hash])
 endfunction"}}}
 
@@ -87,6 +103,12 @@ let s:kind.action_table.vimdiff = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.vimdiff.func(candidates)"{{{
+  if s:is_graph_only_line(a:candidates[0])
+\ || s:is_graph_only_line(a:candidates[1])
+    echo 'graph only line'
+    return
+  endif
+
   let from  = ''
   let to    = ''
   let file  = len(a:candidates[0].action__file) > 0
@@ -117,6 +139,11 @@ let s:kind.action_table.reset_hard = {
 \ 'is_invalidate_cache' : 0,
 \}
 function! s:kind.action_table.reset_hard.func(candidate)"{{{
+  if s:is_graph_only_line(a:candidate)
+    echo 'graph only line'
+    return
+  endif
+
   call giti#reset#hard({'hash' : a:candidate.action__data.hash})
 endfunction"}}}
 let s:kind.alias_table.reset_hard = 'reset'
@@ -124,6 +151,9 @@ let s:kind.alias_table.reset_hard = 'reset'
 " }}}
 
 " local functions {{{
+function! s:is_graph_only_line(candidate)"{{{
+  return has_key(a:candidate.action__data, 'hash') ? 0 : 1
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo

@@ -35,9 +35,14 @@ function! s:source.gather_candidates(args, context)"{{{
 endfunction"}}}
 
 " local functions {{{
-let s:word_format = '%s - %s, %s : %s'
+let s:word_format = '%s%s - %s, %s : %s'
 function! s:build_word(val)"{{{
+  if !has_key(a:val, 'hash') || len(a:val.hash) <= 0
+    return a:val.graph
+  endif
+
   return printf(s:word_format,
+\   a:val.graph,
 \   a:val.hash[0:6],
 \   a:val.author.name,
 \   a:val.author.date,
@@ -46,6 +51,7 @@ function! s:build_word(val)"{{{
 endfunction"}}}
 function! s:build_title()"{{{
   return printf(s:word_format,
+\   '',
 \   'hash',
 \   'author',
 \   'relative date',
