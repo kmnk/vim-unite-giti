@@ -48,7 +48,7 @@ let s:kind.action_table.diff = {
 \}
 function! s:kind.action_table.diff.func(candidates)"{{{
   if s:is_graph_only_line(a:candidates[0])
-\ || s:is_graph_only_line(a:candidates[1])
+\ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
     echo 'graph only line'
     return
   endif
@@ -104,7 +104,7 @@ let s:kind.action_table.vimdiff = {
 \}
 function! s:kind.action_table.vimdiff.func(candidates)"{{{
   if s:is_graph_only_line(a:candidates[0])
-\ || s:is_graph_only_line(a:candidates[1])
+\ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
     echo 'graph only line'
     return
   endif
