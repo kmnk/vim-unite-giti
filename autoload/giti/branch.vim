@@ -20,6 +20,20 @@ function! giti#branch#list_all()"{{{
 \ )
 endfunction"}}}
 
+function! giti#branch#current_name()"{{{
+  return giti#branch#current()['name']
+endfunction"}}}
+
+function! giti#branch#current()"{{{
+  return remove(filter(
+\   map(
+\     split(giti#system('branch -a'), '\n'),
+\     's:build_branch_data(v:val)'
+\   ),
+\   'v:val.is_current'
+\ ), 0)
+endfunction"}}}
+
 function! giti#branch#delete(branch)"{{{
   return giti#system_with_specifics({
 \   'command' : 'branch -d ' . a:branch,
