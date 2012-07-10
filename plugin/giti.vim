@@ -37,6 +37,12 @@ function! s:call_giti_push(arg)"{{{
   echo giti#push#run({'repository' : repository, 'refspec' : refspec})
 endfunction"}}}
 
+command! -nargs=* GitiPushWithSettingUpstream call s:call_giti_push_with_setting_upstream(<q-args>)
+function! s:call_giti_push_with_setting_upstream(arg)"{{{
+  let [repository, refspec] = s:map_param(a:arg)
+  echo giti#push#set_upstream({'repository' : repository, 'refspec' : refspec})
+endfunction"}}}
+
 command! -nargs=0 GitiPushExpressly call s:call_giti_push_expressly()
 function! s:call_giti_push_expressly()"{{{
   echo giti#push#expressly()

@@ -15,6 +15,12 @@ function! giti#push#run(param)"{{{
   return s:run(arg)
 endfunction"}}}
 
+function! giti#push#set_upstream(param)"{{{
+  let arg = a:param
+  let arg.command = 'push -u'
+  return s:run(arg)
+endfunction"}}}
+
 function! giti#push#expressly()"{{{
   let arg = {}
   let arg.command = 'push'
