@@ -55,32 +55,21 @@ function! s:tc.test_delete_remote_branch()"{{{
   call self.assert_equal(
 \   giti#push#delete_remote_branch({
 \     'repository' : 'hoge',
-\     'refspec'    : 'fuga',
+\     'branch'     : 'fuga',
 \   }),
 \   'mocked_system_with_specifics',
 \ )
   call self.assert_equal(b:system_with_specifics_called_with,
 \                        {'command' : 'push hoge :fuga', 'with_confirm' : 1})
-  call self.assert_throw('repository required', '
-\   call giti#push#delete_remote_branch({
-\     "refspec"    : "fuga",
-\   })
-\ ')
-  call self.assert_throw('repository required', '
-\   call giti#push#delete_remote_branch({
-\     "repository" : "",
-\     "refspec"    : "fuga",
-\   })
-\ ')
-  call self.assert_throw('refspec required', '
+  call self.assert_throw('branch required', '
 \   call giti#push#delete_remote_branch({
 \     "repository" : "hoge",
 \   })
 \ ')
-  call self.assert_throw('refspec required', '
+  call self.assert_throw('branch required', '
 \   call giti#push#delete_remote_branch({
 \     "repository" : "hoge",
-\     "refspec"    : "",
+\     "branch"     : "",
 \   })
 \ ')
 

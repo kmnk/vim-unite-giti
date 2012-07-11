@@ -22,17 +22,14 @@ function! giti#push#set_upstream(param)"{{{
 endfunction"}}}
 
 function! giti#push#delete_remote_branch(param) abort "{{{
+  if !has_key(a:param, 'branch') || len(a:param.branch) <= 0
+    throw 'branch required'
+  endif
+
   let arg = a:param
   let arg.command = 'push'
+  let arg.refspec = ':' . a:param.branch
 
-  if !has_key(arg, 'repository') || len(arg.repository) <= 0
-    throw 'repository required'
-  endif
-  if !has_key(arg, 'refspec') || len(arg.refspec) <= 0
-    throw 'refspec required'
-  endif
-
-  let arg.refspec = ':' . arg.refspec
   return s:run(arg)
 endfunction"}}}
 
