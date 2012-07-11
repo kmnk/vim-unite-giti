@@ -64,7 +64,7 @@ function! s:tc.test_list()"{{{
 \   'comment'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -4321 --graph --date=relative --pretty=format:".\+" ',
+\   'log -4321 --graph --date=relative --pretty=format:".\+"',
 \   b:system_called_with
 \ )
   call self.assert_equal(giti#log#list({'file' : 'hoge'}), [{
