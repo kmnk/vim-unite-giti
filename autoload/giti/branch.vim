@@ -48,6 +48,13 @@ function! giti#branch#delete_force(branch)"{{{
 \ })
 endfunction"}}}
 
+function! giti#branch#delete_remote(param) abort "{{{
+  if !has_key(a:param, 'branch') || len(a:param.branch) <= 0
+    throw 'branch required'
+  endif
+  return giti#push#delete_remote_branch(a:param)
+endfunction"}}}
+
 function! giti#branch#create(branch)"{{{
   return giti#checkout#create({'name' : a:branch})
 endfunction"}}}
