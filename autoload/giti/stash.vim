@@ -7,14 +7,44 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
-let s:pretty_format = "::%gd::%H::%P::%an<%ae>[%ad]::%cn<%ce>[%cd]::%s"
+let s:pretty_format = "::%gd::%H::%an<%ae>[%ad]::%cn<%ce>[%cd]::%s"
 " }}}
 
 function! giti#stash#list()"{{{
   return giti#system('stash list')
 endfunction"}}}
 
+function! giti#stash#built_list()"{{{
+  return map(split(giti#system(
+\   printf('stash list --date=relative --pretty=format:"%s"',
+\          s:pretty_format)
+\ ), '\n'), '
+\   s:build_data(v:val)
+\ ')
+endfunction"}}}
+
 " local functions {{{
+function! s:build_data(line)"{{{
+  let splited = split(a:line, '::')
+
+  return {
+\   'stash'       : remove(splited, 0),
+\   'hash'        : remove(splited, 0),
+\   'author'      : s:build_user_data(remove(splited, 0)),
+\   'committer'   : s:build_user_data(remove(splited, 0)),
+\   'comment'     : join(splited, ':'),
+\ }
+endfunction"}}}
+
+function! s:build_user_data(line)"{{{
+  let matches
+\   = matchlist(a:line, '^\(.\+\)<\(.\+\)>\[\(.\+\)\]$')
+  return {
+\   'name' : matches[1],
+\   'mail' : matches[2],
+\   'date' : matches[3]
+\ }
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
