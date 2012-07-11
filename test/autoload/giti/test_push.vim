@@ -51,4 +51,41 @@ function! s:tc.test_set_upstream()"{{{
   call self.assert_throw('E119', 'call giti#push#set_upstream()')
 endfunction"}}}
 
+function! s:tc.test_delete_remote_branch()"{{{
+  call self.assert_equal(
+\   giti#push#delete_remote_branch({
+\     'repository' : 'hoge',
+\     'refspec'    : 'fuga',
+\   }),
+\   'mocked_system_with_specifics',
+\ )
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command' : 'push hoge :fuga', 'with_confirm' : 1})
+  call self.assert_throw('repository required', '
+\   call giti#push#delete_remote_branch({
+\     "refspec"    : "fuga",
+\   })
+\ ')
+  call self.assert_throw('repository required', '
+\   call giti#push#delete_remote_branch({
+\     "repository" : "",
+\     "refspec"    : "fuga",
+\   })
+\ ')
+  call self.assert_throw('refspec required', '
+\   call giti#push#delete_remote_branch({
+\     "repository" : "hoge",
+\   })
+\ ')
+  call self.assert_throw('refspec required', '
+\   call giti#push#delete_remote_branch({
+\     "repository" : "hoge",
+\     "refspec"    : "",
+\   })
+\ ')
+
+  call self.assert_throw('E118', 'call giti#push#delete_remote_branch("", "")')
+  call self.assert_throw('E119', 'call giti#push#delete_remote_branch()')
+endfunction"}}}
+
 unlet s:tc
