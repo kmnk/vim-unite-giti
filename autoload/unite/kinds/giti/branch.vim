@@ -43,6 +43,17 @@ let s:kind.action_table.delete = {
 \}
 function! s:kind.action_table.delete.func(candidate)"{{{
   echo giti#branch#delete(a:candidate.action__name)
+
+  if !v:shell_error
+    " TODO: get repository from config branch remote
+    let arg = {
+\     'repository' : 'origin',
+\     'branch'     : a:candidate.action__name
+\   }
+    if s:is_deleting_remote_confirmed(arg)
+      echo giti#branch#delete_remote(arg)
+    endif
+  endif
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
@@ -53,6 +64,17 @@ let s:kind.action_table.delete_force = {
 \}
 function! s:kind.action_table.delete_force.func(candidate)"{{{
   echo giti#branch#delete_force(a:candidate.action__name)
+
+  if !v:shell_error
+    " TODO: get repository from config branch remote
+    let arg = {
+\     'repository' : 'origin',
+\     'branch'     : a:candidate.action__name
+\   }
+    if s:is_deleting_remote_confirmed(arg)
+      echo giti#branch#delete_remote(arg)
+    endif
+  endif
 endfunction"}}}
 
 let s:kind.action_table.merge = {
@@ -69,6 +91,10 @@ endfunction"}}}
 " }}}
 
 " local functions {{{
+function! s:is_deleting_remote_confirmed(param)"{{{
+  let branch = a:param.branch
+  return input('delete remote branch "' . branch . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction"}}}
 " }}}
 
 let &cpo = s:save_cpo
