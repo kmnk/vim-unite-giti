@@ -33,13 +33,73 @@ And execute :NeoBundleInstall command.
 ==========================================================================
 SOURCES						*vim-unite-giti-sources*
 
+This plugin provides following unite sources.
+
+giti						*vim-unite-giti-sources-giti*
+
+giti/branc					*vim-unite-giti-sources-giti/branch*
+
+giti/branch_all					*vim-unite-giti-sources-giti/branch_all*
+
+giti/branch/new					*vim-unite-giti-sources-giti/branch/new*
+
+giti/config					*vim-unite-giti-sources-giti/config*
+
+giti/log					*vim-unite-giti-sources-giti/log*
+
+giti/status					*vim-unite-giti-sources-giti/status*
+
 
 ==========================================================================
 KINDS						*vim-unite-giti-kinds*
 
+This plugin provides following unite kinds.
+
+giti						*vim-unite-giti-kinds-giti*
+
+giti/branc					*vim-unite-giti-kinds-giti/branch*
+
+giti/branch/new					*vim-unite-giti-kinds-giti/branch/new*
+
+giti/config					*vim-unite-giti-kinds-giti/config*
+
+giti/log					*vim-unite-giti-kinds-giti/log*
+
+giti/status					*vim-unite-giti-kinds-giti/status*
+
 
 ==========================================================================
 COMMANDS					*vim-unite-giti-commands*
+
+This plugin provides following commands.
+
+Giti						*vim-unite-giti-commands-giti*
+
+GitiWithConfirm					*vim-unite-giti-commands-giti-with-confirm*
+
+GitiFetch					*vim-unite-giti-commands-giti-fetch*
+
+GitiPush					*vim-unite-giti-commands-giti-push*
+
+GitiPushWithSettingUpstream			*vim-unite-giti-commands-giti-push-with-setting-upstream*
+
+GitiPushExpressly				*vim-unite-giti-commands-giti-push-expressly*
+
+GitiPull					*vim-unite-giti-commands-giti-pull*
+
+GitiPullSquash					*vim-unite-giti-commands-giti-pull-squash*
+
+GitiPullRebase					*vim-unite-giti-commands-giti-pull-rebase*
+
+GitiPullExpressly				*vim-unite-giti-commands-giti-pull-expressly*
+
+GitiDiff					*vim-unite-giti-commands-giti-diff*
+
+GitiDiffCached					*vim-unite-giti-commands-giti-diff-cached*
+
+GitiLog						*vim-unite-giti-commands-giti-log*
+
+GitiLogLine					*vim-unite-giti-commands-giti-log-line*
 
 
 ==========================================================================
