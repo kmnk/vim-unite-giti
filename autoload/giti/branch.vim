@@ -34,25 +34,34 @@ function! giti#branch#current()"{{{
 \ ), 0)
 endfunction"}}}
 
-function! giti#branch#delete(branch)"{{{
+function! giti#branch#delete(branches)"{{{
   return giti#system_with_specifics({
-\   'command' : 'branch -d ' . a:branch,
+\   'command' : 'branch -d ' . join(a:branches),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
 
-function! giti#branch#delete_force(branch)"{{{
+function! giti#branch#delete_force(branches)"{{{
   return giti#system_with_specifics({
-\   'command' : 'branch -D ' . a:branch,
+\   'command' : 'branch -D ' . join(a:branches),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
 
-function! giti#branch#delete_remote(param) abort "{{{
-  if !has_key(a:param, 'branch') || len(a:param.branch) <= 0
-    throw 'branch required'
+function! giti#branch#delete_remote(params) abort "{{{
+  if len(a:params) <= 0
+    return
   endif
-  return giti#push#delete_remote_branch(a:param)
+
+  let results = []
+  for param in a:params
+    if !has_key(param, 'branch') || len(param.branch) <= 0
+      throw 'branch required'
+    endif
+    call add(results, giti#push#delete_remote_branch(param))
+  endfor
+
+  return results
 endfunction"}}}
 
 function! giti#branch#create(branch)"{{{

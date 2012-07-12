@@ -38,40 +38,46 @@ let s:kind.alias_table.new = 'run'
 
 let s:kind.action_table.delete = {
 \ 'description' : 'delete this branch',
-\ 'is_selectable' : 0,
+\ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete.func(candidate)"{{{
-  let branch = a:candidate.action__name
-  let repository = s:get_repository(branch)
+function! s:kind.action_table.delete.func(candidates)"{{{
+  let args = map(copy(a:candidates), '
+\   {
+\     "branch"     : v:val.action__name,
+\     "repository" : s:get_repository(v:val.action__name),
+\   }
+\ ')
 
-  echo giti#branch#delete(branch)
+  echo giti#branch#delete(map(copy(args), 'v:val.branch'))
 
-  if len(repository) > 0 && !v:shell_error
-    echo s:delete_remote({
-\     'repository' : repository,
-\     'branch'     : branch,
-\   })
+  if len(args) > 0 && !v:shell_error
+    for result in s:delete_remote(args)
+      echo result ? result : 'some error occured'
+    endfor
   endif
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
 let s:kind.action_table.delete_force = {
 \ 'description' : 'delete force this branch',
-\ 'is_selectable' : 0,
+\ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete_force.func(candidate)"{{{
-  let branch = a:candidate.action__name
-  let repository = s:get_repository(branch)
+function! s:kind.action_table.delete_force.func(candidates)"{{{
+  let args = map(copy(a:candidates), '
+\   {
+\     "branch"     : v:val.action__name,
+\     "repository" : s:get_repository(v:val.action__name),
+\   }
+\ ')
 
-  echo giti#branch#delete_force(branch)
+  echo giti#branch#delete_force(map(copy(args), 'v:val.branch'))
 
-  if len(repository) > 0 && !v:shell_error
-    echo s:delete_remote({
-\     'repository' : repository,
-\     'branch'     : branch,
-\   })
+  if len(args) > 0 && !v:shell_error
+    for result in s:delete_remote(args)
+      echo result ? result : 'some error occured'
+    endfor
   endif
 endfunction"}}}
 
@@ -89,8 +95,8 @@ endfunction"}}}
 " }}}
 
 " local functions {{{
-function! s:is_deleting_remote_confirmed(param)"{{{
-  return input('delete remote branch "' . a:param.branch . '" ? [y/n] : ') == 'y' ? 1 : 0
+function! s:is_deleting_remote_confirmed(params)"{{{
+  return input('delete remote branches ? [y/n] : ') == 'y' ? 1 : 0
 endfunction"}}}
 
 function! s:get_repository(branch)"{{{
@@ -100,9 +106,9 @@ function! s:get_repository(branch)"{{{
 \ })
 endfunction"}}}
 
-function! s:delete_remote(param)"{{{
-  if s:is_deleting_remote_confirmed(a:param)
-    return giti#branch#delete_remote(a:param)
+function! s:delete_remote(params)"{{{
+  if s:is_deleting_remote_confirmed(a:params)
+    return giti#branch#delete_remote(a:params)
   else
     return 'canceled'
   endif
