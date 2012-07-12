@@ -33,11 +33,16 @@ function! s:tc.test_list_error()"{{{
 endfunction"}}}
 
 function! s:tc.test_read()"{{{
-  call self.assert_equal(giti#config#read({'key' : 'hoge'}), 'mocked_system')
-  call self.assert_equal(b:system_called_with, 'config  hoge')
+  call self.assert_equal(giti#config#read({'key' : 'hoge'}),
+\                        'mocked_system_with_specifics')
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command' : 'config  hoge',
+\                         'ignore_error' : 1})
 
   call giti#config#read({'key' : 'hoge', 'location' : 'foobar'})
-  call self.assert_equal(b:system_called_with, 'config --foobar hoge')
+  call self.assert_equal(b:system_with_specifics_called_with,
+\                        {'command' : 'config --foobar hoge',
+\                         'ignore_error' : 1})
 
   call self.assert_throw('E118', 'call giti#config#read("", "")')
   call self.assert_throw('E119', 'call giti#config#read()')
