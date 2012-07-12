@@ -44,9 +44,12 @@ endfunction"}}}
 function! giti#config#read(param)"{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                           : ''
-  return giti#system(join([
-\   'config', location, a:param.key
-\ ]))
+  return substitute(giti#system_with_specifics({
+\   'command' : join([
+\     'config', location, a:param.key
+\   ]),
+\   'ignore_error' : 1,
+\ }), '\n\+$', '', '')
 endfunction"}}}
 
 function! giti#config#write(param)"{{{

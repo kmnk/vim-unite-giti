@@ -121,7 +121,8 @@ endfunction"}}}
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if v:shell_error
-    throw 'System error: git ' . a:param.command . "\n" . a:res
+    echo 'error occured on executing "git ' . a:param.command . '"'
+    echo a:res
     return
   else
     return a:res

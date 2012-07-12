@@ -42,17 +42,16 @@ let s:kind.action_table.delete = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete.func(candidate)"{{{
-  echo giti#branch#delete(a:candidate.action__name)
+  let branch = a:candidate.action__name
+  let repository = s:get_repository(branch)
 
-  if !v:shell_error
-    " TODO: get repository from config branch remote
-    let arg = {
-\     'repository' : 'origin',
-\     'branch'     : a:candidate.action__name
-\   }
-    if s:is_deleting_remote_confirmed(arg)
-      echo giti#branch#delete_remote(arg)
-    endif
+  echo giti#branch#delete(branch)
+
+  if len(repository) > 0 && !v:shell_error
+    echo s:delete_remote({
+\     'repository' : repository,
+\     'branch'     : branch,
+\   })
   endif
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
@@ -63,17 +62,16 @@ let s:kind.action_table.delete_force = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete_force.func(candidate)"{{{
-  echo giti#branch#delete_force(a:candidate.action__name)
+  let branch = a:candidate.action__name
+  let repository = s:get_repository(branch)
 
-  if !v:shell_error
-    " TODO: get repository from config branch remote
-    let arg = {
-\     'repository' : 'origin',
-\     'branch'     : a:candidate.action__name
-\   }
-    if s:is_deleting_remote_confirmed(arg)
-      echo giti#branch#delete_remote(arg)
-    endif
+  echo giti#branch#delete_force(branch)
+
+  if len(repository) > 0 && !v:shell_error
+    echo s:delete_remote({
+\     'repository' : repository,
+\     'branch'     : branch,
+\   })
   endif
 endfunction"}}}
 
@@ -92,8 +90,22 @@ endfunction"}}}
 
 " local functions {{{
 function! s:is_deleting_remote_confirmed(param)"{{{
-  let branch = a:param.branch
-  return input('delete remote branch "' . branch . '" ? [y/n] : ') == 'y' ? 1 : 0
+  return input('delete remote branch "' . a:param.branch . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction"}}}
+
+function! s:get_repository(branch)"{{{
+  return giti#config#read({
+\   'location' : 'local',
+\   'key'      : printf('branch.%s.remote', a:branch)
+\ })
+endfunction"}}}
+
+function! s:delete_remote(param)"{{{
+  if s:is_deleting_remote_confirmed(a:param)
+    return giti#branch#delete_remote(a:param)
+  else
+    return 'canceled'
+  endif
 endfunction"}}}
 " }}}
 
