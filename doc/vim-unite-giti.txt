@@ -1,23 +1,49 @@
 *vim-unite-giti.txt*	
 
 Author: kmnk <kmnknmk+vim@gmail.com>
-Repository: 
+Repository: https://github.com/kmnk/vim-unite-giti
 
 ==========================================================================
 CONTENTS					*vim-unite-giti-contents*
 
 Introduction		|vim-unite-giti-introduction|
 Install			|vim-unite-giti-install|
+Sources			|vim-unite-giti-sources|
+Kinds			|vim-unite-giti-kinds|
+Commands		|vim-unite-giti-commands|
+Samples			|vim-unite-giti-samples|
 
 
 ==========================================================================
 INTRODUCTION					*vim-unite-giti-introduction*
 
-|vim-unite-giti| is ..
+|vim-unite-giti| is unite source for using git.
+And provide some simple commands.
 
 
 ==========================================================================
 INSTALL						*vim-unite-giti-install*
+
+If you use NeoBundle (or Vundle) plugin, add following line to your .vimrc.
+And execute :NeoBundleInstall command.
+>
+  NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
+<
+
+==========================================================================
+SOURCES						*vim-unite-giti-sources*
+
+
+==========================================================================
+KINDS						*vim-unite-giti-kinds*
+
+
+==========================================================================
+COMMANDS					*vim-unite-giti-commands*
+
+
+==========================================================================
+SAMPLES						*vim-unite-giti-samples*
 
 
 
