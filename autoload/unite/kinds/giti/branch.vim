@@ -52,9 +52,14 @@ function! s:kind.action_table.delete.func(candidates)"{{{
   echo giti#branch#delete(map(copy(args), 'v:val.branch'))
 
   if len(args) > 0 && !v:shell_error
-    for result in s:delete_remote(args)
-      echo result ? result : 'some error occured'
-    endfor
+    let result = s:delete_remote(args)
+    if type(result) == type([])
+      for output in result
+        echo output ? output : 'some error occured'
+      endfor
+    else
+      echo result
+    endif
   endif
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
@@ -75,9 +80,14 @@ function! s:kind.action_table.delete_force.func(candidates)"{{{
   echo giti#branch#delete_force(map(copy(args), 'v:val.branch'))
 
   if len(args) > 0 && !v:shell_error
-    for result in s:delete_remote(args)
-      echo result ? result : 'some error occured'
-    endfor
+    let result = s:delete_remote(args)
+    if type(result) == type([])
+      for output in result
+        echo output ? output : 'some error occured'
+      endfor
+    else
+      echo result
+    endif
   endif
 endfunction"}}}
 
