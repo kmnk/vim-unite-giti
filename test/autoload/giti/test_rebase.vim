@@ -1,19 +1,27 @@
 let s:tc = unittest#testcase#new('autoload/giti/rebase.vim')
 
 function! s:tc.test_run()"{{{
-  call self.assert_equal('mocked_system',
+  call self.assert_equal('mocked_system_with_specifics',
 \                        giti#rebase#run({'upstream' : 'hoge',
 \                                         'onto'     : 'fuga'}))
-  call self.assert_equal('rebase --onto fuga hoge', b:system_called_with)
+  call self.assert_equal({'command' : 'rebase --onto fuga hoge',
+\                         'with_confirm' : 1},
+\                        b:system_with_specifics_called_with)
 
   call giti#rebase#run({'upstream' : 'hoge'})
-  call self.assert_equal('rebase  hoge', b:system_called_with)
+  call self.assert_equal({'command' : 'rebase  hoge',
+\                         'with_confirm' : 1},
+\                        b:system_with_specifics_called_with)
 
   call giti#rebase#run({'onto' : 'fuga'})
-  call self.assert_equal('rebase --onto fuga ', b:system_called_with)
+  call self.assert_equal({'command' : 'rebase --onto fuga ',
+\                         'with_confirm' : 1},
+\                        b:system_with_specifics_called_with)
 
   call giti#rebase#run({})
-  call self.assert_equal('rebase  ', b:system_called_with)
+  call self.assert_equal({'command' : 'rebase  ',
+\                         'with_confirm' : 1},
+\                        b:system_with_specifics_called_with)
 
   call self.assert_throw('E118', 'call giti#rebase#run("", "")')
   call self.assert_throw('E119', 'call giti#rebase#run()')

@@ -10,10 +10,17 @@ set cpo&vim
 " }}}
 
 function! giti#rebase#run(param)"{{{
-  return giti#system(printf('rebase %s %s',
-\   has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
-\   has_key(a:param, 'upstream') ? a:param.upstream         : '',
-\ ))
+  return giti#system_with_specifics({
+\   'command' : printf('rebase %s %s',
+\                 has_key(a:param, 'onto')
+\                   ? '--onto ' . a:param.onto
+\                   : '',
+\                 has_key(a:param, 'upstream')
+\                   ? a:param.upstream
+\                   : ''
+\               ),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#rebase#interactive(param)"{{{
