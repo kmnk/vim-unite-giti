@@ -102,6 +102,17 @@ function! s:kind.action_table.merge.func(candidate)"{{{
   echo giti#merge#run({ 'branch_name' : a:candidate.action__name })
 endfunction"}}}
 
+let s:kind.action_table.rebase = {
+\ 'description' : 'rebase on this branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.rebase.func(candidate)"{{{
+  echo giti#rebase#run({ 'branch_name' : a:candidate.action__name })
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
