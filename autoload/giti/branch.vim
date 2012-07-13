@@ -87,6 +87,9 @@ function! s:pickup_full_branch_name(line)
 endfunction
 
 function! s:pickup_branch_name(line)
+  if match(a:line, '^*\s*\%((no branch)\)') >= 0
+    return '(no branch)'
+  endif
   return substitute(a:line, '^*\?\s*\%(remotes/\)\?\([^ ]\+\).*', '\1', '')
 endfunction
 
