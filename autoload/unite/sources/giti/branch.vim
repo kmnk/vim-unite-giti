@@ -50,7 +50,7 @@ let s:word_format = '% 1s %s'
 function! s:build_word(val)"{{{
   return printf(s:word_format,
 \   a:val.is_current ? '*' : '',
-\   a:val.name)
+\   a:val.full_name)
 endfunction"}}}
 
 function! s:sort_by_is_current(context1, context2)"{{{{
