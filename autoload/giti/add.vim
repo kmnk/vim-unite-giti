@@ -13,6 +13,10 @@ function! giti#add#run(files)"{{{
   return giti#system('add ' . join(a:files))
 endfunction"}}}
 
+function! giti#add#patch(files)"{{{
+  return giti#execute('! git add -p ' . join(a:files))
+endfunction"}}}
+
 " local functions {{{
 " }}}
 

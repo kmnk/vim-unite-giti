@@ -30,6 +30,16 @@ function! s:kind.action_table.add.func(candidates)"{{{
 endfunction"}}}
 let s:kind.alias_table.stage = 'add'
 
+let s:kind.action_table.add_patch = {
+\ 'description' : 'add -p selected files',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 0,
+\ 'is_invalidate_cache' : 1,
+\}
+function! s:kind.action_table.add_patch.func(candidates)"{{{
+  return giti#add#patch(map(a:candidates, 'v:val.action__path'))
+endfunction"}}}
+
 let s:kind.action_table.reset_head = {
 \ 'description' : "reset selected files' Index to HEAD",
 \ 'is_selectable' : 1,
