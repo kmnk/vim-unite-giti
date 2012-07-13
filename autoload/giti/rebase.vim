@@ -17,7 +17,7 @@ function! giti#rebase#run(param)"{{{
 endfunction"}}}
 
 function! giti#rebase#interactive(param)"{{{
-  return giti#system(printf('rebase -i %s %s',
+  return giti#execute(printf('! git rebase -i %s %s',
 \   has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
 \   has_key(a:param, 'upstream') ? a:param.upstream         : '',
 \ ))

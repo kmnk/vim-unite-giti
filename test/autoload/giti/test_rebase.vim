@@ -20,19 +20,19 @@ function! s:tc.test_run()"{{{
 endfunction"}}}
 
 function! s:tc.test_interactive()"{{{
-  call self.assert_equal('mocked_system',
+  call self.assert_equal('mocked_execute',
 \                        giti#rebase#interactive({'upstream' : 'hoge',
 \                                                 'onto'     : 'fuga'}))
-  call self.assert_equal('rebase -i --onto fuga hoge', b:system_called_with)
+  call self.assert_equal('! git rebase -i --onto fuga hoge', b:execute_called_with)
 
   call giti#rebase#interactive({'upstream' : 'hoge'})
-  call self.assert_match('rebase -i  hoge', b:system_called_with)
+  call self.assert_match('! git rebase -i  hoge', b:execute_called_with)
 
   call giti#rebase#interactive({'onto' : 'fuga'})
-  call self.assert_equal('rebase -i --onto fuga ', b:system_called_with)
+  call self.assert_equal('! git rebase -i --onto fuga ', b:execute_called_with)
 
   call giti#rebase#interactive({})
-  call self.assert_equal('rebase -i  ', b:system_called_with)
+  call self.assert_equal('! git rebase -i  ', b:execute_called_with)
 
   call self.assert_throw('E118', 'call giti#rebase#interactive("", "")')
   call self.assert_throw('E119', 'call giti#rebase#interactive()')

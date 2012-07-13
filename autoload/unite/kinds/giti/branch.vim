@@ -110,7 +110,18 @@ let s:kind.action_table.rebase = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.rebase.func(candidate)"{{{
-  echo giti#rebase#run({ 'branch_name' : a:candidate.action__name })
+  echo giti#rebase#run({ 'upstream' : a:candidate.action__name })
+endfunction"}}}
+
+let s:kind.action_table.rebase_interactive = {
+\ 'description' : 'rebase interactive on this branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.rebase_interactive.func(candidate)"{{{
+  echo giti#rebase#interactive({ 'upstream' : a:candidate.action__name })
 endfunction"}}}
 
 " }}}
