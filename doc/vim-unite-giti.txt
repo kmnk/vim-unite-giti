@@ -37,17 +37,31 @@ This plugin provides following unite sources.
 
 giti						*vim-unite-giti-sources-giti*
 
-giti/branc					*vim-unite-giti-sources-giti/branch*
+List source names of giti.
+
+giti/branch					*vim-unite-giti-sources-giti/branch*
+
+List results of "git branch".
 
 giti/branch_all					*vim-unite-giti-sources-giti/branch_all*
 
+List results of "git branch -a".
+
 giti/branch/new					*vim-unite-giti-sources-giti/branch/new*
+
+Source for execute "giti/branch/new" kind.
 
 giti/config					*vim-unite-giti-sources-giti/config*
 
+List git configs.
+
 giti/log					*vim-unite-giti-sources-giti/log*
 
+List formated reuslts of "git log".
+
 giti/status					*vim-unite-giti-sources-giti/status*
+
+List formated results of "git status"
 
 
 ==========================================================================
