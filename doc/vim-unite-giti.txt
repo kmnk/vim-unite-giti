@@ -74,10 +74,19 @@ This plugin provides following unite kinds.
 giti/branch					*vim-unite-giti-kinds-giti/branch*
 
 	run switch sw new
+		Checkout selected branch, and switch it.
+		Execute "git checkout" on your shell.
 
 	delete rm
+		Delete selected branch.
+		And can delete remote branch too if you want.
+		Execute "git branch -d"
+		and "git push $REPOSITORY :$BRANCH_NAME" on your shell.
 
 	delete_force
+		Force delete selected branch.
+		And can delete remote branch too if you want.
+		
 
 	merge
 
