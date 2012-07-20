@@ -26,7 +26,7 @@ INSTALL						*vim-unite-giti-install*
 
 If you use NeoBundle (or Vundle) plugin, add following line to your .vimrc.
 And execute :NeoBundleInstall command.
->
+Example: >
   NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 <
 
@@ -50,11 +50,6 @@ giti/branch_all					*vim-unite-giti-sources-giti/branch_all*
 	List results of "git branch -a".
 
 
-giti/branch/new					*vim-unite-giti-sources-giti/branch/new*
-
-	Source for execute "giti/branch/new" kind.
-
-
 giti/config					*vim-unite-giti-sources-giti/config*
 
 	List git configs.
@@ -68,24 +63,76 @@ giti/log					*vim-unite-giti-sources-giti/log*
 giti/status					*vim-unite-giti-sources-giti/status*
 
 	List formated results of "git status".
-	Every line has two statuses. IndexStatus and WorkStatus.
+	Every line has two statuses, IndexStatus and WorkStatus.
+	IndexStatus is status of index, and WorkStatus is of work tree.
 
 ==========================================================================
 KINDS						*vim-unite-giti-kinds*
 
 This plugin provides following unite kinds.
 
-giti						*vim-unite-giti-kinds-giti*
+giti/branch					*vim-unite-giti-kinds-giti/branch*
 
-giti/branc					*vim-unite-giti-kinds-giti/branch*
+	run switch sw new
+
+	delete rm
+
+	delete_force
+
+	merge
+
 
 giti/branch/new					*vim-unite-giti-kinds-giti/branch/new*
 
+	run create new
+
+
 giti/config					*vim-unite-giti-kinds-giti/config*
+
+	run yank_value
+
+	write
+
+	remove
+
 
 giti/log					*vim-unite-giti-kinds-giti/log*
 
+	view
+
+	diff di
+
+	revert
+
+	vimdiff vdi
+
+	reset_hard reset
+
+
 giti/status					*vim-unite-giti-kinds-giti/status*
+
+	add stage
+
+	reset_head reset undo unstage
+
+	commit ci
+
+	amend
+
+	checkout
+
+	diff di
+
+	diff_cached dic
+
+	diff_head dih
+
+	vimdiff_head vdih vdi
+
+	rm_cached rmc
+
+	ignore
+
 
 
 ==========================================================================
