@@ -73,74 +73,105 @@ This plugin provides following unite kinds.
 
 giti/branch					*vim-unite-giti-kinds-giti/branch*
 
+
+
 	run switch sw new
 		Checkout selected branch, and switch it.
-		Execute "git checkout" on your shell.
+		This action execute "git checkout".
 
 	delete rm
 		Delete selected branch.
 		And can delete remote branch too if you want.
-		Execute "git branch -d"
+		This action execute "git branch -d $BRANCH_NAME".
 		and "git push $REPOSITORY :$BRANCH_NAME" on your shell.
 
 	delete_force
 		Force delete selected branch.
 		And can delete remote branch too if you want.
-		
+		This action execute "git branch -D $BRANCH_NAME".
+		and "git push $REPOSITORY :$BRANCH_NAME" on your shell.
 
 	merge
+		Merge selected branch into current branch.
+		This action execute "git merge $BRANCH_NAME".
 
 
 giti/branch/new					*vim-unite-giti-kinds-giti/branch/new*
 
 	run create new
+		Create new branch from selected (or inputed) branch.
+		This action execute "git checkout -b $NEW_BRANCH_NAME $SELECTED_BRANCH_NAME".
 
 
 giti/config					*vim-unite-giti-kinds-giti/config*
 
 	run yank_value
+		Yank value of selected setting.
 
 	write
+		Rewrite selected setting.
 
 	remove
+		Remove selected setting.
 
 
 giti/log					*vim-unite-giti-kinds-giti/log*
 
 	view
+		View detail of selected commit.
 
 	diff di
+		View diff of selected commit, or diff between selected commits.
 
 	revert
+		Revert selected commit.
 
 	vimdiff vdi
+		View diff by vimdiff of selected commit.
+		This action run correctly with logs specified a file.
 
 	reset_hard reset
+		Execute hard reset to selected commit.
 
 
 giti/status					*vim-unite-giti-kinds-giti/status*
 
 	add stage
+		Add selected files to staged.
+
+	add_patch
+		Add selected files each hunks of patch to staged.
 
 	reset_head reset undo unstage
+		Reset this files status to unstage.
 
 	commit ci
+		Commit selected files.
 
 	amend
+		Amend previous commit.
 
 	checkout
+		Checkout selected files.
 
 	diff di
+		View differences betaween selected unstaged files from staged them.
 
 	diff_cached dic
+		View differences between selected staged files from HEAD.
 
 	diff_head dih
+		View differences between selected unstaged files from HEAD.
 
 	vimdiff_head vdih vdi
+		View differences between selected unstaged files from HEAD by vimdiff.
 
 	rm_cached rmc
+		Remove new selected files from stage.
 
 	ignore
+		Ignore selected files.
+		Open new buffer of ".gitignore".
 
 
 
