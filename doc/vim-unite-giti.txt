@@ -155,7 +155,7 @@ giti/status					*vim-unite-giti-kinds-giti/status*
 		Checkout selected files.
 
 	diff di
-		View differences betaween selected unstaged files from staged them.
+		View differences between selected unstaged files from staged them.
 
 	diff_cached dic
 		View differences between selected staged files from HEAD.
@@ -181,37 +181,110 @@ COMMANDS					*vim-unite-giti-commands*
 This plugin provides following commands.
 
 Giti						*vim-unite-giti-commands-giti*
+	Execute specified git command by giti.
 
 GitiWithConfirm					*vim-unite-giti-commands-giti-with-confirm*
+	Execute specified git command by giti.
+	And view executing command as confirm.
 
 GitiFetch					*vim-unite-giti-commands-giti-fetch*
+	Fetch from specified repository with refspec by giti.
 
 GitiPush					*vim-unite-giti-commands-giti-push*
+	Push to specified repository with refspec by giti.
 
 GitiPushWithSettingUpstream			*vim-unite-giti-commands-giti-push-with-setting-upstream*
+	Push to specified repository with refspec
+	and add upstream reference by giti.
 
 GitiPushExpressly				*vim-unite-giti-commands-giti-push-expressly*
+	Push to specified repository with refspec interactively.
 
 GitiPull					*vim-unite-giti-commands-giti-pull*
+	Pull from specified repository with refspec.
 
 GitiPullSquash					*vim-unite-giti-commands-giti-pull-squash*
+	Squash pull from specified repository with refspec.
 
 GitiPullRebase					*vim-unite-giti-commands-giti-pull-rebase*
+	Rebase pull from specified repository with refspec.
 
 GitiPullExpressly				*vim-unite-giti-commands-giti-pull-expressly*
+	Pull from specified repository with refspec interactively.
 
 GitiDiff					*vim-unite-giti-commands-giti-diff*
+	View differences between specified unstaged files from staged them.
 
 GitiDiffCached					*vim-unite-giti-commands-giti-diff-cached*
+	View differences between specified staged files from HEAD.
 
 GitiLog						*vim-unite-giti-commands-giti-log*
+	View logs with specified parameters.
 
 GitiLogLine					*vim-unite-giti-commands-giti-log-line*
+	View one-line logs with specified parameters.
 
 
 ==========================================================================
 SAMPLES						*vim-unite-giti-samples*
 
+>
+    " giti
+    nmap <Space>gd <SID>(git-diff-cached)
+    nmap <Space>gD <SID>(git-diff)
+    nmap <Space>gf <SID>(git-fetch-now)
+    nmap <Space>gF <SID>(git-fetch)
+    nmap <Space>gp <SID>(git-push-now)
+    nmap <Space>gP <SID>(git-pull-now)
+    nmap <Space>gl <SID>(git-log-line)
+    nmap <Space>gL <SID>(git-log)
+
+    " giti {{{
+    if globpath(&rtp, 'plugin/giti.vim') != ''
+      let g:giti_log_default_line_count = 100
+      nnoremap <expr><silent> <SID>(git-diff)        ':<C-u>GitiDiff ' . expand('%:p') . '<CR>'
+      nnoremap <expr><silent> <SID>(git-diff-cached) ':<C-u>GitiDiffCached ' . expand('%:p') .  '<CR>'
+      nnoremap       <silent> <SID>(git-fetch-now)    :<C-u>GitiFetch<CR>
+      nnoremap       <silent> <SID>(git-fetch)        :<C-u>GitiFetch 
+      nnoremap <expr><silent> <SID>(git-push-now)    ':<C-u>GitiPushWithSettingUpstream origin ' . giti#branch#current_name() . '<CR>'
+      nnoremap       <silent> <SID>(git-push)         :<C-u>GitiPush 
+      nnoremap       <silent> <SID>(git-pull-now)     :<C-u>GitiPull<CR>
+      nnoremap       <silent> <SID>(git-pull)         :<C-u>GitiPull 
+      nnoremap       <silent> <SID>(git-log-line)     :<C-u>GitiLogLine ' . expand('%:p') . '<CR>'
+      nnoremap       <silent> <SID>(git-log)          :<C-u>GitiLog ' . expand('%:p') . '<CR>'
+    endif
+    " }}}
+
+    " unite settings
+    if globpath(&rtp, 'plugin/unite.vim') == ''
+      finish
+    endif
+
+    " unite prefix key
+    nnoremap [unite] <Nop>
+    nmap <Leader>. [unite]
+
+    nmap [unite]gg    <SID>(giti-sources)
+    nmap [unite]gst   <SID>(git-status)
+    nmap [unite]gb    <SID>(git-branch)
+    nmap [unite]gB    <SID>(git-branch_all)
+    nmap [unite]gc    <SID>(git-config)
+    nmap [unite]gl    <SID>(git-log)
+    nmap [unite]gL    <SID>(git-log-this-file)
+
+    " git {{{
+    if globpath(&rtp, 'plugin/giti.vim') != ''
+      nnoremap <silent> <SID>(giti-sources)   :<C-u>Unite giti<CR>
+      nnoremap <silent> <SID>(git-status)     :<C-u>Unite giti/status<CR>
+      nnoremap <silent> <SID>(git-branch)     :<C-u>Unite giti/branch<CR>
+      nnoremap <silent> <SID>(git-branch_all) :<C-u>Unite giti/branch_all<CR>
+      nnoremap <silent> <SID>(git-config)     :<C-u>Unite giti/config<CR>
+      nnoremap <silent> <SID>(git-log)        :<C-u>Unite giti/log<CR>
+
+      nnoremap <silent><expr> <SID>(git-log-this-file) ':<C-u>Unite giti/log:' . expand('%:p') . '<CR>'
+    endif
+" }}}
+<
 
 
 ==========================================================================
