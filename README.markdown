@@ -77,7 +77,6 @@
 
 ## TODO
 
-- write document
 - extend *giti/log* source (and write document about it)
 - extend *giti/diff* action (use vimdiff)
 - implement *giti/stash* source and kind
