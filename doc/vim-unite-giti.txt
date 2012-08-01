@@ -239,6 +239,18 @@ SAMPLES						*vim-unite-giti-samples*
     nmap <Space>gl <SID>(git-log-line)
     nmap <Space>gL <SID>(git-log)
 
+    " unite prefix key
+    nnoremap [unite] <Nop>
+    nmap <Leader>. [unite]
+
+    nmap [unite]gg    <SID>(giti-sources)
+    nmap [unite]gst   <SID>(git-status)
+    nmap [unite]gb    <SID>(git-branch)
+    nmap [unite]gB    <SID>(git-branch_all)
+    nmap [unite]gc    <SID>(git-config)
+    nmap [unite]gl    <SID>(git-log)
+    nmap [unite]gL    <SID>(git-log-this-file)
+
     " giti {{{
     if globpath(&rtp, 'plugin/giti.vim') != ''
       let g:giti_log_default_line_count = 100
@@ -252,28 +264,7 @@ SAMPLES						*vim-unite-giti-samples*
       nnoremap       <silent> <SID>(git-pull)         :<C-u>GitiPull 
       nnoremap       <silent> <SID>(git-log-line)     :<C-u>GitiLogLine ' . expand('%:p') . '<CR>'
       nnoremap       <silent> <SID>(git-log)          :<C-u>GitiLog ' . expand('%:p') . '<CR>'
-    endif
-    " }}}
 
-    " unite settings
-    if globpath(&rtp, 'plugin/unite.vim') == ''
-      finish
-    endif
-
-    " unite prefix key
-    nnoremap [unite] <Nop>
-    nmap <Leader>. [unite]
-
-    nmap [unite]gg    <SID>(giti-sources)
-    nmap [unite]gst   <SID>(git-status)
-    nmap [unite]gb    <SID>(git-branch)
-    nmap [unite]gB    <SID>(git-branch_all)
-    nmap [unite]gc    <SID>(git-config)
-    nmap [unite]gl    <SID>(git-log)
-    nmap [unite]gL    <SID>(git-log-this-file)
-
-    " git {{{
-    if globpath(&rtp, 'plugin/giti.vim') != ''
       nnoremap <silent> <SID>(giti-sources)   :<C-u>Unite giti<CR>
       nnoremap <silent> <SID>(git-status)     :<C-u>Unite giti/status<CR>
       nnoremap <silent> <SID>(git-branch)     :<C-u>Unite giti/branch<CR>
@@ -283,7 +274,7 @@ SAMPLES						*vim-unite-giti-samples*
 
       nnoremap <silent><expr> <SID>(git-log-this-file) ':<C-u>Unite giti/log:' . expand('%:p') . '<CR>'
     endif
-" }}}
+    " }}}
 <
 
 
