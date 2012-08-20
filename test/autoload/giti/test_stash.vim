@@ -39,6 +39,12 @@ function! s:tc.test_built_list()"{{{
 endfunction"}}}
 
 function! s:tc.test_show()"{{{
+  call self.assert_equal(giti#stash#show({'stash' : 'hoge'}), 'mocked_system')
+  call self.assert_equal('stash show hoge', b:system_called_with)
+  call self.assert_equal(giti#stash#show({}), 'mocked_system')
+  call self.assert_equal('stash show ', b:system_called_with)
+  call self.assert_throw('E118', 'call giti#stash#show("", "")')
+  call self.assert_throw('E119', 'call giti#stash#show()')
   call self.assert(1)
 endfunction"}}}
 

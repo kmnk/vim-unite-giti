@@ -23,6 +23,11 @@ function! giti#stash#built_list()"{{{
 \ ')
 endfunction"}}}
 
+function! giti#stash#show(param)"{{{
+  let stash = has_key(a:param, 'stash') ? a:param.stash : ''
+  return giti#system('stash show ' . stash)
+endfunction"}}}
+
 " local functions {{{
 function! s:build_data(line)"{{{
   let splited = split(a:line, '::')
