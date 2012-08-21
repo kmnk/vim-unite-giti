@@ -138,7 +138,7 @@ function! s:is_confirmed(param)
 endfunction
 
 function! s:trim(string)"{{{
-  return substitute(a:string, '\(.\+\)\s\+$', '\1', '')
+  return substitute(a:string, '\s\+$', '', '')
 endfunction"}}}
 " }}}
 
