@@ -45,11 +45,15 @@ function! s:tc.test_show()"{{{
   call self.assert_equal('stash show ', b:system_called_with)
   call self.assert_throw('E118', 'call giti#stash#show("", "")')
   call self.assert_throw('E119', 'call giti#stash#show()')
-  call self.assert(1)
 endfunction"}}}
 
 function! s:tc.test_drop()"{{{
-  call self.assert(1)
+  call self.assert_equal(giti#stash#drop({'stash' : 'hoge'}), 'mocked_system')
+  call self.assert_equal('stash drop hoge', b:system_called_with)
+  call self.assert_equal(giti#stash#drop({}), 'mocked_system')
+  call self.assert_equal('stash drop ', b:system_called_with)
+  call self.assert_throw('E118', 'call giti#stash#drop("", "")')
+  call self.assert_throw('E119', 'call giti#stash#drop()')
 endfunction"}}}
 
 function! s:tc.test_pop()"{{{

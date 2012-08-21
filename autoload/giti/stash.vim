@@ -28,6 +28,11 @@ function! giti#stash#show(param)"{{{
   return giti#system('stash show ' . stash)
 endfunction"}}}
 
+function! giti#stash#drop(param)"{{{
+  let stash = has_key(a:param, 'stash') ? a:param.stash : ''
+  return giti#system('stash drop ' . stash)
+endfunction"}}}
+
 " local functions {{{
 function! s:build_data(line)"{{{
   let splited = split(a:line, '::')
