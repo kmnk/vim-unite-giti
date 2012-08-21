@@ -33,6 +33,16 @@ function! giti#stash#drop(param)"{{{
   return giti#system('stash drop ' . stash)
 endfunction"}}}
 
+function! giti#stash#pop(param)"{{{
+  let stash = has_key(a:param, 'stash') ? a:param.stash : ''
+  return giti#system('stash pop ' . stash)
+endfunction"}}}
+
+function! giti#stash#apply(param)"{{{
+  let stash = has_key(a:param, 'stash') ? a:param.stash : ''
+  return giti#system('stash apply ' . stash)
+endfunction"}}}
+
 " local functions {{{
 function! s:build_data(line)"{{{
   let splited = split(a:line, '::')
