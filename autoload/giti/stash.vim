@@ -52,6 +52,12 @@ function! giti#stash#branch(param)"{{{
   return giti#system(printf('stash branch %s %s', branchname, stash))
 endfunction"}}}
 
+function! giti#stash#save(...)"{{{
+  let param = a:0 > 0 ? a:1 : {}
+  let message = has_key(param, 'message') ? param.message : ''
+  return giti#system(printf('stash save %s', message))
+endfunction"}}}
+
 function! giti#stash#clear()"{{{
   return giti#system('stash clear')
 endfunction"}}}

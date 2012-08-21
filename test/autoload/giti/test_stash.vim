@@ -88,7 +88,13 @@ function! s:tc.test_branch()"{{{
 endfunction"}}}
 
 function! s:tc.test_save()"{{{
-  call self.assert(1)
+  call self.assert_equal(
+\   giti#stash#save({'message' : 'hoge'}),
+\   'mocked_system'
+\ )
+  call self.assert_equal('stash save hoge', b:system_called_with)
+  call self.assert_equal(giti#stash#save(), 'mocked_system')
+  call self.assert_equal('stash save ', b:system_called_with)
 endfunction"}}}
 
 function! s:tc.test_clear()"{{{
