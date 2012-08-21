@@ -92,7 +92,9 @@ function! s:tc.test_save()"{{{
 endfunction"}}}
 
 function! s:tc.test_clear()"{{{
-  call self.assert(1)
+  call self.assert_equal(giti#stash#clear(), 'mocked_system')
+  call self.assert_equal('stash clear', b:system_called_with)
+  call self.assert_throw('E118', 'call giti#stash#clear("")')
 endfunction"}}}
 
 unlet s:tc

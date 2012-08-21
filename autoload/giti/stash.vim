@@ -52,6 +52,10 @@ function! giti#stash#branch(param)"{{{
   return giti#system(printf('stash branch %s %s', branchname, stash))
 endfunction"}}}
 
+function! giti#stash#clear()"{{{
+  return giti#system('stash clear')
+endfunction"}}}
+
 " local functions {{{
 function! s:build_data(line)"{{{
   let splited = split(a:line, '::')
