@@ -43,6 +43,15 @@ function! giti#stash#apply(param)"{{{
   return giti#system('stash apply ' . stash)
 endfunction"}}}
 
+function! giti#stash#branch(param)"{{{
+  if !has_key(a:param, 'branchname')
+    throw 'branchname required'
+  endif
+  let branchname = a:param.branchname
+  let stash = has_key(a:param, 'stash') ? a:param.stash : ''
+  return giti#system(printf('stash branch %s %s', branchname, stash))
+endfunction"}}}
+
 " local functions {{{
 function! s:build_data(line)"{{{
   let splited = split(a:line, '::')
