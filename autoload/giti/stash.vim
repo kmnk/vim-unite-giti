@@ -16,7 +16,7 @@ endfunction"}}}
 
 function! giti#stash#built_list()"{{{
   return map(split(giti#system(
-\   printf('stash list --date=relative --pretty=format:"%s"',
+\   printf('stash list --pretty=format:"%s"',
 \          s:pretty_format)
 \ ), '\n'), '
 \   s:build_data(v:val)
@@ -25,7 +25,12 @@ endfunction"}}}
 
 function! giti#stash#show(param)"{{{
   let stash = has_key(a:param, 'stash') ? a:param.stash : ''
-  return giti#system('stash show ' . stash)
+  let patch = has_key(a:param, 'patch') ? a:param.patch : ''
+  return giti#system(printf(
+\   'stash show %s %s',
+\   patch ? '-p' : '',
+\   stash,
+\ ))
 endfunction"}}}
 
 function! giti#stash#drop(param)"{{{
