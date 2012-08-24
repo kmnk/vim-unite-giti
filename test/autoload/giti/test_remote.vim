@@ -18,7 +18,36 @@ function! s:tc.test_show_verbose()"{{{
 endfunction"}}}
 
 function! s:tc.test_add()"{{{
-  call self.assert(1)
+  call self.assert_equal('mocked_system', giti#remote#add({
+\   'branch'  : 'foo',
+\   'master'  : 'bar',
+\   'fetch'   : 1,
+\   'tags'    : 1,
+\   'no_tags' : 1,
+\   'mirror'  : 'fetch',
+\   'name'    : 'baz',
+\   'url'     : 'qux',
+\ }))
+  call self.assert_equal(
+\   'remote add -t foo -m bar -f --tags --mirror=fetch baz qux',
+\   b:system_called_with
+\ )
+  call self.assert_equal('mocked_system', giti#remote#add({
+\   'name' : 'baz',
+\   'url'  : 'qux',
+\ }))
+  call self.assert_equal(
+\   'remote add      baz qux',
+\   b:system_called_with
+\ )
+  call self.assert_throw('name required', 'call giti#remote#add({
+\   "url"  : "qux",
+\ })')
+  call self.assert_throw('url required', 'call giti#remote#add({
+\   "name" : "baz",
+\ })')
+  call self.assert_throw('E118', 'call giti#remote#add("", "")')
+  call self.assert_throw('E119', 'call giti#remote#add()')
 endfunction"}}}
 
 function! s:tc.test_rename()"{{{
