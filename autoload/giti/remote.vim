@@ -6,8 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-
-
+function! giti#remote#show()"{{{
+  return giti#system('remote show')
+endfunction"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
