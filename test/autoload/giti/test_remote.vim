@@ -51,7 +51,22 @@ function! s:tc.test_add()"{{{
 endfunction"}}}
 
 function! s:tc.test_rename()"{{{
-  call self.assert(1)
+  call self.assert_equal('mocked_system', giti#remote#rename({
+\   'old' : 'foo',
+\   'new' : 'bar',
+\ }))
+  call self.assert_equal(
+\   'remote rename foo bar',
+\   b:system_called_with
+\ )
+  call self.assert_throw('new required', 'call giti#remote#rename({
+\   "old" : "foo",
+\ })')
+  call self.assert_throw('old required', 'call giti#remote#rename({
+\   "new" : "bar",
+\ })')
+  call self.assert_throw('E118', 'call giti#remote#rename("", "")')
+  call self.assert_throw('E119', 'call giti#remote#rename()')
 endfunction"}}}
 
 function! s:tc.test_rm()"{{{

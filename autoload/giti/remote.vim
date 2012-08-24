@@ -43,6 +43,19 @@ function! giti#remote#add(param)"{{{
 \ ))
 endfunction"}}}
 
+function! giti#remote#rename(param)"{{{
+  if !has_key(a:param, 'old') || strlen(a:param.old) <= 0
+    throw 'old required'
+  endif
+  if !has_key(a:param, 'new') || strlen(a:param.new) <= 0
+    throw 'new required'
+  endif
+
+  return giti#system(printf('remote rename %s %s',
+\   a:param.old, a:param.new
+\ ))
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
