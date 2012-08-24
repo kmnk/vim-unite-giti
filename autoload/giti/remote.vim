@@ -10,6 +10,10 @@ function! giti#remote#show()"{{{
   return giti#system('remote show')
 endfunction"}}}
 
+function! giti#remote#show_verbose()"{{{
+  return giti#system('remote --verbose show')
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__

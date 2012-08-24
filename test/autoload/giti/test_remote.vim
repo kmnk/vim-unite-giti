@@ -12,7 +12,9 @@ function! s:tc.test_show()"{{{
 endfunction"}}}
 
 function! s:tc.test_show_verbose()"{{{
-  call self.assert(1)
+  call self.assert_equal('mocked_system', giti#remote#show_verbose())
+  call self.assert_equal('remote --verbose show', b:system_called_with)
+  call self.assert_throw('E118', 'call giti#branch#list("")')
 endfunction"}}}
 
 function! s:tc.test_add()"{{{
