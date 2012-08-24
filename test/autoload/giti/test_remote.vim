@@ -90,7 +90,24 @@ function! s:tc.test_set_url()"{{{
 endfunction"}}}
 
 function! s:tc.test_prune()"{{{
-  call self.assert(1)
+  call self.assert_equal('mocked_system', giti#remote#prune({
+\   'name' : 'foo',
+\ }))
+  call self.assert_equal(
+\   'remote prune  foo',
+\   b:system_called_with
+\ )
+  call self.assert_equal('mocked_system', giti#remote#prune({
+\   'name'    : 'foo',
+\   'dry_run' : 1,
+\ }))
+  call self.assert_equal(
+\   'remote prune --dry-run foo',
+\   b:system_called_with
+\ )
+  call self.assert_throw('name required', 'call giti#remote#prune({})')
+  call self.assert_throw('E118', 'call giti#remote#prune("", "")')
+  call self.assert_throw('E119', 'call giti#remote#prune()')
 endfunction"}}}
 
 function! s:tc.test_update()"{{{

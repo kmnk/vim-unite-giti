@@ -63,6 +63,17 @@ function! giti#remote#rm(name)"{{{
   return giti#system(printf('remote rm %s', a:name))
 endfunction"}}}
 
+function! giti#remote#prune(param)"{{{
+  if !has_key(a:param, 'name') || strlen(a:param.name) <= 0
+    throw 'name required'
+  endif
+  let dry_run = has_key(a:param, 'dry_run') ? a:param.dry_run : 0
+  return giti#system(printf('remote prune %s %s',
+\   dry_run ? '--dry-run' : '',
+\   a:param.name,
+\ ))
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
