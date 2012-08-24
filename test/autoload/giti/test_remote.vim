@@ -89,15 +89,11 @@ function! s:tc.test_set_url()"{{{
   call self.assert(1)
 endfunction"}}}
 
-function! s:tc.test_set_prune()"{{{
+function! s:tc.test_prune()"{{{
   call self.assert(1)
 endfunction"}}}
 
-function! s:tc.test_set_update()"{{{
-  call self.assert(1)
-endfunction"}}}
-
-function! s:tc.test_sample()"{{{
+function! s:tc.test_update()"{{{
   call self.assert(1)
 endfunction"}}}
 
