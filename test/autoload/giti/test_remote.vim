@@ -70,7 +70,11 @@ function! s:tc.test_rename()"{{{
 endfunction"}}}
 
 function! s:tc.test_rm()"{{{
-  call self.assert(1)
+  call self.assert_equal('mocked_system', giti#remote#rm('foo'))
+  call self.assert_equal('remote rm foo', b:system_called_with)
+  call self.assert_throw('name required', 'call giti#remote#rm("")')
+  call self.assert_throw('E118', 'call giti#remote#rm("", "")')
+  call self.assert_throw('E119', 'call giti#remote#rm()')
 endfunction"}}}
 
 function! s:tc.test_set_head()"{{{

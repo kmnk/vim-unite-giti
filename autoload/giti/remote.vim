@@ -56,6 +56,13 @@ function! giti#remote#rename(param)"{{{
 \ ))
 endfunction"}}}
 
+function! giti#remote#rm(name)"{{{
+  if strlen(a:name) <= 0
+    throw 'name required'
+  endif
+  return giti#system(printf('remote rm %s', a:name))
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
