@@ -51,16 +51,22 @@ function! giti#remote#rename(param)"{{{
     throw 'new required'
   endif
 
-  return giti#system(printf('remote rename %s %s',
-\   a:param.old, a:param.new
-\ ))
+  return giti#system_with_specifics({
+\   'command' : printf('remote rename %s %s',
+\     a:param.old, a:param.new
+\   ),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#remote#rm(name)"{{{
   if strlen(a:name) <= 0
     throw 'name required'
   endif
-  return giti#system(printf('remote rm %s', a:name))
+  return giti#system_with_specifics({
+\   'command' : printf('remote rm %s', a:name),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 function! giti#remote#prune(param)"{{{
@@ -68,10 +74,13 @@ function! giti#remote#prune(param)"{{{
     throw 'name required'
   endif
   let dry_run = has_key(a:param, 'dry_run') ? a:param.dry_run : 0
-  return giti#system(printf('remote prune %s %s',
-\   dry_run ? '--dry-run' : '',
-\   a:param.name,
-\ ))
+  return giti#system_with_specifics({
+\   'command' : printf('remote prune %s %s',
+\     dry_run ? '--dry-run' : '',
+\     a:param.name,
+\   ),
+\   'with_confirm' : 1,
+\ })
 endfunction"}}}
 
 let &cpo = s:save_cpo

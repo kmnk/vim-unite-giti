@@ -51,13 +51,13 @@ function! s:tc.test_add()"{{{
 endfunction"}}}
 
 function! s:tc.test_rename()"{{{
-  call self.assert_equal('mocked_system', giti#remote#rename({
+  call self.assert_equal('mocked_system_with_specifics', giti#remote#rename({
 \   'old' : 'foo',
 \   'new' : 'bar',
 \ }))
   call self.assert_equal(
-\   'remote rename foo bar',
-\   b:system_called_with
+\   {'command' : 'remote rename foo bar', 'with_confirm' : 1},
+\   b:system_with_specifics_called_with,
 \ )
   call self.assert_throw('new required', 'call giti#remote#rename({
 \   "old" : "foo",
@@ -70,8 +70,11 @@ function! s:tc.test_rename()"{{{
 endfunction"}}}
 
 function! s:tc.test_rm()"{{{
-  call self.assert_equal('mocked_system', giti#remote#rm('foo'))
-  call self.assert_equal('remote rm foo', b:system_called_with)
+  call self.assert_equal('mocked_system_with_specifics', giti#remote#rm('foo'))
+  call self.assert_equal(
+\   {'command' : 'remote rm foo', 'with_confirm' : 1},
+\   b:system_with_specifics_called_with,
+\ )
   call self.assert_throw('name required', 'call giti#remote#rm("")')
   call self.assert_throw('E118', 'call giti#remote#rm("", "")')
   call self.assert_throw('E119', 'call giti#remote#rm()')
@@ -90,20 +93,20 @@ function! s:tc.test_set_url()"{{{
 endfunction"}}}
 
 function! s:tc.test_prune()"{{{
-  call self.assert_equal('mocked_system', giti#remote#prune({
+  call self.assert_equal('mocked_system_with_specifics', giti#remote#prune({
 \   'name' : 'foo',
 \ }))
   call self.assert_equal(
-\   'remote prune  foo',
-\   b:system_called_with
+\   {'command' : 'remote prune  foo', 'with_confirm' : 1},
+\   b:system_with_specifics_called_with,
 \ )
-  call self.assert_equal('mocked_system', giti#remote#prune({
+  call self.assert_equal('mocked_system_with_specifics', giti#remote#prune({
 \   'name'    : 'foo',
 \   'dry_run' : 1,
 \ }))
   call self.assert_equal(
-\   'remote prune --dry-run foo',
-\   b:system_called_with
+\   {'command' : 'remote prune --dry-run foo', 'with_confirm' : 1},
+\   b:system_with_specifics_called_with,
 \ )
   call self.assert_throw('name required', 'call giti#remote#prune({})')
   call self.assert_throw('E118', 'call giti#remote#prune("", "")')
