@@ -37,6 +37,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
     echo giti#fetch#run({'repository' : a:candidate.action__name})
   endif
 endfunction"}}}
+let s:kind.alias_table.fetch = 'run'
 let s:kind.alias_table.default = 'run'
 
 let s:kind.action_table.rm = {

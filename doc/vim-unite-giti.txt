@@ -60,6 +60,11 @@ giti/log					*vim-unite-giti-sources-giti/log*
 	List formated reuslts of "git log".
 
 
+giti/remote					*vim-unite-giti-sources-giti/remote*
+
+	List remotes.
+
+
 giti/status					*vim-unite-giti-sources-giti/status*
 
 	List formated results of "git status".
@@ -132,6 +137,20 @@ giti/log					*vim-unite-giti-kinds-giti/log*
 
 	reset_hard reset
 		Execute hard reset to selected commit.
+
+
+giti/remote					*vim-unite-giti-kinds-giti/remote*
+
+	fetch
+		Fetch selected remote.
+		Can add new remote by this action, if you input some word,
+		and select "[add new remote]" line.
+
+	rename
+		Rename selected remote.
+
+	rm
+		Delete selected remote.
 
 
 giti/status					*vim-unite-giti-kinds-giti/status*

@@ -21,6 +21,8 @@
     - view log on current repository
 - giti/config
     - view config
+- giti/remote
+    - view remotes
 
 
 ### Kinds
@@ -60,6 +62,13 @@
 - yank\_value
 - write
 - remove
+
+
+#### *giti/remote* actions
+
+- fetch
+- rm
+- rename
 
 
 ### CUSTOM ACTION
