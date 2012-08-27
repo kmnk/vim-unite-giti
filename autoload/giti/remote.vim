@@ -1,17 +1,17 @@
 " File:    remote.vim
 " Author:  kmnk <kmnknmk+vim@gmail.com>
 " Version: 0.1.0
-" License: 
+" License: MIT Licence
 
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! giti#remote#show()"{{{
-  return giti#system('remote show')
+  return split(giti#system('remote show'), "\n")
 endfunction"}}}
 
 function! giti#remote#show_verbose()"{{{
-  return giti#system('remote --verbose show')
+  return split(giti#system('remote --verbose show'), "\n")
 endfunction"}}}
 
 function! giti#remote#add(param)"{{{
