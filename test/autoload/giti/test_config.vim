@@ -117,4 +117,14 @@ function! s:tc.test_add()"{{{
   call self.assert_throw('E119', 'call giti#config#add()')
 endfunction"}}}
 
+function! s:tc.test_is_valid_location()"{{{
+  call self.assert_equal(giti#config#is_valid_location('hoge'), '0')
+  call self.assert_equal(giti#config#is_valid_location(''), '0')
+  call self.assert_equal(giti#config#is_valid_location('local'), '1')
+  call self.assert_equal(giti#config#is_valid_location('global'), '1')
+  call self.assert_equal(giti#config#is_valid_location('system'), '1')
+  call self.assert_throw('E118', 'call giti#config#is_valid_location("", "")')
+  call self.assert_throw('E119', 'call giti#config#is_valid_location()')
+endfunction"}}}
+
 unlet s:tc

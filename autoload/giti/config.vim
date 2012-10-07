@@ -85,6 +85,14 @@ function! giti#config#add(param)"{{{
 \ })
 endfunction"}}}
 
+function! giti#config#is_valid_location(location)"{{{
+  return a:location == ''       ? 0
+\      : a:location == 'local'  ? 1
+\      : a:location == 'global' ? 1
+\      : a:location == 'system' ? 1
+\      :                          0
+endfunction"}}}
+
 " local functions {{{
 
 function! s:get_list(param)"{{{
