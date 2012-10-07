@@ -36,7 +36,7 @@ endfunction"}}}
 let s:kind.alias_table.run = 'yank_value'
 
 let s:kind.action_table.write = {
-\ 'description' : 'yank this config value',
+\ 'description' : 'write this config value',
 \ 'is_selectable' : 0,
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
