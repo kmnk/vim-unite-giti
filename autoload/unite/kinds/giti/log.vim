@@ -24,13 +24,30 @@ let s:kind.action_table.view = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 0,
 \}
+
+function! s:format_body(body)
+  let res = ""
+  let first = 1
+  for one_line in split(a:body, "\n")
+    let space = first == 1 ? '' : '            '
+    let res .= space . one_line . "\n"
+    let first = 0
+  endfor
+
+  return res
+endfunction
+
 function! s:kind.action_table.view.func(candidate)"{{{
   if s:is_graph_only_line(a:candidate)
     echo 'graph only line'
     return
   endif
 
-  let data = a:candidate.action__data
+  let data      = a:candidate.action__data
+  let log_hash  = data.hash . "^..." . data.hash
+  let body      = giti#system(printf('log %s --pretty="%s"', log_hash, "%b"))
+  let data.body = s:format_body(body)
+
   echo        'Hash:       ' . data.hash
   echo        'ParentHash: ' . data.parent_hash
   echo printf('Author:     %s <%s> - %s',
@@ -38,6 +55,9 @@ function! s:kind.action_table.view.func(candidate)"{{{
   echo printf('Committer:  %s <%s> - %s',
 \       data.committer.name, data.committer.mail, data.committer.date)
   echo        'Comment:    ' . data.comment
+  if data.body != ""
+    echo      'Body:       ' . data.body
+  endif
 endfunction"}}}
 
 let s:kind.action_table.diff = {
