@@ -22,10 +22,10 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
-\   "action__path"  : has_key(v:val, "path2") ? v:val.path2
-\                                             : v:val.path1,
-\   "action__paths" : has_key(v:val, "path2") ? [v:val.path1, v:val.path2]
-\                                             : [v:val.path1],
+\   "action__path"  : len(v:val.path2) > 0 ? v:val.path2
+\                                          : v:val.path1,
+\   "action__paths" : len(v:val.path2) > 0 ? [v:val.path1, v:val.path2]
+\                                          : [v:val.path1],
 \   "action__line" : 1,
 \ }'), {
 \   "word" : "(execute any action)",

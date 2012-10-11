@@ -49,20 +49,20 @@ function! s:tc.test_read()"{{{
 endfunction"}}}
 
 function! s:tc.test_write()"{{{
-  call self.assert_equal(giti#config#write({'key' : 'hoge', 'value' : 'fuga'}), 'mocked_system_with_specifics')
+  call self.assert_equal(giti#config#write({'key' : 'hoge', 'value' : 'fuga piyo'}), 'mocked_system_with_specifics')
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
 \   {
-\     'command' : 'config  hoge fuga',
+\     'command' : 'config  hoge "fuga piyo"',
 \     'with_confirm' : 1,
 \   }
 \ )
 
-  call giti#config#write({'key' : 'hoge', 'value' : 'fuga', 'location' : 'foobar'})
+  call giti#config#write({'key' : 'hoge', 'value' : 'fuga piyo', 'location' : 'foobar'})
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
 \   {
-\     'command' : 'config --foobar hoge fuga',
+\     'command' : 'config --foobar hoge "fuga piyo"',
 \     'with_confirm' : 1,
 \   }
 \ )
@@ -95,20 +95,20 @@ function! s:tc.test_remove()"{{{
 endfunction"}}}
 
 function! s:tc.test_add()"{{{
-  call self.assert_equal(giti#config#add({'key' : 'hoge', 'value' : 'fuga'}), 'mocked_system_with_specifics')
+  call self.assert_equal(giti#config#add({'key' : 'hoge', 'value' : 'fuga piyo'}), 'mocked_system_with_specifics')
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
 \   {
-\     'command' : 'config --add  hoge fuga',
+\     'command' : 'config --add  hoge "fuga piyo"',
 \     'with_confirm' : 1,
 \   }
 \ )
 
-  call giti#config#add({'key' : 'hoge', 'value' : 'fuga', 'location' : 'foobar'})
+  call giti#config#add({'key' : 'hoge', 'value' : 'fuga piyo', 'location' : 'foobar'})
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
 \   {
-\     'command' : 'config --add --foobar hoge fuga',
+\     'command' : 'config --add --foobar hoge "fuga piyo"',
 \     'with_confirm' : 1,
 \   }
 \ )

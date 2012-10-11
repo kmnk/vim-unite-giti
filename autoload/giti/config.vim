@@ -56,9 +56,9 @@ function! giti#config#write(param)"{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
-\   'command' : join([
+\   'command' : printf('%s %s %s "%s"',
 \     'config', location, a:param.key, a:param.value
-\   ]),
+\   ),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
@@ -78,9 +78,9 @@ function! giti#config#add(param)"{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
-\   'command' : join([
+\   'command' : printf('%s %s %s %s "%s"',
 \     'config', '--add', location, a:param.key, a:param.value
-\   ]),
+\   ),
 \   'with_confirm' : 1,
 \ })
 endfunction"}}}
