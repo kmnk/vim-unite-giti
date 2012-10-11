@@ -22,14 +22,18 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "word" : s:build_word(v:val),
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
-\   "action__path" : v:val.path,
+\   "action__path"  : has_key(v:val, "path2") ? v:val.path2
+\                                             : v:val.path1,
+\   "action__paths" : has_key(v:val, "path2") ? [v:val.path1, v:val.path2]
+\                                             : [v:val.path1],
 \   "action__line" : 1,
 \ }'), {
 \   "word" : "(execute any action)",
 \   "source" : s:source.name,
 \   "kind"   : "giti/status",
-\   "action__path" : "./",
-\   "action__line" : 1,
+\   "action__path"  : "./",
+\   "action__paths" : ["./"],
+\   "action__line"  : 1,
 \ })
 endfunction"}}}
 
@@ -39,7 +43,7 @@ function! s:build_word(val)"{{{
   return printf(s:word_format,
 \   '[' . a:val.index . ']',
 \   '[' . a:val.work  . ']',
-\   a:val.path)
+\   a:val.description)
 endfunction"}}}
 function! s:build_title()"{{{
   return printf(s:word_format,

@@ -58,7 +58,13 @@ let s:kind.action_table.commit = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.commit.func(candidates)"{{{
-  return giti#commit#run(map(a:candidates, 'v:val.action__path'))
+  let files = []
+  for candidate in a:candidates
+    for path in candidate.action__paths
+      call add(files, path)
+    endfor
+  endfor
+  return giti#commit#run(files)
 endfunction"}}}
 let s:kind.alias_table.ci = 'commit'
 
