@@ -1,5 +1,5 @@
-let s:tc = unittest#testcase#new('autoload/unite/sources/giti/branch/new.vim',
-\                                unite#sources#giti#branch#new#__context__())
+let s:tc = unittest#testcase#new('autoload/unite/sources/giti/branch_all.vim',
+\                                unite#sources#giti#branch_all#__context__())
 
 function! s:tc.SETUP()"{{{
 endfunction"}}}
@@ -8,10 +8,10 @@ endfunction"}}}
 
 function! s:tc.test_define()"{{{
   call self.assert_equal(
-\   type({}),
-\   type(unite#sources#giti#branch#new#define()),
+\   type([]),
+\   type(unite#sources#giti#branch_all#define()),
 \ )
-  call self.assert_throw('E118', 'call self.call("unite#sources#giti#branch#new#define", [""])')
+  call self.assert_throw('E118', 'call self.call("unite#sources#giti#branch_all#define", [""])')
 endfunction"}}}
 
 function! s:tc.source_should_have()"{{{
@@ -31,7 +31,7 @@ function! s:tc.test_source_gather_candidate()"{{{
   call self.assert(has_key(candidates[0], 'source'))
   call self.assert(has_key(candidates[0], 'kind'))
   call self.assert(has_key(candidates[0], 'action__name'))
-  call self.assert(has_key(candidates[0], 'action__start_point'))
+  call self.assert(has_key(candidates[0], 'action__is_new'))
 endfunction"}}}
 
 function! s:tc.test_source_change_candidate()"{{{
@@ -43,7 +43,7 @@ function! s:tc.test_source_change_candidate()"{{{
   call self.assert(has_key(candidates[0], 'source'))
   call self.assert(has_key(candidates[0], 'kind'))
   call self.assert(has_key(candidates[0], 'action__name'))
-  call self.assert(has_key(candidates[0], 'action__start_point'))
+  call self.assert(has_key(candidates[0], 'action__is_new'))
 endfunction"}}}
 
 unlet s:tc
