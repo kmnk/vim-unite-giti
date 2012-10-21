@@ -30,6 +30,7 @@ function! s:tc.test_source_gather_candidate()"{{{
   call self.assert(has_key(candidates[0], 'source'))
   call self.assert(has_key(candidates[0], 'kind'))
   call self.assert(has_key(candidates[0], 'action__source_name'))
+  call self.assert_equal(candidates[0].source, source.name)
 endfunction"}}}
 
 function! s:tc.test_script_get_commands()"{{{

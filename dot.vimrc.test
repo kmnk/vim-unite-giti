@@ -1,6 +1,8 @@
 syntax on
+
 set runtimepath+=~/.bundle/vim-unittest/  " edit this on test
-set runtimepath+=~/.bundle/unite.vim/     " edit this on test
+
+set runtimepath+=./test/mock/
 set runtimepath+=./
 
 " mock
