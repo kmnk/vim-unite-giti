@@ -72,6 +72,18 @@ function! s:add_mv_action_on_file_kind()"{{{
 endfunction"}}}
 " }}}
 
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " __END__
