@@ -32,9 +32,9 @@ endfunction"}}}
 function! s:tc.source_should_have()"{{{
   let source = self.get('s:source')
   call self.assert_equal(type({}), type(source))
-  call self.assert(type(''), type(source.name))
-  call self.assert(type([]), type(source.description))
-  call self.assert(type(function('tr')), type(source.gather_candidates))
+  call self.assert_equal(type(''), type(source.name))
+  call self.assert_equal(type(''), type(source.description))
+  call self.assert_equal(type(function('tr')), type(source.gather_candidates))
 endfunction"}}}
 
 function! s:tc.test_source_gather_candidate()"{{{

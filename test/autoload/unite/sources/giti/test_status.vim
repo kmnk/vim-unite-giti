@@ -25,6 +25,14 @@ function! s:tc.test_define()"{{{
   call self.assert_throw('E118', 'call self.call("unite#sources#giti#status#define", [""])')
 endfunction"}}}
 
+function! s:tc.source_should_have()"{{{
+  let source = self.get('s:source')
+  call self.assert_equal(type({}), type(source))
+  call self.assert_equal(type(''), type(source.name))
+  call self.assert_equal(type(''), type(source.description))
+  call self.assert_equal(type(function('tr')), type(source.gather_candidates))
+endfunction"}}}
+
 function! s:tc.test_source_gather_candidate()"{{{
   let source = self.get('s:source')
   let candidates = source.gather_candidates('', '')
