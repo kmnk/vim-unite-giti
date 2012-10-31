@@ -25,3 +25,7 @@ endfunction"}}}
 function! giti#diffthis()"{{{
   return 'mocked_diffthis'
 endfunction"}}}
+function! giti#print(string)"{{{
+  let b:print_called_with = a:string
+  return 'mocked_print'
+endfunction"}}}

@@ -121,6 +121,10 @@ function! giti#diffthis()"{{{
   diffthis
 endfunction"}}}
 
+function! giti#print(string)"{{{
+  echo a:string
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if v:shell_error
