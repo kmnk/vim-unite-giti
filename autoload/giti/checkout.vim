@@ -21,7 +21,7 @@ endfunction"}}}
 function! giti#checkout#create(param)"{{{
   let name = a:param.name
 
-  echo 'create new branch [' . name . ']'
+  call giti#print('create new branch [' . name . ']')
 
   let start_point = ''
   if exists('a:param.start_point')

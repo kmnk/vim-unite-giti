@@ -29,7 +29,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
     let context.input = ''
     call unite#start([['giti/branch/new', a:candidate.action__name]], context)
   else
-    echo giti#checkout#switch(a:candidate.action__name)
+    call giti#print(giti#checkout#switch(a:candidate.action__name))
   endif
 endfunction"}}}
 let s:kind.alias_table.switch = 'run'
@@ -49,16 +49,16 @@ function! s:kind.action_table.delete.func(candidates)"{{{
 \   }
 \ ')
 
-  echo giti#branch#delete(map(copy(args), 'v:val.branch'))
+  call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
 
   if len(args) > 0 && !v:shell_error
     let result = s:delete_remote(args)
     if type(result) == type([])
       for output in result
-        echo output ? output : 'some error occured'
+        call giti#print(output ? output : 'some error occured')
       endfor
     else
-      echo result
+      call giti#print(result)
     endif
   endif
 endfunction"}}}
@@ -77,16 +77,16 @@ function! s:kind.action_table.delete_force.func(candidates)"{{{
 \   }
 \ ')
 
-  echo giti#branch#delete_force(map(copy(args), 'v:val.branch'))
+  call giti#print(giti#branch#delete_force(map(copy(args), 'v:val.branch')))
 
   if len(args) > 0 && !v:shell_error
     let result = s:delete_remote(args)
     if type(result) == type([])
       for output in result
-        echo output ? output : 'some error occured'
+        call giti#print(output ? output : 'some error occured')
       endfor
     else
-      echo result
+      call giti#print(result)
     endif
   endif
 endfunction"}}}
@@ -99,7 +99,7 @@ let s:kind.action_table.merge = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.merge.func(candidate)"{{{
-  echo giti#merge#run({ 'branch_name' : a:candidate.action__name })
+  call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name }))
 endfunction"}}}
 
 let s:kind.action_table.rebase = {
@@ -110,7 +110,7 @@ let s:kind.action_table.rebase = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.rebase.func(candidate)"{{{
-  echo giti#rebase#run({ 'upstream' : a:candidate.action__name })
+  call giti#print(giti#rebase#run({ 'upstream' : a:candidate.action__name }))
 endfunction"}}}
 
 let s:kind.action_table.rebase_interactive = {
@@ -121,7 +121,7 @@ let s:kind.action_table.rebase_interactive = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.rebase_interactive.func(candidate)"{{{
-  echo giti#rebase#interactive({ 'upstream' : a:candidate.action__name })
+  call giti#print(giti#rebase#interactive({ 'upstream' : a:candidate.action__name }))
 endfunction"}}}
 
 " }}}
@@ -146,6 +146,18 @@ function! s:delete_remote(params)"{{{
   endif
 endfunction"}}}
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#branch#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

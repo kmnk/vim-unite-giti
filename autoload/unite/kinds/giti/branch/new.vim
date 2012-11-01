@@ -28,7 +28,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
   if a:candidate.action__start_point != ''
     let arg.start_point = a:candidate.action__start_point
   endif
-  echo giti#checkout#create(arg)
+  call giti#print(giti#checkout#create(arg))
 endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'

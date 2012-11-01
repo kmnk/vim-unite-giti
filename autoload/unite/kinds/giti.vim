@@ -56,8 +56,8 @@ function! s:add_mv_action_on_file_kind()"{{{
   function! git_mv.func(candidate)
     let source = a:candidate.action__path
 
-    echo "git mv"
-    echo printf('from "%s"', source)
+    call giti#print("git mv")
+    call giti#print(printf('from "%s"', source))
 
     let destination = input('to: ', source)
     let is_directory = isdirectory(destination)

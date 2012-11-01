@@ -24,9 +24,9 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    echo 'Not a git repository'
-    echo 'Specify directory of git repository (and change current directory of this window)'
-    echo 'current  : ' . getcwd()
+    call giti#print('Not a git repository')
+    call giti#print('Specify directory of git repository (and change current directory of this window)')
+    call giti#print('current  : ' . getcwd())
     call giti#execute(printf('lcd %s', input('change to: ', getcwd())))
     return giti#system_with_specifics(a:param)
   endif
@@ -35,7 +35,7 @@ function! giti#system_with_specifics(param)"{{{
 
   if exists('a:param.with_confirm') && a:param.with_confirm
     if !s:is_confirmed(a:param)
-      echo 'canceled'
+      call giti#print('canceled')
       return
     endif
   endif
@@ -128,8 +128,8 @@ endfunction"}}}
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if v:shell_error
-    echo 'error occured on executing "git ' . a:param.command . '"'
-    echo a:res
+    call giti#print('error occured on executing "git ' . a:param.command . '"')
+    call giti#print(a:res)
     return
   else
     return a:res

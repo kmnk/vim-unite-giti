@@ -28,7 +28,7 @@ function! s:kind.action_table.yank_value.func(candidate)"{{{
   if a:candidate.action__is_new
     return s:create_new_config(a:candidate)
   else
-    echo 'yanked ' . a:candidate.action__key
+    call giti#print('yanked ' . a:candidate.action__key)
     let @" = a:candidate.action__value
     return
   endif
@@ -43,8 +43,8 @@ let s:kind.action_table.write = {
 \}
 function! s:kind.action_table.write.func(candidate)"{{{
   let location = s:get_location(a:candidate.action__location)
-  echo printf('write "%s" on %s', a:candidate.action__key, location)
-  echo printf('current value: %s', a:candidate.action__value)
+  call giti#print(printf('write "%s" on %s', a:candidate.action__key, location))
+  call giti#print(printf('current value: %s', a:candidate.action__value))
   let value = input('new value: ', a:candidate.action__value)
   let res = giti#config#write({
 \   'key'      : a:candidate.action__key,
@@ -79,7 +79,7 @@ function! s:get_location(location)"{{{
 endfunction"}}}
 
 function! s:create_new_config(candidate)"{{{
-  echo 'create new config "' . a:candidate.action__key . '"'
+  call giti#print('create new config "' . a:candidate.action__key . '"')
   let location = s:get_location(input('location(default is "local") : '))
   let value    = input('value : ')
   let res = giti#config#add({

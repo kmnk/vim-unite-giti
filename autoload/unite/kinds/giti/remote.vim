@@ -32,9 +32,9 @@ function! s:kind.action_table.run.func(candidate)"{{{
 
     let arg.url = input('url: ')
 
-    echo giti#remote#add(arg)
+    call giti#print(giti#remote#add(arg))
   else
-    echo giti#fetch#run({'repository' : a:candidate.action__name})
+    call giti#print( giti#fetch#run({'repository' : a:candidate.action__name}))
   endif
 endfunction"}}}
 let s:kind.alias_table.fetch = 'run'
@@ -48,7 +48,7 @@ let s:kind.action_table.rm = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.rm.func(candidate)"{{{
-  echo giti#remote#rm(a:candidate.action__name)
+  call giti#print(giti#remote#rm(a:candidate.action__name))
 endfunction"}}}
 let s:kind.alias_table.delete = 'rm'
 
@@ -62,7 +62,7 @@ let s:kind.action_table.rename = {
 function! s:kind.action_table.rename.func(candidate)"{{{
   let arg = {'old' : a:candidate.action__name}
   let arg.new = input('new name: ', a:candidate.action__name)
-  echo giti#remote#rename(arg)
+  call giti#print(giti#remote#rename(arg))
 endfunction"}}}
 "let s:kind.alias_table.alias_action = 'rename'
 
