@@ -29,7 +29,7 @@ function! s:tc.setup_list_error()"{{{
 endfunction"}}}
 
 function! s:tc.test_list_error()"{{{
-  call self.assert_throw('Vim(echoerr)', 'call giti#config#list()')
+  call self.assert_throw('invalid config line', 'call giti#config#list()')
 endfunction"}}}
 
 function! s:tc.test_read()"{{{

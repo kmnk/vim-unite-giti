@@ -11,7 +11,7 @@ function! s:tc.test_run()"{{{
   call self.assert_equal(b:system_with_specifics_called_with, {
 \   'command' : 'merge hoge'
 \ })
-  call self.assert_throw('Vim(echoerr):branch_name required',
+  call self.assert_throw('branch_name required',
 \                        'call giti#merge#run({})')
   call self.assert_throw('E118', 'call giti#merge#run("", "")')
   call self.assert_throw('E119', 'call giti#merge#run()')

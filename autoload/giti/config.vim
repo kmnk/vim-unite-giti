@@ -113,7 +113,7 @@ function! s:build_config_data(param)"{{{
 
   let splited = split(line, '=')
   if len(splited) != 2
-    echoerr 'invalid config line :' . line
+    throw 'invalid config line :' . line
   endif
 
   let location = exists('a:param.location') ? a:param.location

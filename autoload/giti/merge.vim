@@ -11,7 +11,7 @@ set cpo&vim
 
 function! giti#merge#run(param)"{{{
   if !exists('a:param.branch_name')
-    echoerr 'branch_name required'
+    throw 'branch_name required'
     return
   endif
 
