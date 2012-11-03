@@ -12,6 +12,17 @@ function! unite#custom_action(kind, name, action)"{{{
   return 'mocked unite#custom_action'
 endfunction"}}}
 
+function! unite#get_context()"{{{
+  return {
+\   'input' : 'mocked unite#get_context'
+\ }
+endfunction"}}}
+
+function! unite#start(sources, context)"{{{
+  let b:unite_start_called_with = [a:sources, a:context]
+  return 'mocked unite#start'
+endfunction"}}}
+
 " local functions {{{
 " }}}
 
