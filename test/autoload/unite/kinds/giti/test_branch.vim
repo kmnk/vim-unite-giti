@@ -170,7 +170,7 @@ function! s:tc.test_kind_action_merge()"{{{
   let candidate = {
 \   'action__name' : 'hoge',
 \ }
-  call self.assert_equal(merge.func(candidate), 'mocked_print')
+  call merge.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#merge#run')
   call self.assert_equal(b:merge_run_called_with, {'branch_name' : candidate.action__name})
 endfunction"}}}
@@ -199,7 +199,7 @@ function! s:tc.test_kind_action_rebase()"{{{
   let candidate = {
 \   'action__name' : 'hoge',
 \ }
-  call self.assert_equal(rebase.func(candidate), 'mocked_print')
+  call rebase.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#rebase#run')
   call self.assert_equal(b:rebase_run_called_with, {'upstream' : candidate.action__name})
 endfunction"}}}
@@ -228,7 +228,7 @@ function! s:tc.test_kind_action_rebase_interactive()"{{{
   let candidate = {
 \   'action__name' : 'hoge',
 \ }
-  call self.assert_equal(rebase_interactive.func(candidate), 'mocked_print')
+  call rebase_interactive.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#rebase#interactive')
   call self.assert_equal(b:rebase_interactive_run_called_with,
 \                        {'upstream' : candidate.action__name})
