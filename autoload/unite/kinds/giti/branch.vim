@@ -51,16 +51,7 @@ function! s:kind.action_table.delete.func(candidates)"{{{
 
   call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
 
-  if len(args) > 0 && !v:shell_error
-    let result = s:delete_remote(args)
-    if type(result) == type([])
-      for output in result
-        call giti#print(output ? output : 'some error occured')
-      endfor
-    else
-      call giti#print(result)
-    endif
-  endif
+  call s:handle_delete_remote(args)
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
@@ -79,16 +70,7 @@ function! s:kind.action_table.delete_force.func(candidates)"{{{
 
   call giti#print(giti#branch#delete_force(map(copy(args), 'v:val.branch')))
 
-  if len(args) > 0 && !v:shell_error
-    let result = s:delete_remote(args)
-    if type(result) == type([])
-      for output in result
-        call giti#print(output ? output : 'some error occured')
-      endfor
-    else
-      call giti#print(result)
-    endif
-  endif
+  call s:handle_delete_remote(args)
 endfunction"}}}
 
 let s:kind.action_table.merge = {
@@ -136,6 +118,19 @@ function! s:get_repository(branch)"{{{
 \   'location' : 'local',
 \   'key'      : printf('branch.%s.remote', a:branch)
 \ })
+endfunction"}}}
+
+function! s:handle_delete_remote(params)"{{{
+  if len(a:params) > 0 && !giti#has_shell_error()
+    let result = s:delete_remote(a:params)
+    if type(result) == type([])
+      for output in result
+        call giti#print(output ? output : 'some error occured')
+      endfor
+    else
+      call giti#print(result)
+    endif
+  endif
 endfunction"}}}
 
 function! s:delete_remote(params)"{{{

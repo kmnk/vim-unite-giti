@@ -52,7 +52,7 @@ endfunction"}}}
 function! giti#dir()"{{{
   if !exists('b:giti_dir')
     let b:giti_dir = giti#system('rev-parse --git-dir')
-    if !v:shell_error
+    if !giti#has_shell_error()
       let b:giti_dir = fnamemodify(split(b:giti_dir, '\n')[0], ':p')
     endif
   endif
@@ -125,9 +125,13 @@ function! giti#print(string)"{{{
   echo a:string
 endfunction"}}}
 
+function! giti#has_shell_error()"{{{
+  return v:shell_error ? 1 : 0
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
-  if v:shell_error
+  if giti#has_shell_error()
     call giti#print('error occured on executing "git ' . a:param.command . '"')
     call giti#print(a:res)
     return

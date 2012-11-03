@@ -102,7 +102,7 @@ function! s:get_list(param)"{{{
 \   'command'      : 'config ' . location . ' -l',
 \   'ignore_error' : 1,
 \ })
-  if v:shell_error
+  if giti#has_shell_error()
     return []
   endif
   return split(res, '\n')
