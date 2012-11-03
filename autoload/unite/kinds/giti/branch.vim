@@ -110,7 +110,7 @@ endfunction"}}}
 
 " local functions {{{
 function! s:is_deleting_remote_confirmed(params)"{{{
-  return input('delete remote branches ? [y/n] : ') == 'y' ? 1 : 0
+  return giti#input('delete remote branches ? [y/n] : ') == 'y' ? 1 : 0
 endfunction"}}}
 
 function! s:get_repository(branch)"{{{

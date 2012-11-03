@@ -30,8 +30,8 @@ endfunction"}}}
 function! giti#pull#expressly()"{{{
   let arg = {}
   let arg.command = 'pull'
-  let arg.repository = input("repository: ")
-  let arg.refspec    = input("refspec: ")
+  let arg.repository = giti#input("repository: ")
+  let arg.refspec    = giti#input("refspec: ")
   return s:run(arg)
 endfunction"}}}
 

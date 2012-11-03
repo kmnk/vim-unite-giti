@@ -45,7 +45,7 @@ function! s:kind.action_table.write.func(candidate)"{{{
   let location = s:get_location(a:candidate.action__location)
   call giti#print(printf('write "%s" on %s', a:candidate.action__key, location))
   call giti#print(printf('current value: %s', a:candidate.action__value))
-  let value = input('new value: ', a:candidate.action__value)
+  let value = giti#input('new value: ', a:candidate.action__value)
   let res = giti#config#write({
 \   'key'      : a:candidate.action__key,
 \   'value'    : value,
@@ -80,8 +80,8 @@ endfunction"}}}
 
 function! s:create_new_config(candidate)"{{{
   call giti#print('create new config "' . a:candidate.action__key . '"')
-  let location = s:get_location(input('location(default is "local") : '))
-  let value    = input('value : ')
+  let location = s:get_location(giti#input('location(default is "local") : '))
+  let value    = giti#input('value : ')
   let res = giti#config#add({
 \   'key'      : a:candidate.action__key,
 \   'value'    : value,

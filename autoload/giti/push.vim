@@ -36,8 +36,8 @@ endfunction"}}}
 function! giti#push#expressly()"{{{
   let arg = {}
   let arg.command = 'push'
-  let arg.repository = input("repository: ")
-  let arg.refspec    = input("refspec: ")
+  let arg.repository = giti#input("repository: ")
+  let arg.refspec    = giti#input("refspec: ")
   return s:run(arg)
 endfunction"}}}
 

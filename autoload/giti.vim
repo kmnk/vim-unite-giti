@@ -27,7 +27,7 @@ function! giti#system_with_specifics(param)"{{{
     call giti#print('Not a git repository')
     call giti#print('Specify directory of git repository (and change current directory of this window)')
     call giti#print('current  : ' . getcwd())
-    call giti#execute(printf('lcd %s', input('change to: ', getcwd())))
+    call giti#execute(printf('lcd %s', giti#input('change to: ', getcwd())))
     return giti#system_with_specifics(a:param)
   endif
 
@@ -129,6 +129,18 @@ function! giti#has_shell_error()"{{{
   return v:shell_error ? 1 : 0
 endfunction"}}}
 
+function! giti#input(prompt, ...)"{{{
+  if a:0 <= 0
+    return input(prompt)
+  endif
+  if a:0 == 1
+    return input(prompt, a:1)
+  endif
+  if a:0 == 2
+    return input(prompt, a:1, a:2)
+  endif
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if giti#has_shell_error()
@@ -142,7 +154,7 @@ endfunction"}}}
 
 function! s:is_confirmed(param)
   let command = 'git ' . a:param.command
-  return input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction
 
 function! s:trim(string)"{{{

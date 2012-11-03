@@ -27,7 +27,7 @@ function! giti#checkout#create(param)"{{{
   if exists('a:param.start_point')
     let start_point = a:param.start_point
   else
-    let start_point = input('start-point (optional) : ')
+    let start_point = giti#input('start-point (optional) : ')
   endif
 
   return giti#system('checkout -b ' . name . ' ' . start_point)

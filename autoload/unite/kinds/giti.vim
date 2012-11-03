@@ -59,7 +59,7 @@ function! s:add_mv_action_on_file_kind()"{{{
     call giti#print("git mv")
     call giti#print(printf('from "%s"', source))
 
-    let destination = input('to: ', source)
+    let destination = giti#input('to: ', source)
     let is_directory = isdirectory(destination)
 
     return giti#mv#run({

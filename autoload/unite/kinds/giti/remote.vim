@@ -30,7 +30,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
     let context.input = ''
     let arg = {'name' : a:candidate.action__name}
 
-    let arg.url = input('url: ')
+    let arg.url = giti#input('url: ')
 
     call giti#print(giti#remote#add(arg))
   else
@@ -61,7 +61,7 @@ let s:kind.action_table.rename = {
 \}
 function! s:kind.action_table.rename.func(candidate)"{{{
   let arg = {'old' : a:candidate.action__name}
-  let arg.new = input('new name: ', a:candidate.action__name)
+  let arg.new = giti#input('new name: ', a:candidate.action__name)
   call giti#print(giti#remote#rename(arg))
 endfunction"}}}
 "let s:kind.alias_table.alias_action = 'rename'
