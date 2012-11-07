@@ -34,7 +34,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
 
     call giti#print(giti#remote#add(arg))
   else
-    call giti#print( giti#fetch#run({'repository' : a:candidate.action__name}))
+    call giti#print(giti#fetch#run({'repository' : a:candidate.action__name}))
   endif
 endfunction"}}}
 let s:kind.alias_table.fetch = 'run'
@@ -68,6 +68,18 @@ endfunction"}}}
 
 " local functions {{{
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#remote#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
