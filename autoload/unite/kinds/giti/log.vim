@@ -34,9 +34,9 @@ function! s:kind.action_table.view.func(candidate)"{{{
   call giti#print(       'Hash:       ' . data.hash)
   call giti#print(       'ParentHash: ' . data.parent_hash)
   call giti#print(printf('Author:     %s <%s> - %s',
-\       data.author.name, data.author.mail, data.author.date))
+\                        data.author.name, data.author.mail, data.author.date))
   call giti#print(printf('Committer:  %s <%s> - %s',
-\       data.committer.name, data.committer.mail, data.committer.date))
+\                        data.committer.name, data.committer.mail, data.committer.date))
   call giti#print(       'Comment:    ' . data.comment)
 endfunction"}}}
 
@@ -72,7 +72,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
     return
   endif
 
-  call giti#new_buffer({
+  return giti#new_buffer({
 \   'method'   : giti#edit_command(),
 \   'string'   : diff,
 \   'filetype' : 'diff',
@@ -155,6 +155,18 @@ function! s:is_graph_only_line(candidate)"{{{
   return has_key(a:candidate.action__data, 'hash') ? 0 : 1
 endfunction"}}}
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#log#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
