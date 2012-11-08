@@ -28,7 +28,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
   if a:candidate.action__start_point != ''
     let arg.start_point = a:candidate.action__start_point
   endif
-  echo giti#checkout#create(arg)
+  call giti#print(giti#checkout#create(arg))
 endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'
@@ -37,6 +37,18 @@ let s:kind.alias_table.new = 'run'
 
 " local functions {{{
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#branch#new#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

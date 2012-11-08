@@ -26,18 +26,18 @@ let s:kind.action_table.view = {
 \}
 function! s:kind.action_table.view.func(candidate)"{{{
   if s:is_graph_only_line(a:candidate)
-    echo 'graph only line'
+    call giti#print('graph only line')
     return
   endif
 
   let data = a:candidate.action__data
-  echo        'Hash:       ' . data.hash
-  echo        'ParentHash: ' . data.parent_hash
-  echo printf('Author:     %s <%s> - %s',
-\       data.author.name, data.author.mail, data.author.date)
-  echo printf('Committer:  %s <%s> - %s',
-\       data.committer.name, data.committer.mail, data.committer.date)
-  echo        'Comment:    ' . data.comment
+  call giti#print(       'Hash:       ' . data.hash)
+  call giti#print(       'ParentHash: ' . data.parent_hash)
+  call giti#print(printf('Author:     %s <%s> - %s',
+\                        data.author.name, data.author.mail, data.author.date))
+  call giti#print(printf('Committer:  %s <%s> - %s',
+\                        data.committer.name, data.committer.mail, data.committer.date))
+  call giti#print(       'Comment:    ' . data.comment)
 endfunction"}}}
 
 let s:kind.action_table.diff = {
@@ -49,7 +49,7 @@ let s:kind.action_table.diff = {
 function! s:kind.action_table.diff.func(candidates)"{{{
   if s:is_graph_only_line(a:candidates[0])
 \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
-    echo 'graph only line'
+    call giti#print('graph only line')
     return
   endif
 
@@ -68,11 +68,11 @@ function! s:kind.action_table.diff.func(candidates)"{{{
   let diff = giti#diff#specify({'from' : from, 'to' : to, 'files' : files})
 
   if !strlen(diff)
-    echo 'no difference'
+    call giti#print('no difference')
     return
   endif
 
-  call giti#new_buffer({
+  return giti#new_buffer({
 \   'method'   : giti#edit_command(),
 \   'string'   : diff,
 \   'filetype' : 'diff',
@@ -89,7 +89,7 @@ let s:kind.action_table.revert = {
 \}
 function! s:kind.action_table.revert.func(candidate)"{{{
   if s:is_graph_only_line(a:candidate)
-    echo 'graph only line'
+    call giti#print('graph only line')
     return
   endif
 
@@ -105,7 +105,7 @@ let s:kind.action_table.vimdiff = {
 function! s:kind.action_table.vimdiff.func(candidates)"{{{
   if s:is_graph_only_line(a:candidates[0])
 \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
-    echo 'graph only line'
+    call giti#print('graph only line')
     return
   endif
 
@@ -140,7 +140,7 @@ let s:kind.action_table.reset_hard = {
 \}
 function! s:kind.action_table.reset_hard.func(candidate)"{{{
   if s:is_graph_only_line(a:candidate)
-    echo 'graph only line'
+    call giti#print('graph only line')
     return
   endif
 
@@ -155,6 +155,18 @@ function! s:is_graph_only_line(candidate)"{{{
   return has_key(a:candidate.action__data, 'hash') ? 0 : 1
 endfunction"}}}
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#log#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

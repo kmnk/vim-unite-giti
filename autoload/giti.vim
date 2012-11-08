@@ -24,10 +24,10 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    echo 'Not a git repository'
-    echo 'Specify directory of git repository (and change current directory of this window)'
-    echo 'current  : ' . getcwd()
-    call giti#execute(printf('lcd %s', input('change to: ', getcwd())))
+    call giti#print('Not a git repository')
+    call giti#print('Specify directory of git repository (and change current directory of this window)')
+    call giti#print('current  : ' . getcwd())
+    call giti#execute(printf('lcd %s', giti#input('change to: ', getcwd())))
     return giti#system_with_specifics(a:param)
   endif
 
@@ -35,7 +35,7 @@ function! giti#system_with_specifics(param)"{{{
 
   if exists('a:param.with_confirm') && a:param.with_confirm
     if !s:is_confirmed(a:param)
-      echo 'canceled'
+      call giti#print('canceled')
       return
     endif
   endif
@@ -52,7 +52,7 @@ endfunction"}}}
 function! giti#dir()"{{{
   if !exists('b:giti_dir')
     let b:giti_dir = giti#system('rev-parse --git-dir')
-    if !v:shell_error
+    if !giti#has_shell_error()
       let b:giti_dir = fnamemodify(split(b:giti_dir, '\n')[0], ':p')
     endif
   endif
@@ -121,11 +121,31 @@ function! giti#diffthis()"{{{
   diffthis
 endfunction"}}}
 
+function! giti#print(string)"{{{
+  echo a:string
+endfunction"}}}
+
+function! giti#has_shell_error()"{{{
+  return v:shell_error ? 1 : 0
+endfunction"}}}
+
+function! giti#input(prompt, ...)"{{{
+  if a:0 <= 0
+    return input(prompt)
+  endif
+  if a:0 == 1
+    return input(prompt, a:1)
+  endif
+  if a:0 == 2
+    return input(prompt, a:1, a:2)
+  endif
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
-  if v:shell_error
-    echo 'error occured on executing "git ' . a:param.command . '"'
-    echo a:res
+  if giti#has_shell_error()
+    call giti#print('error occured on executing "git ' . a:param.command . '"')
+    call giti#print(a:res)
     return
   else
     return a:res
@@ -134,7 +154,7 @@ endfunction"}}}
 
 function! s:is_confirmed(param)
   let command = 'git ' . a:param.command
-  return input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction
 
 function! s:trim(string)"{{{

@@ -30,11 +30,11 @@ function! s:kind.action_table.run.func(candidate)"{{{
     let context.input = ''
     let arg = {'name' : a:candidate.action__name}
 
-    let arg.url = input('url: ')
+    let arg.url = giti#input('url: ')
 
-    echo giti#remote#add(arg)
+    call giti#print(giti#remote#add(arg))
   else
-    echo giti#fetch#run({'repository' : a:candidate.action__name})
+    call giti#print(giti#fetch#run({'repository' : a:candidate.action__name}))
   endif
 endfunction"}}}
 let s:kind.alias_table.fetch = 'run'
@@ -48,7 +48,7 @@ let s:kind.action_table.rm = {
 \ 'is_listed' : 1,
 \}
 function! s:kind.action_table.rm.func(candidate)"{{{
-  echo giti#remote#rm(a:candidate.action__name)
+  call giti#print(giti#remote#rm(a:candidate.action__name))
 endfunction"}}}
 let s:kind.alias_table.delete = 'rm'
 
@@ -61,13 +61,25 @@ let s:kind.action_table.rename = {
 \}
 function! s:kind.action_table.rename.func(candidate)"{{{
   let arg = {'old' : a:candidate.action__name}
-  let arg.new = input('new name: ', a:candidate.action__name)
-  echo giti#remote#rename(arg)
+  let arg.new = giti#input('new name: ', a:candidate.action__name)
+  call giti#print(giti#remote#rename(arg))
 endfunction"}}}
 "let s:kind.alias_table.alias_action = 'rename'
 
 " local functions {{{
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#remote#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

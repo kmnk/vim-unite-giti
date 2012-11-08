@@ -56,10 +56,10 @@ function! s:add_mv_action_on_file_kind()"{{{
   function! git_mv.func(candidate)
     let source = a:candidate.action__path
 
-    echo "git mv"
-    echo printf('from "%s"', source)
+    call giti#print("git mv")
+    call giti#print(printf('from "%s"', source))
 
-    let destination = input('to: ', source)
+    let destination = giti#input('to: ', source)
     let is_directory = isdirectory(destination)
 
     return giti#mv#run({
@@ -71,6 +71,18 @@ function! s:add_mv_action_on_file_kind()"{{{
   call unite#custom_action('file', 'git_mv', git_mv)
 endfunction"}}}
 " }}}
+
+" context getter {{{
+function! s:get_SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
+function! unite#kinds#giti#__context__()
+  return { 'sid': s:SID, 'scope': s: }
+endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

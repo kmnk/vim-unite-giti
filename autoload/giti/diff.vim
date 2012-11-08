@@ -35,7 +35,7 @@ endfunction"}}}
 
 function! giti#diff#view_git_diff(diff)"{{{
   if !strlen(a:diff)
-    echo 'no difference'
+    call giti#print('no difference')
     return
   endif
   return giti#new_buffer({

@@ -1,5 +1,8 @@
 syntax on
+
 set runtimepath+=~/.bundle/vim-unittest/  " edit this on test
+
+set runtimepath+=./test/mock/
 set runtimepath+=./
 
 " mock
@@ -21,4 +24,8 @@ function! giti#put(string, ...)"{{{
 endfunction"}}}
 function! giti#diffthis()"{{{
   return 'mocked_diffthis'
+endfunction"}}}
+function! giti#print(string)"{{{
+  let b:print_called_with = a:string
+  return 'mocked_print'
 endfunction"}}}

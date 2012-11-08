@@ -102,7 +102,7 @@ function! s:get_list(param)"{{{
 \   'command'      : 'config ' . location . ' -l',
 \   'ignore_error' : 1,
 \ })
-  if v:shell_error
+  if giti#has_shell_error()
     return []
   endif
   return split(res, '\n')
@@ -113,7 +113,7 @@ function! s:build_config_data(param)"{{{
 
   let splited = split(line, '=')
   if len(splited) != 2
-    echoerr 'invalid config line :' . line
+    throw 'invalid config line :' . line
   endif
 
   let location = exists('a:param.location') ? a:param.location
