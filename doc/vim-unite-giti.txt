@@ -12,6 +12,7 @@ Sources			|vim-unite-giti-sources|
 Kinds			|vim-unite-giti-kinds|
 Commands		|vim-unite-giti-commands|
 Samples			|vim-unite-giti-samples|
+Tests			|vim-unite-giti-tests|
 
 
 ==========================================================================
@@ -295,6 +296,19 @@ SAMPLES						*vim-unite-giti-samples*
     endif
     " }}}
 <
+
+==========================================================================
+TESTS					*vim-unite-giti-tests*
+
+This plugin is covered by some tests.
+
+Execute make command on your shell to test all.
+
+>
+    $ make test_all
+<
+
+All tests are under test directory.
 
 
 ==========================================================================
