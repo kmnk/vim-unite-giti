@@ -131,13 +131,13 @@ endfunction"}}}
 
 function! giti#input(prompt, ...)"{{{
   if a:0 <= 0
-    return input(prompt)
+    return input(a:prompt)
   endif
   if a:0 == 1
-    return input(prompt, a:1)
+    return input(a:prompt, a:1)
   endif
   if a:0 == 2
-    return input(prompt, a:1, a:2)
+    return input(a:prompt, a:1, a:2)
   endif
 endfunction"}}}
 
