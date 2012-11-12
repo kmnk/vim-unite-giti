@@ -37,7 +37,7 @@ function! s:kind.action_table.view.func(candidate)"{{{
 \                        data.author.name, data.author.mail, data.author.date))
   call giti#print(printf('Committer:  %s <%s> - %s',
 \                        data.committer.name, data.committer.mail, data.committer.date))
-  call giti#print(       'Comment:    ' . data.comment)
+  call giti#print(       'Subject:    ' . data.subject)
 endfunction"}}}
 
 let s:kind.action_table.diff = {

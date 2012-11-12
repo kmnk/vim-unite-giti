@@ -49,7 +49,7 @@ function! s:tc.test_list()"{{{
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
 \   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
-\   'comment'     : 'eeee',
+\   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
 \   'log -1234 --graph --date=relative --pretty=format:".\+" ',
@@ -61,7 +61,7 @@ function! s:tc.test_list()"{{{
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
 \   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
-\   'comment'     : 'eeee',
+\   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
 \   'log -4321 --graph --date=relative --pretty=format:".\+" ',
@@ -73,7 +73,7 @@ function! s:tc.test_list()"{{{
 \   'parent_hash' : 'bbbb',
 \   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
 \   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
-\   'comment'     : 'eeee',
+\   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
 \   'log -1234 --graph --date=relative --pretty=format:".\+" hoge',

@@ -67,7 +67,7 @@ function! s:build_log_data(line)"{{{
 \   'parent_hash' : remove(splited, 0),
 \   'author'      : s:build_user_data(remove(splited, 0)),
 \   'committer'   : s:build_user_data(remove(splited, 0)),
-\   'comment'     : join(splited, ':'),
+\   'subject'     : remove(splited, 0),
 \ }
 endfunction"}}}
 

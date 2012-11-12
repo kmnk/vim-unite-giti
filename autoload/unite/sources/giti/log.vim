@@ -46,7 +46,7 @@ function! s:build_word(val)"{{{
 \   a:val.hash[0:6],
 \   a:val.author.name,
 \   a:val.author.date,
-\   a:val.comment
+\   a:val.subject
 \ )
 endfunction"}}}
 function! s:build_title()"{{{
@@ -55,7 +55,7 @@ function! s:build_title()"{{{
 \   'hash',
 \   'author',
 \   'relative date',
-\   'comment')
+\   'subject')
 endfunction"}}}
 " }}}
 

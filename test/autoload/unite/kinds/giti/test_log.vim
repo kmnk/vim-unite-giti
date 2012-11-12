@@ -39,7 +39,7 @@ function! s:tc.test_kind_action_view()"{{{
 \     'parent_hash' : 'fuga',
 \     'author'      : {'name' : 'foo', 'mail' : 'bar', 'date' : 'baz'},
 \     'committer'   : {'name' : 'foo', 'mail' : 'bar', 'date' : 'baz'},
-\     'comment'     : 'piyo',
+\     'subject'     : 'piyo',
 \   }
 \ }
   call view.func(candidate)
@@ -72,7 +72,7 @@ function! s:tc.test_kind_action_diff()"{{{
 \       "parent_hash" : "fuga" . v:val,
 \       "author"      : {"name" : "foo" . v:val, "mail" : "bar" . v:val, "date" : "baz" . v:val},
 \       "committer"   : {"name" : "foo" . v:val, "mail" : "bar" . v:val, "date" : "baz" . v:val},
-\       "comment"     : "piyo" . v:val,
+\       "subject"     : "piyo" . v:val,
 \     },
 \     "action__file" : "qux" . v:val
 \   }
@@ -155,7 +155,7 @@ function! s:tc.test_kind_action_vimdiff()"{{{
 \       "parent_hash" : "fuga" . v:val,
 \       "author"      : {"name" : "foo" . v:val, "mail" : "bar" . v:val, "date" : "baz" . v:val},
 \       "committer"   : {"name" : "foo" . v:val, "mail" : "bar" . v:val, "date" : "baz" . v:val},
-\       "comment"     : "piyo" . v:val,
+\       "subject"     : "piyo" . v:val,
 \     },
 \     "action__file" : "qux" . v:val
 \   }
