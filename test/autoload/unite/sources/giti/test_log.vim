@@ -8,7 +8,7 @@ let s:list = [{
 \   'name' : 'hoge',
 \   'date' : 'fuga',
 \ },
-\ 'comment' : 'baz',
+\ 'subject' : 'baz',
 \}]
 
 function! s:tc.SETUP()"{{{
