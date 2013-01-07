@@ -13,33 +13,19 @@
 
 - giti
     - view sources of giti
-- giti/status
-    - view status of current repository
 - giti/branch
     - view branches on current repository
-- giti/log
-    - view log on current repository
 - giti/config
     - view config
+- giti/log
+    - view log on current repository
 - giti/remote
     - view remotes
+- giti/status
+    - view status of current repository
 
 
 ### Kinds
-
-#### *giti/status* actions
-
-- add
-- rm\_cached
-- reset
-- commit
-- amend
-- checkout
-- diff
-- diff\_cached
-- diff\_head
-- ignore
-
 
 #### *giti/branch* actions
 
@@ -49,14 +35,6 @@
 - merge
 
 
-#### *giti/log* actions
-
-- view
-- diff
-- revert
-- reset
-
-
 #### *giti/config* actions
 
 - yank\_value
@@ -64,11 +42,36 @@
 - remove
 
 
+#### *giti/log* actions
+
+- view
+- diff
+- revert
+- vimdiff
+- reset
+
+
 #### *giti/remote* actions
 
 - fetch
-- rm
 - rename
+- rm
+
+
+#### *giti/status* actions
+
+- add
+- add\_patch
+- reset
+- commit
+- amend
+- checkout
+- diff
+- diff\_cached
+- diff\_head
+- vimdiff\_head
+- rm\_cached
+- ignore
 
 
 ### CUSTOM ACTION
@@ -87,7 +90,6 @@
 ## TODO
 
 - extend *giti/log* source (and write document about it)
-- extend *giti/diff* action (use vimdiff)
 - implement *giti/stash* source and kind
 - implement *giti/blame* source and kind (use scrollbind)
 - implement *giti/tag* source and kind
