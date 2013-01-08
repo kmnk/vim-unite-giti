@@ -26,14 +26,14 @@ function! giti#branch#current_name()"{{{
 endfunction"}}}
 
 function! giti#branch#current()"{{{
-  let branchs = filter(
+  let branches = filter(
 \   map(
 \     split(giti#system('branch -a'), '\n'),
 \     's:build_branch_data(v:val)'
 \   ),
 \   'v:val.is_current'
 \ )
-  return len(branchs) > 0 ? remove(branches, 0) : {}
+  return len(branches) > 0 ? remove(branches, 0) : {}
 endfunction"}}}
 
 function! giti#branch#delete(branches)"{{{
