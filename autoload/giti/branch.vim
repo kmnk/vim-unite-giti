@@ -22,19 +22,18 @@ endfunction"}}}
 
 function! giti#branch#current_name()"{{{
   let current_branch = giti#branch#current()
-  return type(current_branch) == type({})
-\           ? current_branch['name']
-\           : 'master'
+  return has_key(current_branch, 'name') ? current_branch['name'] : 'master'
 endfunction"}}}
 
 function! giti#branch#current()"{{{
-  return remove(filter(
+  let branchs = filter(
 \   map(
 \     split(giti#system('branch -a'), '\n'),
 \     's:build_branch_data(v:val)'
 \   ),
 \   'v:val.is_current'
-\ ), 0)
+\ )
+  return len(branchs) > 0 ? remove(branches, 0) : {}
 endfunction"}}}
 
 function! giti#branch#delete(branches)"{{{
