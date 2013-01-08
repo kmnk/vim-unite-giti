@@ -21,7 +21,10 @@ function! giti#branch#list_all()"{{{
 endfunction"}}}
 
 function! giti#branch#current_name()"{{{
-  return giti#branch#current()['name']
+  let current_branch = giti#branch#current()
+  return type(current_branch) == type({})
+\           ? current_branch['name']
+\           : 'master'
 endfunction"}}}
 
 function! giti#branch#current()"{{{
