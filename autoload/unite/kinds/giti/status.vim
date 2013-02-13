@@ -73,7 +73,13 @@ let s:kind.action_table.amend = {
 \ 'is_selectable' : 1,
 \}
 function! s:kind.action_table.amend.func(candidates)"{{{
-  return giti#commit#amend()
+  let files = []
+  for candidate in a:candidates
+    for path in candidate.action__paths
+      call add(files, path)
+    endfor
+  endfor
+  return giti#commit#amend(files)
 endfunction"}}}
 
 let s:kind.action_table.checkout = {

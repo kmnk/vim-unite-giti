@@ -126,7 +126,8 @@ function! s:tc.test_kind_action_commit()"{{{
 endfunction"}}}
 
 function! s:tc.setup_kind_action_amend()"{{{
-  function! giti#commit#amend()"{{{
+  function! giti#commit#amend(param)"{{{
+    let b:commit_amend_called_with = a:param
     return 'mocked giti#commit#amend'
   endfunction"}}}
 endfunction"}}}
@@ -144,6 +145,10 @@ function! s:tc.test_kind_action_amend()"{{{
 
   let candidates = [{ 'action__paths' : [ 'hoge', 'fuga' ] }]
   call self.assert_equal('mocked giti#commit#amend', amend.func(candidates))
+  call self.assert_equal([
+\   candidates[0].action__paths[0],
+\   candidates[0].action__paths[1]
+\ ], b:commit_amend_called_with)
 endfunction"}}}
 
 function! s:tc.setup_kind_action_checkout()"{{{
