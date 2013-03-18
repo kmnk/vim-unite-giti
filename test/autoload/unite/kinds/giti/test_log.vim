@@ -211,6 +211,27 @@ function! s:tc.test_kind_action_reset_hard()"{{{
 \ )
 endfunction"}}}
 
+function! s:tc.test_action_yank_hash()"{{{
+  let kind = self.get('s:kind')
+  let yank_hash = kind.action_table.yank_hash
+  call self.assert_equal(type({}), type(yank_hash))
+  call self.assert_equal(type(''), type(yank_hash.description))
+  call self.assert_equal(yank_hash.is_selectable, 0)
+  call self.assert_equal(yank_hash.is_quit, 1)
+  call self.assert_equal(yank_hash.is_invalidate_cache, 0)
+  call self.assert_equal(type(function('tr')), type(yank_hash.func))
+
+  let candidate = {
+\   "action__data" : {
+\     "hash"        : "hoge",
+\   },
+\ }
+  let @" = 'fuga'
+  call self.assert_not_equal(candidate.action__data.hash, @")
+  call yank_hash.func(candidate)
+  call self.assert_equal(candidate.action__data.hash, @")
+endfunction"}}}
+
 function! s:tc.test_kind_alias_table_has()"{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table

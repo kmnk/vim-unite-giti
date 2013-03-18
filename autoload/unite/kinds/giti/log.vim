@@ -148,6 +148,17 @@ function! s:kind.action_table.reset_hard.func(candidate)"{{{
 endfunction"}}}
 let s:kind.alias_table.reset_hard = 'reset'
 
+let s:kind.action_table.yank_hash = {
+\ 'description' : 'yank hash of this commit',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.yank_hash.func(candidate)"{{{
+  let @" = a:candidate.action__data.hash
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
