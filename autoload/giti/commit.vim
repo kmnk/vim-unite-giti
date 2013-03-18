@@ -17,8 +17,8 @@ function! giti#commit#dry_run(files)"{{{
   return s:run('commit --dry-run', a:files)
 endfunction"}}}
 
-function! giti#commit#amend()"{{{
-  return s:run('commit --amend', [])
+function! giti#commit#amend(files)"{{{
+  return s:run('commit --amend', a:files)
 endfunction"}}}
 
 " local functions {{{

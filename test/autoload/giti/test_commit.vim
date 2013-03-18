@@ -34,15 +34,16 @@ endfunction"}}}
 
 
 function! s:tc.test_amend()"{{{
-  call giti#commit#amend()
+  call giti#commit#amend(['hoge', 'fuga'])
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
 \   {
-\     'command' : 'commit --amend -- ',
+\     'command' : 'commit --amend -- hoge fuga',
 \     'ignore_error' : 1,
 \   }
 \ )
-  call self.assert_throw('E118', 'call giti#commit#amend("")')
+  call self.assert_throw('E118', 'call giti#commit#amend("", "")')
+  call self.assert_throw('E119', 'call giti#commit#amend()')
 endfunction"}}}
 
 unlet s:tc
