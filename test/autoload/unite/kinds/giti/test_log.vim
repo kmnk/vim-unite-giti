@@ -232,6 +232,47 @@ function! s:tc.test_action_yank_hash()"{{{
   call self.assert_equal(candidate.action__data.hash, @")
 endfunction"}}}
 
+function! s:tc.setup_kind_action_changed_files()"{{{
+  function! giti#diff_tree#changed_files(param)"{{{
+    let b:changed_files_called_with = a:param
+    return 'mocked giti#diff_tree#changed_files'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_changed_files()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/diff_tree.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_changed_files()"{{{
+  let kind = self.get('s:kind')
+  let changed_files = kind.action_table.changed_files
+  call self.assert_equal(type({}), type(changed_files))
+  call self.assert_equal(type(''), type(changed_files.description))
+  call self.assert_equal(changed_files.is_selectable, 1)
+  call self.assert_equal(changed_files.is_quit, 1)
+  call self.assert_equal(changed_files.is_invalidate_cache, 0)
+  call self.assert_equal(type(function('tr')), type(changed_files.func))
+
+  let candidates = map(range(2), '
+\   {
+\     "action__data" : {
+\       "hash"        : "hoge" . v:val,
+\       "parent_hash" : "fuga" . v:val,
+\     },
+\   }
+\ ')
+  call self.assert_equal(changed_files.func([candidates[0]]), 'mocked unite#start')
+  call self.assert_equal(b:unite_start_called_with,
+\                        [[['giti/diff_tree/changed_files',
+\                           candidates[0].action__data.parent_hash,
+\                           candidates[0].action__data.hash]], {'input' : ''}])
+
+  call self.assert_equal(changed_files.func(candidates), 'mocked unite#start')
+  call self.assert_equal(b:unite_start_called_with,
+\                        [[['giti/diff_tree/changed_files',
+\                           candidates[1].action__data.hash,
+\                           candidates[0].action__data.hash]], {'input' : ''}])
+endfunction"}}}
+
 function! s:tc.test_kind_alias_table_has()"{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table

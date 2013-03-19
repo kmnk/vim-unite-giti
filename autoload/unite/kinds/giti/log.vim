@@ -159,6 +159,37 @@ function! s:kind.action_table.yank_hash.func(candidate)"{{{
   let @" = a:candidate.action__data.hash
 endfunction"}}}
 
+let s:kind.action_table.changed_files = {
+\ 'description' : 'show changed files',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.changed_files.func(candidates)"{{{
+  if s:is_graph_only_line(a:candidates[0])
+\ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
+    call giti#print('graph only line')
+    return
+  endif
+
+  let from  = ''
+  let to    = ''
+  if len(a:candidates) == 1
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[0].action__data.parent_hash
+  elseif len(a:candidates) == 2
+    let to   = a:candidates[0].action__data.hash
+    let from = a:candidates[1].action__data.hash
+  else
+    call unite#print_error('too many commits selected')
+  endif
+
+  let context = unite#get_context()
+  let context.input = ''
+  return unite#start([['giti/diff_tree/changed_files', from, to]], context)
+endfunction"}}}
+
 " }}}
 
 " local functions {{{
