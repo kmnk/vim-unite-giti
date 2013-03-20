@@ -36,6 +36,14 @@ function! s:tc.test_changed_files()"{{{
   call self.assert_equal(b:system_called_with,
 \                        printf('diff-tree -r --name-only --no-commit-id %s', arg.from))
 
+  let arg = { 'from' : '', 'to' : 'foo' }
+  call self.assert_equal(
+\   giti#diff_tree#changed_files(arg),
+\   ['hoge', 'fuga', 'piyo']
+\ )
+  call self.assert_equal(b:system_called_with,
+\                        printf('diff-tree -r --name-only --no-commit-id %s', arg.to))
+
   call self.assert_throw('E119', 'call giti#diff_tree#changed_files()')
   call self.assert_throw('E118', 'call giti#diff_tree#changed_files("", "")')
 endfunction"}}}

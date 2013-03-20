@@ -36,6 +36,8 @@ function! giti#diff_tree#changed_files(param)"{{{
   let res = ''
   if from == to
     let res = giti#system(printf('diff-tree -r --name-only --no-commit-id %s', from))
+  elseif from == ''
+    let res = giti#system(printf('diff-tree -r --name-only --no-commit-id %s', to))
   else
     let res = giti#system(printf('diff-tree -r --name-only --no-commit-id %s..%s', from, to))
   endif
