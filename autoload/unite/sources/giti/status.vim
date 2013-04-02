@@ -42,7 +42,7 @@ let s:word_format = '%-12s%-12s %s'
 function! s:build_word(val)"{{{
   return printf(s:word_format,
 \   '[' . a:val.index . ']',
-\   '[' . a:val.work  . ']',
+\   '<' . a:val.work  . '>',
 \   a:val.description)
 endfunction"}}}
 function! s:build_title()"{{{
