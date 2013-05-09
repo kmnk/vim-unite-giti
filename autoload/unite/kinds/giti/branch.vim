@@ -50,8 +50,6 @@ function! s:kind.action_table.delete.func(candidates)"{{{
 \ ')
 
   call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
-
-  call s:handle_delete_remote(args)
 endfunction"}}}
 let s:kind.alias_table.rm = 'delete'
 
@@ -61,6 +59,40 @@ let s:kind.action_table.delete_force = {
 \ 'is_quit' : 1,
 \}
 function! s:kind.action_table.delete_force.func(candidates)"{{{
+  let args = map(copy(a:candidates), '
+\   {
+\     "branch"     : v:val.action__name,
+\     "repository" : s:get_repository(v:val.action__name),
+\   }
+\ ')
+
+  call giti#print(giti#branch#delete_force(map(copy(args), 'v:val.branch')))
+endfunction"}}}
+
+let s:kind.action_table.delete_remote = {
+\ 'description' : 'delete this branch and remote',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.delete_remote.func(candidates)"{{{
+  let args = map(copy(a:candidates), '
+\   {
+\     "branch"     : v:val.action__name,
+\     "repository" : s:get_repository(v:val.action__name),
+\   }
+\ ')
+
+  call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
+
+  call s:handle_delete_remote(args)
+endfunction"}}}
+
+let s:kind.action_table.delete_remote_force = {
+\ 'description' : 'delete force this branch and remote',
+\ 'is_selectable' : 1,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.delete_remote_force.func(candidates)"{{{
   let args = map(copy(a:candidates), '
 \   {
 \     "branch"     : v:val.action__name,

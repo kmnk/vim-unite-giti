@@ -75,6 +75,7 @@ function! s:tc.setup_kind_action_delete()"{{{
     return 'mocked giti#config#read'
   endfunction"}}}
 endfunction"}}}
+
 function! s:tc.teardown_kind_action_delete()"{{{
   let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
   execute 'source ' . paths[0]
@@ -96,9 +97,6 @@ function! s:tc.test_kind_action_delete()"{{{
   call self.assert_equal(delete.func(candidates), 'mocked giti#branch#delete')
   call self.assert_equal(b:branch_delete_called_with,
 \                        [candidates[0].action__name])
-  call self.assert_equal(b:branch_delete_remote_called_with,
-\                        [{'repository' : 'mocked giti#config#read',
-\                          'branch' : candidates[0].action__name}])
 endfunction"}}}
 
 function! s:tc.setup_kind_action_delete_force()"{{{
@@ -139,6 +137,93 @@ function! s:tc.test_kind_action_delete_force()"{{{
 \   'action__name' : 'hoge',
 \ }]
   call self.assert_equal('mocked giti#branch#delete_force', delete_force.func(candidates))
+  call self.assert_equal(b:branch_delete_called_with,
+\                        [candidates[0].action__name])
+endfunction"}}}
+
+function! s:tc.setup_kind_action_delete_remote()"{{{
+  function! giti#has_shell_error()"{{{
+    return 0
+  endfunction"}}}
+  function! giti#input(prompt, ...)"{{{
+    return 'y'
+  endfunction"}}}
+  function! giti#branch#delete(branches)"{{{
+    let b:branch_delete_called_with = a:branches
+    return 'mocked giti#branch#delete'
+  endfunction"}}}
+  function! giti#branch#delete_remote(branches)"{{{
+    let b:branch_delete_remote_called_with = a:branches
+    return 'mocked giti#branch#delete_remote'
+  endfunction"}}}
+  function! giti#config#read(param)"{{{
+    return 'mocked giti#config#read'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_delete_remote()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
+  execute 'source ' . paths[0]
+  let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_delete_remote()"{{{
+  let kind = self.get('s:kind')
+  let delete_remote = kind.action_table.delete_remote
+  call self.assert_equal(type({}), type(delete_remote))
+  call self.assert_equal(type(''), type(delete_remote.description))
+  call self.assert_equal(delete_remote.is_selectable, 1)
+  call self.assert_equal(delete_remote.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(delete_remote.func))
+
+  let candidates = [{
+\   'action__name' : 'hoge',
+\ }]
+  call self.assert_equal(delete_remote.func(candidates), 'mocked giti#branch#delete')
+  call self.assert_equal(b:branch_delete_called_with,
+\                        [candidates[0].action__name])
+  call self.assert_equal(b:branch_delete_remote_called_with,
+\                        [{'repository' : 'mocked giti#config#read',
+\                          'branch' : candidates[0].action__name}])
+endfunction"}}}
+
+function! s:tc.setup_kind_action_delete_remote_force()"{{{
+  function! giti#has_shell_error()"{{{
+    return 0
+  endfunction"}}}
+  function! giti#input(prompt, ...)"{{{
+    return 'y'
+  endfunction"}}}
+  function! giti#branch#delete_force(branches)"{{{
+    let b:branch_delete_called_with = a:branches
+    return 'mocked giti#branch#delete_force'
+  endfunction"}}}
+  function! giti#branch#delete_remote(branches)"{{{
+    let b:branch_delete_remote_called_with = a:branches
+    return 'mocked giti#branch#delete_remote'
+  endfunction"}}}
+  function! giti#config#read(param)"{{{
+    return 'mocked giti#config#read'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_delete_remote_force()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
+  execute 'source ' . paths[0]
+  let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_delete_remote_force()"{{{
+  let kind = self.get('s:kind')
+  let delete_remote_force = kind.action_table.delete_remote_force
+  call self.assert_equal(type({}), type(delete_remote_force))
+  call self.assert_equal(type(''), type(delete_remote_force.description))
+  call self.assert_equal(delete_remote_force.is_selectable, 1)
+  call self.assert_equal(delete_remote_force.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(delete_remote_force.func))
+
+  let candidates = [{
+\   'action__name' : 'hoge',
+\ }]
+  call self.assert_equal('mocked giti#branch#delete_force', delete_remote_force.func(candidates))
   call self.assert_equal(b:branch_delete_called_with,
 \                        [candidates[0].action__name])
   call self.assert_equal(b:branch_delete_remote_called_with,
