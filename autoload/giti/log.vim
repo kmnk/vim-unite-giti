@@ -46,7 +46,7 @@ function! s:get_list(param)"{{{
 \     : g:giti_log_default_line_count
   let file = exists('a:param.file') ? a:param.file : ''
   let res = giti#system(printf(
-\   'log -%d --graph --date=relative --pretty=format:"%s" %s',
+\   'log -%d --graph --date=default --pretty=format:"%s" %s',
 \   line_count, s:pretty_format, file
 \ ))
   return split(res, '\n')

@@ -52,7 +52,7 @@ function! s:tc.test_list()"{{{
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -1234 --graph --date=relative --pretty=format:".\+" ',
+\   'log -1234 --graph --date=default --pretty=format:".\+" ',
 \   b:system_called_with
 \ )
   call self.assert_equal(giti#log#list({'line_count' : 4321}), [{
@@ -64,7 +64,7 @@ function! s:tc.test_list()"{{{
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -4321 --graph --date=relative --pretty=format:".\+" ',
+\   'log -4321 --graph --date=default --pretty=format:".\+" ',
 \   b:system_called_with
 \ )
   call self.assert_equal(giti#log#list({'file' : 'hoge'}), [{
@@ -76,7 +76,7 @@ function! s:tc.test_list()"{{{
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
-\   'log -1234 --graph --date=relative --pretty=format:".\+" hoge',
+\   'log -1234 --graph --date=default --pretty=format:".\+" hoge',
 \   b:system_called_with
 \ )
 endfunction"}}}
