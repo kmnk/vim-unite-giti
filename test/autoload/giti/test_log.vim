@@ -33,7 +33,7 @@ endfunction"}}}
 function! s:tc.setup_list()"{{{
   function! giti#system(command)"{{{
     let b:system_called_with = a:command
-    return '* | | ::aaaa::bbbb::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc]::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd]::eeee'
+    return '* | | :::aaaa:::bbbb:::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc]:::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd]:::eeee'
   endfunction"}}}
 endfunction
 function! s:tc.teardown_list()"{{{

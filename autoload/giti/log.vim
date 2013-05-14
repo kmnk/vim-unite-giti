@@ -10,7 +10,7 @@ set cpo&vim
 if !exists('g:giti_log_default_line_count')
   let g:giti_log_default_line_count = 50
 endif
-let s:pretty_format = "::%H::%P::%an<%ae>[%ad]::%cn<%ce>[%cd]::%s"
+let s:pretty_format = ":::%H:::%P:::%an<%ae>[%ad]:::%cn<%ce>[%cd]:::%s"
 " }}}
 
 function! giti#log#run(...)"{{{
@@ -53,7 +53,7 @@ function! s:get_list(param)"{{{
 endfunction"}}}
 
 function! s:build_log_data(line)"{{{
-  let splited = split(a:line, '::')
+  let splited = split(a:line, ':::')
 
   if 1 == len(splited)
     return {
