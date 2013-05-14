@@ -5,8 +5,9 @@ let s:list = [{
 \ 'graph' : 'foo',
 \ 'hash'  : 'barbarbarbarbar',
 \ 'author' : {
-\   'name' : 'hoge',
+\   'name' : 'hogehogehogehogehoge',
 \   'date' : 'fuga',
+\   'time' : '12345',
 \ },
 \ 'subject' : 'baz',
 \}]
