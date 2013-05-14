@@ -33,7 +33,7 @@ endfunction"}}}
 function! s:tc.setup_list()"{{{
   function! giti#system(command)"{{{
     let b:system_called_with = a:command
-    return '* | | :::aaaa:::bbbb:::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc]:::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd]:::eeee'
+    return '* | | :::aaaa:::bbbb:::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc(12345)]:::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd(12345)]:::eeee'
   endfunction"}}}
 endfunction
 function! s:tc.teardown_list()"{{{
@@ -47,8 +47,8 @@ function! s:tc.test_list()"{{{
 \   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
-\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
-\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
+\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc', 'time' : '12345'},
+\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd', 'time' : '12345'},
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
@@ -59,8 +59,8 @@ function! s:tc.test_list()"{{{
 \   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
-\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
-\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
+\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc', 'time' : '12345'},
+\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd', 'time' : '12345'},
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(
@@ -71,8 +71,8 @@ function! s:tc.test_list()"{{{
 \   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
 \   'parent_hash' : 'bbbb',
-\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc'},
-\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd'},
+\   'author'      : {'name' : 'cccc', 'mail' : 'cc@cc.cc', 'date' : 'cc/cc/cc cc:cc:cc', 'time' : '12345'},
+\   'committer'   : {'name' : 'dddd', 'mail' : 'dd@dd.dd', 'date' : 'dd/dd/dd dd:dd:dd', 'time' : '12345'},
 \   'subject'     : 'eeee',
 \ }])
   call self.assert_match(

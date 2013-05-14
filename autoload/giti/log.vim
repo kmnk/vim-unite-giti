@@ -10,7 +10,7 @@ set cpo&vim
 if !exists('g:giti_log_default_line_count')
   let g:giti_log_default_line_count = 50
 endif
-let s:pretty_format = ":::%H:::%P:::%an<%ae>[%ad]:::%cn<%ce>[%cd]:::%s"
+let s:pretty_format = ":::%H:::%P:::%an<%ae>[%ad(%at)]:::%cn<%ce>[%cd(%at)]:::%s"
 " }}}
 
 function! giti#log#run(...)"{{{
@@ -73,11 +73,12 @@ endfunction"}}}
 
 function! s:build_user_data(line)"{{{
   let matches
-\   = matchlist(a:line, '^\(.\+\)<\(.\+\)>\[\(.\+\)\]$')
+\   = matchlist(a:line, '^\(.\+\)<\(.\+\)>\[\(.\+\)(\(.\+\))]$')
   return {
 \   'name' : matches[1],
 \   'mail' : matches[2],
-\   'date' : matches[3]
+\   'date' : matches[3],
+\   'time' : matches[4]
 \ }
 endfunction"}}}
 
