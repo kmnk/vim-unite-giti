@@ -47,6 +47,7 @@ function! s:kind.action_table.checkout_tracking.func(candidate)"{{{
 \   'track' : 1,
 \ }))
 endfunction"}}}
+let s:kind.alias_table.cot = 'checkout_tracking'
 
 let s:kind.action_table.checkout_no_tracking = {
 \ 'description' : 'checkout branch (no tracking)',
@@ -59,6 +60,7 @@ function! s:kind.action_table.checkout_no_tracking.func(candidate)"{{{
 \   'track' : 0,
 \ }))
 endfunction"}}}
+let s:kind.alias_table.con = 'checkout_no_tracking'
 
 let s:kind.action_table.delete = {
 \ 'description' : 'delete this branch',
