@@ -15,9 +15,14 @@ function! giti#merge#run(param)"{{{
     return
   endif
 
+  let squash = ''
+  if exists('a:param.squash') && a:param.squash is 1
+    let squash = '--squash'
+  endif
+
   let branch_name = a:param.branch_name
   return giti#system_with_specifics({
-\   'command' : printf('merge %s', branch_name)
+\   'command' : printf('merge %s %s', squash, branch_name)
 \ })
 endfunction"}}}
 
