@@ -55,11 +55,75 @@ function! s:tc.test_kind_action_run()"{{{
   call self.assert_equal(b:print_called_with, 'mocked giti#checkout#create')
 endfunction"}}}
 
+function! s:tc.setup_kind_action_create_tracking()"{{{
+  function! giti#checkout#create(param)"{{{
+    let b:checkout_create_called_with = a:param
+    return 'mocked giti#checkout#create'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_create_tracking()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_create_tracking()"{{{
+  let kind = self.get('s:kind')
+  let create_tracking = kind.action_table.create_tracking
+  call self.assert_equal(type({}), type(create_tracking))
+  call self.assert_equal(type(''), type(create_tracking.description))
+  call self.assert_equal(create_tracking.is_selectable, 0)
+  call self.assert_equal(create_tracking.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(create_tracking.func))
+
+  let candidate = {
+\   'action__name'        : 'hoge',
+\   'action__start_point' : 'fuga',
+\ }
+  call create_tracking.func(candidate)
+  call self.assert_equal({'name'        : candidate.action__name,
+\                         'start_point' : candidate.action__start_point,
+\                         'track'       : 1},
+\                        b:checkout_create_called_with)
+  call self.assert_equal(b:print_called_with, 'mocked giti#checkout#create')
+endfunction"}}}
+
+function! s:tc.setup_kind_action_create_no_tracking()"{{{
+  function! giti#checkout#create(param)"{{{
+    let b:checkout_create_called_with = a:param
+    return 'mocked giti#checkout#create'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_create_no_tracking()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_create_no_tracking()"{{{
+  let kind = self.get('s:kind')
+  let create_no_tracking = kind.action_table.create_no_tracking
+  call self.assert_equal(type({}), type(create_no_tracking))
+  call self.assert_equal(type(''), type(create_no_tracking.description))
+  call self.assert_equal(create_no_tracking.is_selectable, 0)
+  call self.assert_equal(create_no_tracking.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(create_no_tracking.func))
+
+  let candidate = {
+\   'action__name'        : 'hoge',
+\   'action__start_point' : 'fuga',
+\ }
+  call create_no_tracking.func(candidate)
+  call self.assert_equal({'name'        : candidate.action__name,
+\                         'start_point' : candidate.action__start_point,
+\                         'track'       : 0},
+\                        b:checkout_create_called_with)
+  call self.assert_equal(b:print_called_with, 'mocked giti#checkout#create')
+endfunction"}}}
+
 function! s:tc.test_kind_alias_table_has()"{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table
   call self.assert_equal(table.create, 'run')
   call self.assert_equal(table.new, 'run')
+  call self.assert_equal(table.cot, 'create_tracking')
+  call self.assert_equal(table.con, 'create_no_tracking')
 endfunction"}}}
 
 unlet s:tc

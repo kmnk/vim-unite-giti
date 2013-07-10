@@ -33,6 +33,40 @@ endfunction"}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'
 
+let s:kind.action_table.create_tracking = {
+\ 'description' : 'create new remote tracking branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.create_tracking.func(candidate)"{{{
+  let arg = {
+\   'name' : a:candidate.action__name,
+\   'track' : 1,
+\ }
+  if a:candidate.action__start_point != ''
+    let arg.start_point = a:candidate.action__start_point
+  endif
+  call giti#print(giti#checkout#create(arg))
+endfunction"}}}
+let s:kind.alias_table.cot = 'create_tracking'
+
+let s:kind.action_table.create_no_tracking = {
+\ 'description' : 'create new not remote tracking branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.create_no_tracking.func(candidate)"{{{
+  let arg = {
+\   'name' : a:candidate.action__name,
+\   'track' : 0,
+\ }
+  if a:candidate.action__start_point != ''
+    let arg.start_point = a:candidate.action__start_point
+  endif
+  call giti#print(giti#checkout#create(arg))
+endfunction"}}}
+let s:kind.alias_table.con = 'create_no_tracking'
+
 " }}}
 
 " local functions {{{
