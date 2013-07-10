@@ -318,6 +318,35 @@ function! s:tc.test_kind_action_merge()"{{{
   call self.assert_equal(b:merge_run_called_with, {'branch_name' : candidate.action__name})
 endfunction"}}}
 
+function! s:tc.setup_kind_action_merge_squash()"{{{
+  function! giti#merge#run(param)"{{{
+    let b:merge_run_called_with = a:param
+    return 'mocked giti#merge#run'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_merge_squash()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/merge.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_merge_squash()"{{{
+  let kind = self.get('s:kind')
+  let merge_squash = kind.action_table.merge_squash
+  call self.assert_equal(type({}), type(merge_squash))
+  call self.assert_equal(type(''), type(merge_squash.description))
+  call self.assert_equal(merge_squash.is_selectable, 0)
+  call self.assert_equal(merge_squash.is_quit, 1)
+  call self.assert_equal(merge_squash.is_invalidate_cache, 0)
+  call self.assert_equal(merge_squash.is_listed, 1)
+  call self.assert_equal(type(function('tr')), type(merge_squash.func))
+
+  let candidate = {
+\   'action__name' : 'hoge',
+\ }
+  call merge_squash.func(candidate)
+  call self.assert_equal(b:print_called_with, 'mocked giti#merge#run')
+  call self.assert_equal(b:merge_run_called_with, {'branch_name' : candidate.action__name, 'squash' : 1})
+endfunction"}}}
+
 function! s:tc.setup_kind_action_rebase()"{{{
   function! giti#rebase#run(param)"{{{
     let b:rebase_run_called_with = a:param
