@@ -24,8 +24,8 @@ function! s:tc.kind_should_have()"{{{
 endfunction"}}}
 
 function! s:tc.setup_kind_action_run()"{{{
-  function! giti#checkout#switch(name)"{{{
-    let b:checkout_switch_called_with = a:name
+  function! giti#checkout#switch(param)"{{{
+    let b:checkout_switch_called_with = a:param
     return 'mocked giti#checkout#switch'
   endfunction"}}}
 endfunction"}}}
@@ -48,7 +48,7 @@ function! s:tc.test_kind_action_run()"{{{
 \ }
   call self.assert_equal(run.func(candidate), 'mocked giti#checkout#switch')
   call self.assert_equal(b:checkout_switch_called_with,
-\                        candidate.action__name)
+\                        {'name' : candidate.action__name})
 
   let candidate.action__is_new = 1
   call self.assert_equal(run.func(candidate), 'mocked unite#start')

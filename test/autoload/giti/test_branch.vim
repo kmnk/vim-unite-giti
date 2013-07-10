@@ -5,8 +5,8 @@ function! s:tc.SETUP()"{{{
     let b:checkout_create_called_with = a:param
     return 'mocked_checkout_create'
   endfunction"}}}
-  function! giti#checkout#switch(branch)"{{{
-    let b:checkout_switch_called_with = a:branch
+  function! giti#checkout#switch(param)"{{{
+    let b:checkout_switch_called_with = a:param
     return 'mocked_checkout_switch'
   endfunction"}}}
   function! giti#push#delete_remote_branch(branch)"{{{
@@ -97,7 +97,7 @@ endfunction"}}}
 
 function! s:tc.test_switch()"{{{
   call self.assert_equal(giti#branch#switch('hoge'), 'mocked_checkout_switch')
-  call self.assert_equal(b:checkout_switch_called_with, 'hoge')
+  call self.assert_equal(b:checkout_switch_called_with, {'name' : 'hoge'})
   call self.assert_throw('E118', 'call giti#branch#switch("", "")')
   call self.assert_throw('E119', 'call giti#branch#switch()')
 endfunction"}}}

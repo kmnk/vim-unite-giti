@@ -13,8 +13,18 @@ function! s:tc.test_run()"{{{
 endfunction"}}}
 
 function! s:tc.test_switch()"{{{
-  call self.assert_equal(giti#checkout#switch('hoge'), 'mocked_system')
-  call self.assert_equal('checkout hoge', b:system_called_with)
+  call self.assert_equal(giti#checkout#switch({'name' : 'hoge'}), 'mocked_system')
+  call self.assert_equal('checkout  hoge', b:system_called_with)
+
+  call self.assert_equal(giti#checkout#switch({'name' : 'hoge', 'track' : 0}), 'mocked_system')
+  call self.assert_equal('checkout --no-track hoge', b:system_called_with)
+
+  call self.assert_equal(giti#checkout#switch({'name' : 'hoge', 'track' : 1}), 'mocked_system')
+  call self.assert_equal('checkout --track hoge', b:system_called_with)
+
+  call self.assert_equal(giti#checkout#switch({'name' : 'hoge', 'track' : 'hoge'}), 'mocked_system')
+  call self.assert_equal('checkout  hoge', b:system_called_with)
+
   call self.assert_throw('E118', 'call giti#checkout#switch("", "")')
   call self.assert_throw('E119', 'call giti#checkout#switch()')
 endfunction"}}}

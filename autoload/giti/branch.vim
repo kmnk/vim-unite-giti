@@ -71,7 +71,7 @@ function! giti#branch#create(branch)"{{{
 endfunction"}}}
 
 function! giti#branch#switch(branch)"{{{
-  return giti#checkout#switch(a:branch)
+  return giti#checkout#switch({'name' : a:branch})
 endfunction"}}}
 
 " local function {{{

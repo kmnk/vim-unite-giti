@@ -14,8 +14,17 @@ function! giti#checkout#run(files)"{{{
   return giti#system('checkout -- ' . join(a:files))
 endfunction"}}}
 
-function! giti#checkout#switch(name)"{{{
-  return giti#system('checkout ' . a:name)
+function! giti#checkout#switch(param)"{{{
+  let name = a:param.name
+
+  let track = ''
+  if exists('a:param.track')
+    let track = a:param.track is 1 ? '--track'
+\             : a:param.track is 0 ? '--no-track'
+\             :                      ''
+  endif
+
+  return giti#system('checkout ' . track . ' ' . name)
 endfunction"}}}
 
 function! giti#checkout#create(param)"{{{
