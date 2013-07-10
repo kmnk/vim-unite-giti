@@ -39,7 +39,14 @@ function! giti#checkout#create(param)"{{{
     let start_point = giti#input('start-point (optional) : ')
   endif
 
-  return giti#system('checkout -b ' . name . ' ' . start_point)
+  let track = ''
+  if exists('a:param.track')
+    let track = a:param.track is 1 ? '--track'
+\             : a:param.track is 0 ? '--no-track'
+\             :                      ''
+  endif
+
+  return giti#system('checkout -b ' . track . ' ' . name . ' ' . start_point)
 endfunction"}}}
 
 " local functions {{{
