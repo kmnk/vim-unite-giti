@@ -36,6 +36,30 @@ let s:kind.alias_table.switch = 'run'
 let s:kind.alias_table.sw = 'run'
 let s:kind.alias_table.new = 'run'
 
+let s:kind.action_table.checkout_tracking = {
+\ 'description' : 'checkout branch (tracking)',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.checkout_tracking.func(candidate)"{{{
+  call giti#print(giti#checkout#switch({
+\   'name' : a:candidate.action__name,
+\   'track' : 1,
+\ }))
+endfunction"}}}
+
+let s:kind.action_table.checkout_no_tracking = {
+\ 'description' : 'checkout branch (no tracking)',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\}
+function! s:kind.action_table.checkout_no_tracking.func(candidate)"{{{
+  call giti#print(giti#checkout#switch({
+\   'name' : a:candidate.action__name,
+\   'track' : 0,
+\ }))
+endfunction"}}}
+
 let s:kind.action_table.delete = {
 \ 'description' : 'delete this branch',
 \ 'is_selectable' : 1,

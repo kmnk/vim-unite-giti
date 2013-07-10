@@ -56,6 +56,64 @@ function! s:tc.test_kind_action_run()"{{{
 \                        [[['giti/branch/new', candidate.action__name]], {'input' : ''}])
 endfunction"}}}
 
+function! s:tc.setup_kind_action_checkout_tracking()"{{{
+  function! giti#checkout#switch(param)"{{{
+    let b:checkout_switch_called_with = a:param
+    return 'mocked giti#checkout#switch'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_checkout_tracking()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_checkout_tracking()"{{{
+  let kind = self.get('s:kind')
+  let checkout_tracking = kind.action_table.checkout_tracking
+  call self.assert_equal(type({}), type(checkout_tracking))
+  call self.assert_equal(type(''), type(checkout_tracking.description))
+  call self.assert_equal(checkout_tracking.is_selectable, 0)
+  call self.assert_equal(checkout_tracking.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(checkout_tracking.func))
+
+  let candidate = {
+\   'action__is_new' : 0,
+\   'action__name'   : 'hoge',
+\ }
+  call self.assert_equal(checkout_tracking.func(candidate), 'mocked giti#checkout#switch')
+  call self.assert_equal(b:checkout_switch_called_with,
+\                        {'name' : candidate.action__name,
+\                         'track' : 1})
+endfunction"}}}
+
+function! s:tc.setup_kind_action_checkout_no_tracking()"{{{
+  function! giti#checkout#switch(param)"{{{
+    let b:checkout_switch_called_with = a:param
+    return 'mocked giti#checkout#switch'
+  endfunction"}}}
+endfunction"}}}
+function! s:tc.teardown_kind_action_checkout_no_tracking()"{{{
+  let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
+  execute 'source ' . paths[0]
+endfunction"}}}
+function! s:tc.test_kind_action_checkout_no_tracking()"{{{
+  let kind = self.get('s:kind')
+  let checkout_no_tracking = kind.action_table.checkout_no_tracking
+  call self.assert_equal(type({}), type(checkout_no_tracking))
+  call self.assert_equal(type(''), type(checkout_no_tracking.description))
+  call self.assert_equal(checkout_no_tracking.is_selectable, 0)
+  call self.assert_equal(checkout_no_tracking.is_quit, 1)
+  call self.assert_equal(type(function('tr')), type(checkout_no_tracking.func))
+
+  let candidate = {
+\   'action__is_new' : 0,
+\   'action__name'   : 'hoge',
+\ }
+  call self.assert_equal(checkout_no_tracking.func(candidate), 'mocked giti#checkout#switch')
+  call self.assert_equal(b:checkout_switch_called_with,
+\                        {'name' : candidate.action__name,
+\                         'track' : 0})
+endfunction"}}}
+
 function! s:tc.setup_kind_action_delete()"{{{
   function! giti#has_shell_error()"{{{
     return 0
