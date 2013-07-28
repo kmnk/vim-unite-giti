@@ -20,6 +20,30 @@ function! giti#branch#list_all()"{{{
 \ )
 endfunction"}}}
 
+function! giti#branch#github_list_all() "{{{
+  let remotes = filter(giti#remote#github_list(), 'v:val.type == "(fetch)"')
+  let remote_branch = filter(giti#branch#list_all(), 'v:val.is_remote && v:val.full_name !~ "->"')
+  let list_all_with_branch = []
+  for branch in remote_branch
+    let [remote_name, branch_name] = split(branch.name, '/')
+    let match_remotes = filter(copy(remotes), 'v:val.name == "'.remote_name.'"')
+
+    if empty(match_remotes)
+      " TODO Change message
+      throw 'Error occured:'
+    else
+      let remote = match_remotes[0]
+      let account = remote.github.account
+      let branch.name_with_remote_name = join([account, branch_name], ':')
+      let branch.remote_name = remote.name
+    endif
+
+    call add(list_all_with_branch, branch)
+  endfor
+
+  return list_all_with_branch
+endfunction"}}}
+
 function! giti#branch#current_name()"{{{
   let current_branch = giti#branch#current()
   return has_key(current_branch, 'name') ? current_branch['name'] : 'master'

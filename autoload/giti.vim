@@ -40,7 +40,7 @@ function! giti#system_with_specifics(param)"{{{
     endif
   endif
 
-  let ret = system('git ' . a:param.command)
+  let ret = system(g:giti_git_command . ' ' . a:param.command)
 
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret

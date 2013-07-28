@@ -7,6 +7,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
+if !exists('g:giti_git_command')
+  if executable('/usr/local/bin/hub')
+    let g:giti_git_command = '/usr/local/bin/hub' 
+  elseif executable('hub')
+    let g:giti_git_command = 'hub' 
+  else
+    let g:giti_git_command = 'git' 
+  endif
+endif
 " }}}
 
 " commands {{{
