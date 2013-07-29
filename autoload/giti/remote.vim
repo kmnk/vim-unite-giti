@@ -29,7 +29,8 @@ function! giti#remote#list_all() "{{{
 
     if remote.is_github
       let github = {}
-      let github.full_name = matchstr(remote.url, '\v([^:/]+/[^/]+)\.git$')[:-5]
+      let github.full_name = substitute(remote.url, 
+            \ '\v.*/([^:/]{-}/[^/]{-})(\.git)?$', '\1', 'g')
       let [github.account, github.name] = split(github.full_name, '/')
       let remote.github = github
     endif

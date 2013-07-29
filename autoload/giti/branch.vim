@@ -25,7 +25,9 @@ function! giti#branch#github_list_all() "{{{
   let remote_branch = filter(giti#branch#list_all(), 'v:val.is_remote && v:val.full_name !~ "->"')
   let list_all_with_branch = []
   for branch in remote_branch
-    let [remote_name, branch_name] = split(branch.name, '/')
+    let branch_name_splited = split(branch.name, '/')
+    let remote_name = remove(branch_name_splited, 0)
+    let branch_name = join(branch_name_splited, '/')
     let match_remotes = filter(copy(remotes), 'v:val.name == "'.remote_name.'"')
 
     if empty(match_remotes)
