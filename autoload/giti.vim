@@ -34,7 +34,7 @@ function! giti#system_with_specifics(param)"{{{
   let a:param.command = s:trim(a:param.command)
 
   if exists('a:param.with_confirm') && a:param.with_confirm
-    if !s:is_confirmed(a:param)
+    if !giti#is_confirmed(a:param)
       call giti#print('canceled')
       return
     endif
@@ -141,6 +141,11 @@ function! giti#input(prompt, ...)"{{{
   endif
 endfunction"}}}
 
+function! giti#is_confirmed(param) "{{{
+  let command = 'git ' . a:param.command
+  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if giti#has_shell_error()
@@ -151,11 +156,6 @@ function! s:handle_error(res, param)"{{{
     return a:res
   endif
 endfunction"}}}
-
-function! s:is_confirmed(param)
-  let command = 'git ' . a:param.command
-  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
-endfunction
 
 function! s:trim(string)"{{{
   return substitute(a:string, '\s\+$', '', '')

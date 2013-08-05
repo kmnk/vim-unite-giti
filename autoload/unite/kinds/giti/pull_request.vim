@@ -35,7 +35,7 @@ function! s:kind.action_table.run.func(candidate) "{{{
   elseif empty(head_repo)
     call unite#start([['giti/pull_request/head', base_repo]], context)
   else
-    call giti#pull_request#run(base_repo, head_repo, '')
+    call giti#pull_request#run(base_repo, head_repo)
   endif
 endfunction"}}}
 " }}}
