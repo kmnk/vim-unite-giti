@@ -13,7 +13,7 @@ endfunction"}}}
 
 function! s:get_recent_updated_branches(target)"{{{
   return split(
-\   giti#system('for-each-ref --sort=-committerdate --format="%(refname:short),%(committerdate:relative),%(objectname:short),%(contents:subject)" ' . a:target),
+\   giti#system('for-each-ref --sort=-committerdate --count=30 --format="%(refname:short),%(committerdate:relative),%(objectname:short),%(contents:subject)" ' . a:target),
 \   '\n')
 endfunction"}}}
 
