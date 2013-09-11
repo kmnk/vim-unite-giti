@@ -26,7 +26,7 @@ function! s:tc.test_recent()"{{{
 \   giti#branch_recent#recent(),
 \ )
   call self.assert_equal(
-\   'for-each-ref --sort=-committerdate --format="%(refname:short),%(committerdate:relative),%(objectname:short),%(contents:subject)" refs/heads/',
+\   'for-each-ref --sort=-committerdate --count=30 --format="%(refname:short),%(committerdate:relative),%(objectname:short),%(contents:subject)" refs/heads/',
 \   b:system_called_with)
 endfunction"}}}
 
