@@ -24,11 +24,7 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    call giti#print('Not a git repository')
-    call giti#print('Specify directory of git repository (and change current directory of this window)')
-    call giti#print('current  : ' . getcwd())
-    call giti#execute(printf('lcd %s', giti#input('change to: ', getcwd())))
-    return giti#system_with_specifics(a:param)
+    return giti#print('Not a git repository')
   endif
 
   let a:param.command = s:trim(a:param.command)
