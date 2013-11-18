@@ -8,13 +8,7 @@ set cpo&vim
 
 " variables {{{
 if !exists('g:giti_git_command')
-  if executable('/usr/local/bin/hub')
-    let g:giti_git_command = '/usr/local/bin/hub' 
-  elseif executable('hub')
-    let g:giti_git_command = 'hub' 
-  else
-    let g:giti_git_command = 'git' 
-  endif
+  let g:giti_git_command = executable('hub') ? 'hub' : 'git'
 endif
 " }}}
 

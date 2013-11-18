@@ -142,7 +142,7 @@ function! giti#input(prompt, ...)"{{{
 endfunction"}}}
 
 function! giti#is_confirmed(param) "{{{
-  let command = 'git ' . a:param.command
+  let command = g:giti_git_command . ' ' . a:param.command
   return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction"}}}
 

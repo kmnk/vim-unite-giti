@@ -7,7 +7,19 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#sources#giti#pull_request#define() "{{{
-  return [s:define_source('base'), s:define_source('head')]
+  if s:enabled_hub_command()
+    return [s:define_source('base'), s:define_source('head')]
+  else
+    return []
+  endif
+endfunction"}}}
+
+function! s:enabled_hub_command() "{{{
+  if !exists('s:enabled_hub')
+    let s:enabled_hub = system(g:giti_git_command) =~ 'hub'
+  endif
+
+  return s:enabled_hub
 endfunction"}}}
 
 function! s:define_source(base_or_head) "{{{
@@ -16,9 +28,9 @@ function! s:define_source(base_or_head) "{{{
   \ 'name' : 'giti/pull_request/' . base_or_head,
   \ 'description' : 'select '. base_or_head .' repository',
   \ 'source__base_or_head' : base_or_head,
-  \}
+  \ }
 
-  function! source.gather_candidates(args, context) 
+  function! source.gather_candidates(args, context)
     let selected_repo = empty(a:args) ? '' : a:args[0]
     let base_or_head = self.source__base_or_head
     call s:print_message(a:args, base_or_head)
@@ -32,8 +44,8 @@ endfunction"}}}
 function! s:get_candidates(base_or_head, selected_repo) "{{{
   let branches = giti#branch#github_list_all()
   let candidates = map(branches, 's:remote2candidate(v:val, a:base_or_head, a:selected_repo)')
-  let message_candidate = { 
-        \ 'word': '-- Please select ' . a:base_or_head. ' repository --', 
+  let message_candidate = {
+        \ 'word': '-- Please select ' . a:base_or_head. ' repository --',
         \ 'is_selected' : 1,
         \ 'is_dummy' : 1,
         \ }
@@ -47,7 +59,7 @@ function! s:remote2candidate(branch, base_or_head, selected_repo) "{{{
   let name = a:branch.name_with_remote_name
   let abbr = printf('%-12s %s', '[' . a:branch.remote_name . ']', name)
 
-  let [base_repo, head_repo] = a:base_or_head == 'base' ? 
+  let [base_repo, head_repo] = a:base_or_head == 'base' ?
         \ [name, a:selected_repo] : [a:selected_repo, name]
 
   return {
