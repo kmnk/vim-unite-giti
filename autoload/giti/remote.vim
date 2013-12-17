@@ -15,25 +15,21 @@ function! giti#remote#show_verbose()"{{{
 endfunction"}}}
 
 function! giti#remote#list_all() "{{{
-  let all_remotes = split(system('git remote -v'), '\n')
-  if empty(all_remotes)
-    return []
-  endif
-
   let remote_list = []
-  for line in all_remotes
+  for line in giti#remote#show_verbose()
     let remote = {}
     let [remote.name, url_with_type] = split(line, '\t')
     let [remote.url, remote.type] = split(url_with_type, ' ')
-    let remote.is_github = line =~ 'github\.com'
-
-    if remote.is_github
+    if remote.url =~ 'github\.com.\+\(\.git\)\?' || remote.url =~ '[^/:]\+/[^/:]\+\(\.git\)\?$'
       let github = {}
-      let github.full_name = substitute(remote.url, 
-            \ '\v.*/([^:/]{-}/[^/]{-})(\.git)?$', '\1', 'g')
+      let github.full_name = matchstr(remote.url, '\(.\+[/:]\)\@=[^/:]\+/[^/:]\+\(\.git\)\?$')
       let [github.account, github.name] = split(github.full_name, '/')
+      let remote.is_github = 1
       let remote.github = github
-    endif
+    else
+      let remote.is_github = 0
+      let remote.github = {}
+    end
 
     call add(remote_list, remote)
   endfor

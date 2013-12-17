@@ -14,6 +14,29 @@ function! unite#sources#giti#pull_request#define() "{{{
   endif
 endfunction"}}}
 
+let s:source = {
+      \ 'name' : '',
+      \ 'description' : '',
+      \ 'source__base_or_head' : '',
+      \ }
+
+function! s:source.gather_candidates(args, context) "{{{
+  let selected_repo = empty(a:args) ? '' : a:args[0]
+  let base_or_head = self.source__base_or_head
+  call s:print_message(a:args, base_or_head)
+
+  let branches = giti#branch#github_list_all()
+  let candidates = map(branches, 's:remote2candidate(v:val, base_or_head, selected_repo)')
+  let message_candidate = {
+        \ 'word': '-- Please select ' . base_or_head. ' repository --',
+        \ 'is_selected' : 1,
+        \ 'is_dummy' : 1,
+        \ }
+  call insert(candidates, message_candidate, 0)
+
+  return candidates
+endfunction"}}}
+
 function! s:enabled_hub_command() "{{{
   if !exists('s:enabled_hub')
     let s:enabled_hub = system(g:giti_git_command) =~ 'hub'
@@ -23,20 +46,10 @@ function! s:enabled_hub_command() "{{{
 endfunction"}}}
 
 function! s:define_source(base_or_head) "{{{
-  let base_or_head = a:base_or_head
-  let source = {
-  \ 'name' : 'giti/pull_request/' . base_or_head,
-  \ 'description' : 'select '. base_or_head .' repository',
-  \ 'source__base_or_head' : base_or_head,
-  \ }
-
-  function! source.gather_candidates(args, context)
-    let selected_repo = empty(a:args) ? '' : a:args[0]
-    let base_or_head = self.source__base_or_head
-    call s:print_message(a:args, base_or_head)
-
-    return s:get_candidates(base_or_head, selected_repo)
-  endfunction
+  let source = copy(s:source)
+  let source.name = 'giti/pull_request/' . a:base_or_head
+  let source.description = 'select '. a:base_or_head .' repository'
+  let source.source__base_or_head = a:base_or_head
 
   return source
 endfunction"}}}
@@ -55,9 +68,8 @@ function! s:get_candidates(base_or_head, selected_repo) "{{{
 endfunction"}}}
 
 function! s:remote2candidate(branch, base_or_head, selected_repo) "{{{
-  let remote_name = a:branch.remote_name
-  let name = a:branch.name_with_remote_name
-  let abbr = printf('%-12s %s', '[' . a:branch.remote_name . ']', name)
+  let name = a:branch.head_name
+  let abbr = printf('%-15s %-35s (%s)', '[' . a:branch.remote.name . ']', name, a:branch.remote.url)
 
   let [base_repo, head_repo] = a:base_or_head == 'base' ?
         \ [name, a:selected_repo] : [a:selected_repo, name]

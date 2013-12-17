@@ -22,28 +22,30 @@ endfunction"}}}
 
 function! giti#branch#github_list_all() "{{{
   let remotes = filter(giti#remote#github_list(), 'v:val.type == "(fetch)"')
-  let remote_branch = filter(giti#branch#list_all(), 'v:val.is_remote && v:val.full_name !~ "->"')
-  let list_all_with_branch = []
-  for branch in remote_branch
-    let branch_name_splited = split(branch.name, '/')
-    let remote_name = remove(branch_name_splited, 0)
-    let branch_name = join(branch_name_splited, '/')
-    let match_remotes = filter(copy(remotes), 'v:val.name == "'.remote_name.'"')
+  let remote_branches = filter(giti#branch#list_all(), 'v:val.is_remote && v:val.full_name !~ "->"')
 
-    if empty(match_remotes)
+  let github_branches = []
+  for branch in remote_branches
+    let [remote_name; branch_name_splited] = split(branch.name, '/')
+    let branch_name = join(branch_name_splited, '/')
+    let matched = filter(copy(remotes), 'v:val.name == "'.remote_name.'"')
+
+    if empty(matched)
       " TODO Change message
       throw 'Error occured:'
     else
-      let remote = match_remotes[0]
-      let account = remote.github.account
-      let branch.name_with_remote_name = join([account, branch_name], ':')
-      let branch.remote_name = remote.name
+      let g:r = remotes
+      let g:n = remote_name
+      let g:h = matched
+      let remote = matched[-1]
+      let branch.head_name = join([remote.github.account, branch_name], ':')
+      let branch.remote = remote
     endif
 
-    call add(list_all_with_branch, branch)
+    call add(github_branches, branch)
   endfor
 
-  return list_all_with_branch
+  return github_branches
 endfunction"}}}
 
 function! giti#branch#current_name()"{{{
