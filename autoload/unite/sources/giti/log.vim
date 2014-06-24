@@ -35,29 +35,29 @@ function! s:source.gather_candidates(args, context)"{{{
 endfunction"}}}
 
 " local functions {{{
-let s:word_format = '%-16s %- 20s %s %s'
+let s:word_format = '%-16s %s %- 20s %s'
 function! s:build_word(val)"{{{
   if !has_key(a:val, 'hash') || len(a:val.hash) <= 0
     return printf(s:word_format,
 \     '',
-\     '',
 \     a:val.graph,
+\     '',
 \     '',
 \   )
   endif
 
   return printf(s:word_format,
 \   strftime('%Y/%m/%d %H:%M', a:val.author.time),
-\   strlen(a:val.author.name) >= 20 ? a:val.author.name[0:18] . '~' : a:val.author.name,
 \   a:val.graph,
+\   strlen(a:val.author.name) >= 20 ? a:val.author.name[0:18] . '~' : a:val.author.name,
 \   a:val.subject,
 \ )
 endfunction"}}}
 function! s:build_title()"{{{
   return printf(s:word_format,
 \   'date',
-\   'author',
 \   '',
+\   'author',
 \   'subject',
 \ )
 endfunction"}}}
