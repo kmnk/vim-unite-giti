@@ -29,7 +29,8 @@ function! giti#system_with_specifics(param)"{{{
     call giti#print('current  : ' . getcwd())
     let new_directory = giti#input('change to: ', getcwd())
     if new_directory == ''
-      call giti#print('cacneled')
+      " Note 'redraw' is required to prevent 'Press ENTER or type...' message
+      redraw | call giti#print('cacneled')
       return
     endif
     call giti#execute(printf('lcd %s', new_directory))
@@ -40,7 +41,8 @@ function! giti#system_with_specifics(param)"{{{
 
   if exists('a:param.with_confirm') && a:param.with_confirm
     if !s:is_confirmed(a:param)
-      call giti#print('canceled')
+      " Note 'redraw' is required to prevent 'Press ENTER or type...' message
+      redraw | call giti#print('canceled')
       return
     endif
   endif

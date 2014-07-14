@@ -14,10 +14,18 @@ function! giti#config#run()"{{{
 endfunction"}}}
 
 function! giti#config#list()"{{{
+  " Note:
+  "   The first s:get_list returl value should be checked while user might
+  "   cancel the process (and then the return value will be 0)
+  let global = s:get_list({'location': 'global'})
+  if type(global) == 0
+    " canceled
+    return []
+  endif
   return extend(
 \   extend(
 \     map(
-\       s:get_list({'location' : 'global'}), '
+\       global, '
 \       s:build_config_data({
 \         "line"     : v:val,
 \         "location" : "global"
@@ -104,6 +112,9 @@ function! s:get_list(param)"{{{
 \ })
   if giti#has_shell_error()
     return []
+  elseif type(res) == 0
+    " operation has canceled (thus return 0)
+    return
   endif
   return split(res, '\n')
 endfunction"}}}

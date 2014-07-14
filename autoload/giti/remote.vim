@@ -7,7 +7,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! giti#remote#show()"{{{
-  return split(giti#system('remote show'), "\n")
+  let ret = giti#system('remote show')
+  if type(ret) == 0
+    " the operation has canceled
+    return []
+  endif
+  return split(ret, "\n")
 endfunction"}}}
 
 function! giti#remote#show_verbose()"{{{

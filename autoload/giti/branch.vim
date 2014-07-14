@@ -7,15 +7,25 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! giti#branch#list()"{{{
+  let result = giti#system('branch')
+  if type(result) == 0
+    " canceled
+    return []
+  endif
   return map(
-\   split(giti#system('branch'), '\n'),
+\   split(result, '\n'),
 \   's:build_branch_data(v:val)'
 \ )
 endfunction"}}}
 
 function! giti#branch#list_all()"{{{
+  let result = giti#system('branch -a')
+  if type(result) == 0
+    " canceled
+    return []
+  endif
   return map(
-\   split(giti#system('branch -a'), '\n'),
+\   split(result, '\n'),
 \   's:build_branch_data(v:val)'
 \ )
 endfunction"}}}
@@ -26,9 +36,14 @@ function! giti#branch#current_name()"{{{
 endfunction"}}}
 
 function! giti#branch#current()"{{{
+  let result = giti#system('branch -a')
+  if type(result) == 0
+    " canceled
+    return []
+  endif
   let branches = filter(
 \   map(
-\     split(giti#system('branch -a'), '\n'),
+\     split(result, '\n'),
 \     's:build_branch_data(v:val)'
 \   ),
 \   'v:val.is_current'
