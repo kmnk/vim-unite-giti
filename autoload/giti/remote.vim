@@ -19,6 +19,34 @@ function! giti#remote#show_verbose()"{{{
   return split(giti#system('remote --verbose show'), "\n")
 endfunction"}}}
 
+function! giti#remote#list_all() "{{{
+  let remote_list = []
+  for line in giti#remote#show_verbose()
+    let remote = {}
+    let [remote.name, url_with_type] = split(line, '\t')
+    let [remote.url, remote.type] = split(url_with_type, ' ')
+    if remote.url =~ 'github\.com.\+\(\.git\)\?' || remote.url =~ '[^/:]\+/[^/:]\+\(\.git\)\?$'
+      let github = {}
+      let github.full_name = matchstr(remote.url, '\(.\+[/:]\)\@=[^/:]\+/[^/:]\+\(\.git\)\?$')
+      let [github.account, github.name] = split(github.full_name, '/')
+      let remote.is_github = 1
+      let remote.github = github
+    else
+      let remote.is_github = 0
+      let remote.github = {}
+    end
+
+    call add(remote_list, remote)
+  endfor
+
+  return remote_list
+endfunction"}}}
+
+function! giti#remote#github_list() "{{{
+  let remote_list = giti#remote#list_all()
+  return filter(remote_list, 'v:val.is_github')
+endfunction"}}}
+
 function! giti#remote#add(param)"{{{
   if !has_key(a:param, 'name') || strlen(a:param.name) <= 0
     throw 'name required'

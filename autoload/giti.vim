@@ -40,14 +40,13 @@ function! giti#system_with_specifics(param)"{{{
   let a:param.command = s:trim(a:param.command)
 
   if exists('a:param.with_confirm') && a:param.with_confirm
-    if !s:is_confirmed(a:param)
-      " Note 'redraw' is required to prevent 'Press ENTER or type...' message
-      redraw | call giti#print('canceled')
+    if !giti#is_confirmed(a:param)
+      call giti#print('canceled')
       return
     endif
   endif
 
-  let ret = system('git ' . a:param.command)
+  let ret = system(g:giti_git_command . ' ' . a:param.command)
 
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
@@ -148,6 +147,11 @@ function! giti#input(prompt, ...)"{{{
   endif
 endfunction"}}}
 
+function! giti#is_confirmed(param) "{{{
+  let command = g:giti_git_command . ' ' . a:param.command
+  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if giti#has_shell_error()
@@ -158,11 +162,6 @@ function! s:handle_error(res, param)"{{{
     return a:res
   endif
 endfunction"}}}
-
-function! s:is_confirmed(param)
-  let command = 'git ' . a:param.command
-  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
-endfunction
 
 function! s:trim(string)"{{{
   return substitute(a:string, '\s\+$', '', '')
