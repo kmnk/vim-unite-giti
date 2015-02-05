@@ -11,7 +11,7 @@ set cpo&vim
 
 function! giti#is_git_repository(...)"{{{
   let path = a:0 > 0 ? a:1 : getcwd()
-  return finddir('.git', path . ';') != '' ? 1 : 0
+  return finddir('.git', fnameescape(path) . ';') != '' ? 1 : 0
 endfunction"}}}
 
 function! giti#to_relative_path(absolute_path)"{{{
