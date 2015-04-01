@@ -9,6 +9,15 @@ set cpo&vim
 " variables {{{
 " }}}
 
+function! giti#reset#reset(param)"{{{
+  let hash  = a:param.hash
+  let files = exists('a:param.files') ? a:param.files : []
+  return giti#system_with_specifics({
+\   'command'      : printf('reset %s %s', hash, join(files)),
+\   'with_confirm' : 1,
+\ })
+endfunction"}}}
+
 function! giti#reset#hard(param)"{{{
   let hash  = a:param.hash
   let files = exists('a:param.files') ? a:param.files : []
