@@ -57,12 +57,12 @@ function! s:build_log_data(line)"{{{
 
   if 1 == len(splited)
     return {
-\     'graph'       : remove(splited, 0),
+\     'graph' : substitute(substitute(substitute(substitute(remove(splited, 0), '/', '//', 'g'), '\', '/', 'g'), '//', '\', 'g'), '_', '~', 'g'),
 \   }
   endif
 
   return {
-\   'graph'       : remove(splited, 0),
+\   'graph'       : substitute(substitute(substitute(substitute(remove(splited, 0), '/', '//', 'g'), '\', '/', 'g'), '//', '\', 'g'), '_', '~', 'g'),
 \   'hash'        : remove(splited, 0),
 \   'parent_hash' : remove(splited, 0),
 \   'author'      : s:build_user_data(remove(splited, 0)),
