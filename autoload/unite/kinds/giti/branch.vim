@@ -160,7 +160,7 @@ let s:kind.action_table.merge_no_ff = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.merge_squash.func(candidate)"{{{
+function! s:kind.action_table.merge_no_ff.func(candidate)"{{{
   call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name, 'no_ff' : 1 }))
 endfunction"}}}
 
