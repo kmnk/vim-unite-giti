@@ -24,23 +24,19 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    call giti#print('Not a git repository')
-    call giti#print('Specify directory of git repository (and change current directory of this window)')
-    call giti#print('current  : ' . getcwd())
-    call giti#execute(printf('lcd %s', giti#input('change to: ', getcwd())))
-    return giti#system_with_specifics(a:param)
+    return giti#print('Not a git repository')
   endif
 
   let a:param.command = s:trim(a:param.command)
 
   if exists('a:param.with_confirm') && a:param.with_confirm
-    if !s:is_confirmed(a:param)
+    if !giti#is_confirmed(a:param)
       call giti#print('canceled')
       return
     endif
   endif
 
-  let ret = system('git ' . a:param.command)
+  let ret = system(g:giti_git_command . ' ' . a:param.command)
 
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
@@ -141,6 +137,11 @@ function! giti#input(prompt, ...)"{{{
   endif
 endfunction"}}}
 
+function! giti#is_confirmed(param) "{{{
+  let command = g:giti_git_command . ' ' . a:param.command
+  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
+endfunction"}}}
+
 " local functions {{{
 function! s:handle_error(res, param)"{{{
   if giti#has_shell_error()
@@ -151,11 +152,6 @@ function! s:handle_error(res, param)"{{{
     return a:res
   endif
 endfunction"}}}
-
-function! s:is_confirmed(param)
-  let command = 'git ' . a:param.command
-  return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
-endfunction
 
 function! s:trim(string)"{{{
   return substitute(a:string, '\s\+$', '', '')

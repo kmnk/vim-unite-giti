@@ -27,9 +27,11 @@ function! s:source.gather_candidates(args, context)"{{{
 endfunction"}}}
 
 function! s:source.change_candidates(args, context)"{{{
+  let g:candidates = a:context
   if !strlen(a:context.input)
     return []
   endif
+  let current_branch = filter(copy(g:candidates.source.unite__cached_candidates), 'v:val.word =~ "^\*"')[0].action__name
   return [{
 \   "word"   : "[new branch] " . a:context.input,
 \   "source" : s:source.name,
@@ -37,12 +39,14 @@ function! s:source.change_candidates(args, context)"{{{
 \   "action__name" : a:context.input,
 \   "action__is_new" : 1,
 \ }, {
-\   "word"   : "[checkout branch] " . a:context.input,
+\   "word"   : "[checkout branch from " . current_branch . "] " . a:context.input,
 \   "source" : s:source.name,
-\   "kind"   : "giti/branch",
+\   "kind"   : "giti/branch/new",
 \   "action__name" : a:context.input,
+\   "action__start_point" : current_branch,
 \   "action__is_new" : 0,
-\ }]
+\ }
+\ ]
 endfunction"}}}
 
 " local functions {{{
