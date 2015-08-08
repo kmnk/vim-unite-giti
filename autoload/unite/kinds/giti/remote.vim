@@ -41,7 +41,7 @@ let s:kind.alias_table.fetch = 'run'
 let s:kind.alias_table.default = 'run'
 
 let s:kind.action_table.rm = {
-\ 'description' : 'remote this remote',
+\ 'description' : 'remove this remote',
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
