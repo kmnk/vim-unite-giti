@@ -132,6 +132,21 @@ function! s:kind.action_table.vimdiff.func(candidates)"{{{
 endfunction"}}}
 let s:kind.alias_table.vdi = 'vimdiff'
 
+let s:kind.action_table.reset = {
+\ 'description' : 'git reset this commit',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\}
+function! s:kind.action_table.reset.func(candidate)"{{{
+  if s:is_graph_only_line(a:candidate)
+    call giti#print('graph only line')
+    return
+  endif
+
+  call giti#reset#reset({'hash' : a:candidate.action__data.hash})
+endfunction"}}}
+
 let s:kind.action_table.reset_hard = {
 \ 'description' : 'git reset --hard this commit',
 \ 'is_selectable' : 0,
@@ -146,7 +161,6 @@ function! s:kind.action_table.reset_hard.func(candidate)"{{{
 
   call giti#reset#hard({'hash' : a:candidate.action__data.hash})
 endfunction"}}}
-let s:kind.alias_table.reset_hard = 'reset'
 
 let s:kind.action_table.yank_hash = {
 \ 'description' : 'yank hash of this commit',

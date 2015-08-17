@@ -153,6 +153,17 @@ function! s:kind.action_table.merge_squash.func(candidate)"{{{
   call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name, 'squash' : 1 }))
 endfunction"}}}
 
+let s:kind.action_table.merge_no_ff = {
+\ 'description' : 'no fast forward merge this branch',
+\ 'is_selectable' : 0,
+\ 'is_quit' : 1,
+\ 'is_invalidate_cache' : 0,
+\ 'is_listed' : 1,
+\}
+function! s:kind.action_table.merge_no_ff.func(candidate)"{{{
+  call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name, 'no_ff' : 1 }))
+endfunction"}}}
+
 let s:kind.action_table.rebase = {
 \ 'description' : 'rebase on this branch',
 \ 'is_selectable' : 0,
