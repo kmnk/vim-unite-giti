@@ -24,7 +24,17 @@ endfunction"}}}
 
 function! giti#system_with_specifics(param)"{{{
   if !giti#is_git_repository()
-    return giti#print('Not a git repository')
+    call giti#print('Not a git repository')
+    call giti#print('Specify directory of git repository (and change current directory of this window)')
+    call giti#print('current  : ' . getcwd())
+    let new_directory = giti#input('change to: ', getcwd())
+    if new_directory == ''
+      " Note 'redraw' is required to prevent 'Press ENTER or type...' message
+      redraw | call giti#print('cacneled')
+      return
+    endif
+    call giti#execute(printf('lcd %s', new_directory))
+    return giti#system_with_specifics(a:param)
   endif
 
   let a:param.command = s:trim(a:param.command)

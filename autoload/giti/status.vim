@@ -27,6 +27,10 @@ endfunction"}}}
 
 function! s:get_list()
   let res = giti#system('status -s')
+  if type(res) == 0
+    " the operation has canceled
+    return []
+  endif
   return split(res, '\n')
 endfunction
 

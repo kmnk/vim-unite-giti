@@ -49,6 +49,10 @@ function! s:get_list(param)"{{{
 \   'log -%d --graph --date=default --pretty=format:"%s" %s',
 \   line_count, s:pretty_format, file
 \ ))
+  if type(res) == 0
+    " the operation has canceled
+    return []
+  endif
   return split(res, '\n')
 endfunction"}}}
 
