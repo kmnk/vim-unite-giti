@@ -48,12 +48,31 @@ function! s:source.gather_candidates(args, context) "{{{
 endfunction "}}}
 
 " local functions {{{
-let s:word_format = '%+30s %5s %s'
+let s:path_length_max = 50
+let s:word_format = '%' . s:path_length_max . 's %4s:%s'
 function! s:build_word(val) "{{{
   return printf(s:word_format,
-        \ fnamemodify(a:val.path, ':t'),
+        \ s:shorten_path(a:val.path),
         \ a:val.line,
         \ a:val.detail)
+endfunction "}}}
+
+function! s:shorten_path(path) "{{{
+  if len(a:path) <= s:path_length_max
+    return a:path
+  endif
+
+  let name = fnamemodify(a:path, ':t')
+  let head = fnamemodify(a:path, ':h')
+
+  if len(name) > s:path_length_max - 10
+    return name
+  endif
+
+  " very loose logic
+  let short_head = head[0:s:path_length_max-len(name)-14] . '..' . head[-10:-1]
+
+  return short_head . '/' . name
 endfunction "}}}
 " }}}
 
