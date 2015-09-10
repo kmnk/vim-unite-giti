@@ -1,12 +1,12 @@
 let s:tc = unittest#testcase#new('autoload/giti/revert.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
   setlocal filetype=unittest bufhidden=hide
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call giti#revert#run(['hoge', 'fuga'])
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
@@ -17,6 +17,6 @@ function! s:tc.test_run()"{{{
 \ )
   call self.assert_throw('E118', 'call giti#revert#run("", "")')
   call self.assert_throw('E119', 'call giti#revert#run()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

@@ -6,16 +6,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#log#define()"{{{
+function! unite#sources#giti#log#define() "{{{
   return s:source
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/log',
 \ 'description' : 'disp logs',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/log] ' . s:build_title())
   let file = ''
   if len(a:args) > 0
@@ -32,11 +32,11 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__data" : v:val,
 \   "action__file" : file,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 let s:word_format = '%-16s %s %- 20s %s'
-function! s:build_word(val)"{{{
+function! s:build_word(val) "{{{
   if !has_key(a:val, 'hash') || len(a:val.hash) <= 0
     return printf(s:word_format,
 \     '',
@@ -52,15 +52,15 @@ function! s:build_word(val)"{{{
 \   strlen(a:val.author.name) >= 20 ? a:val.author.name[0:18] . '~' : a:val.author.name,
 \   a:val.subject,
 \ )
-endfunction"}}}
-function! s:build_title()"{{{
+endfunction "}}}
+function! s:build_title() "{{{
   return printf(s:word_format,
 \   'date',
 \   '',
 \   'author',
 \   'subject',
 \ )
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

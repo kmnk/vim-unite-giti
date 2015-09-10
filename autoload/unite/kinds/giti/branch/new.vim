@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#branch#new#define()"{{{
+function! unite#kinds#giti#branch#new#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/branch/new',
@@ -23,13 +23,13 @@ let s:kind.action_table.run = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.run.func(candidate)"{{{
+function! s:kind.action_table.run.func(candidate) "{{{
   let arg = { 'name' : a:candidate.action__name }
   if a:candidate.action__start_point != ''
     let arg.start_point = a:candidate.action__start_point
   endif
   call giti#print(giti#checkout#create(arg))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.create = 'run'
 let s:kind.alias_table.new = 'run'
 
@@ -38,7 +38,7 @@ let s:kind.action_table.create_tracking = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.create_tracking.func(candidate)"{{{
+function! s:kind.action_table.create_tracking.func(candidate) "{{{
   let arg = {
 \   'name' : a:candidate.action__name,
 \   'track' : 1,
@@ -47,7 +47,7 @@ function! s:kind.action_table.create_tracking.func(candidate)"{{{
     let arg.start_point = a:candidate.action__start_point
   endif
   call giti#print(giti#checkout#create(arg))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.cot = 'create_tracking'
 
 let s:kind.action_table.create_no_tracking = {
@@ -55,7 +55,7 @@ let s:kind.action_table.create_no_tracking = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.create_no_tracking.func(candidate)"{{{
+function! s:kind.action_table.create_no_tracking.func(candidate) "{{{
   let arg = {
 \   'name' : a:candidate.action__name,
 \   'track' : 0,
@@ -64,7 +64,7 @@ function! s:kind.action_table.create_no_tracking.func(candidate)"{{{
     let arg.start_point = a:candidate.action__start_point
   endif
   call giti#print(giti#checkout#create(arg))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.con = 'create_no_tracking'
 
 " }}}

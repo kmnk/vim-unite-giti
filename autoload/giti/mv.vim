@@ -11,15 +11,15 @@ set cpo&vim
 
 function! giti#mv#run(param) abort"{{{
   return s:run('', a:param)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#mv#force(param)"{{{
+function! giti#mv#force(param) "{{{
   return s:run('-f', a:param)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#mv#verbose(param)"{{{
+function! giti#mv#verbose(param) "{{{
   return s:run('-v', a:param)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 function! s:run(option, param) abort"{{{
@@ -47,7 +47,7 @@ function! s:run(option, param) abort"{{{
 \   ? printf('mv%s %s %s',     option, source, destination)
 \   : printf('mv%s %s ... %s', option, source, destination_directory)
 \ )
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 let &cpo = s:save_cpo

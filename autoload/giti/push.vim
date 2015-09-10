@@ -9,17 +9,17 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#push#run(param)"{{{
+function! giti#push#run(param) "{{{
   let arg = a:param
   let arg.command = 'push'
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#push#set_upstream(param)"{{{
+function! giti#push#set_upstream(param) "{{{
   let arg = a:param
   let arg.command = 'push -u'
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
 function! giti#push#delete_remote_branch(param) abort "{{{
   if !has_key(a:param, 'branch') || len(a:param.branch) <= 0
@@ -31,18 +31,18 @@ function! giti#push#delete_remote_branch(param) abort "{{{
   let arg.refspec = ':' . a:param.branch
 
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#push#expressly()"{{{
+function! giti#push#expressly() "{{{
   let arg = {}
   let arg.command = 'push'
   let arg.repository = giti#input("repository: ")
   let arg.refspec    = giti#input("refspec: ")
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:run(param)"{{{
+function! s:run(param) "{{{
   return giti#system_with_specifics({
 \   'command' : printf('%s %s %s',
 \     exists('a:param.command')    ? a:param.command    : '',
@@ -51,7 +51,7 @@ function! s:run(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 let &cpo = s:save_cpo

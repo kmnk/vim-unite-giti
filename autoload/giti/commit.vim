@@ -9,32 +9,32 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#commit#run(files)"{{{
+function! giti#commit#run(files) "{{{
   return s:run('commit', a:files)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#commit#dry_run(files)"{{{
+function! giti#commit#dry_run(files) "{{{
   return s:run('commit --dry-run', a:files)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#commit#amend(files)"{{{
+function! giti#commit#amend(files) "{{{
   return s:run('commit --amend', a:files)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:run(command, files)"{{{
+function! s:run(command, files) "{{{
   call s:make_commit_editmsg(a:command, a:files)
   call s:edit_commit_editmsg(a:command, a:files)
-endfunction"}}}
+endfunction "}}}
 
-function! s:make_commit_editmsg(command, files)"{{{
+function! s:make_commit_editmsg(command, files) "{{{
   call giti#system_with_specifics({
 \   'command'      : a:command . ' -- ' . join(a:files),
 \   'ignore_error' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! s:edit_commit_editmsg(command, files)"{{{
+function! s:edit_commit_editmsg(command, files) "{{{
   call giti#execute(printf('%s %sCOMMIT_EDITMSG', giti#edit_command(), giti#dir()))
   setlocal filetype=gitcommit bufhidden=wipe
   augroup GitiCommit"{{{
@@ -45,7 +45,7 @@ function! s:edit_commit_editmsg(command, files)"{{{
 \     a:command . ' -F ' . expand('%') . ' -- ' . join(a:files)
 \   )
   augroup END"}}}
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

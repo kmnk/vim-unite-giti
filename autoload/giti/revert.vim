@@ -9,24 +9,24 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#revert#run(hash_list)"{{{
+function! giti#revert#run(hash_list) "{{{
   return s:run(a:hash_list)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:run(hash_list)"{{{
+function! s:run(hash_list) "{{{
   call s:make_revert_editmsg(a:hash_list)
   call s:edit_revert_editmsg()
-endfunction"}}}
+endfunction "}}}
 
-function! s:make_revert_editmsg(hash_list)"{{{
+function! s:make_revert_editmsg(hash_list) "{{{
   call giti#system_with_specifics({
 \   'command'      : printf('revert %s', join(a:hash_list)),
 \   'ignore_error' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! s:edit_revert_editmsg()"{{{
+function! s:edit_revert_editmsg() "{{{
   call giti#execute(printf(
 \   '%s %sCOMMIT_EDITMSG',
 \   giti#edit_command(),
@@ -41,7 +41,7 @@ function! s:edit_revert_editmsg()"{{{
 \     'commit --amend -F ' . expand('%')
 \   )
   augroup END"}}}
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 

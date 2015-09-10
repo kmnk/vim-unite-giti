@@ -9,24 +9,24 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#rm#run(param)"{{{
+function! giti#rm#run(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return s:run({'command' : 'rm', 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#rm#cached(param)"{{{
+function! giti#rm#cached(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return s:run({'command' : 'rm --cached', 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:run(param)"{{{
+function! s:run(param) "{{{
   let files = len(a:param.files) > 0 ? join(a:param.files) : '.'
   return giti#system_with_specifics({
 \   'command' : a:param.command . ' -- ' . files,
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 let &cpo = s:save_cpo

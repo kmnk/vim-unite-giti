@@ -1,29 +1,29 @@
 let s:tc = unittest#testcase#new('autoload/unite/kinds/giti/log.vim',
 \                                unite#kinds#giti#log#__context__())
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_define()"{{{
+function! s:tc.test_define() "{{{
   call self.assert_equal(
 \   type({}),
 \   type(unite#kinds#giti#log#define()),
 \ )
   call self.assert_throw('E118', 'call self.call("unite#kinds#giti#log#define", [""])')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.kind_should_have()"{{{
+function! s:tc.kind_should_have() "{{{
   let kind = self.get('s:kind')
   call self.assert_equal(type({}), type(kind))
   call self.assert_equal('giti/log', kind.name)
   call self.assert_equal(type(''), type(kind.default_action))
   call self.assert_equal(type({}), type(kind.action_table))
   call self.assert_equal(type({}), type(kind.alias_table))
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_kind_action_view()"{{{
+function! s:tc.test_kind_action_view() "{{{
   let kind = self.get('s:kind')
   let view = kind.action_table.view
   call self.assert_equal(type({}), type(view))
@@ -43,19 +43,19 @@ function! s:tc.test_kind_action_view()"{{{
 \   }
 \ }
   call view.func(candidate)
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_diff()"{{{
-  function! giti#diff#specify(param)"{{{
+function! s:tc.setup_kind_action_diff() "{{{
+  function! giti#diff#specify(param) "{{{
     let b:diff_specify_called_with = a:param
     return 'mocked giti#diff#specify'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_diff()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_diff() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/diff.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_diff()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_diff() "{{{
   let kind = self.get('s:kind')
   let diff = kind.action_table.diff
   call self.assert_equal(type({}), type(diff))
@@ -94,19 +94,19 @@ function! s:tc.test_kind_action_diff()"{{{
 \   },
 \   b:diff_specify_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_revert()"{{{
-  function! giti#revert#run(hashes)"{{{
+function! s:tc.setup_kind_action_revert() "{{{
+  function! giti#revert#run(hashes) "{{{
     let b:revert_run_called_with = a:hashes
     return 'mocked giti#revert#run'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_revert()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_revert() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/revert.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_revert()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_revert() "{{{
   let kind = self.get('s:kind')
   let revert = kind.action_table.revert
   call self.assert_equal(type({}), type(revert))
@@ -126,19 +126,19 @@ function! s:tc.test_kind_action_revert()"{{{
 \   [ candidate.action__data.hash ],
 \   b:revert_run_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_vimdiff()"{{{
-  function! giti#diff#view_vim_diff(hashes)"{{{
+function! s:tc.setup_kind_action_vimdiff() "{{{
+  function! giti#diff#view_vim_diff(hashes) "{{{
     let b:diff_view_vim_diff_called_with = a:hashes
     return 'mocked giti#diff#view_vim_diff'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_vimdiff()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_vimdiff() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/diff.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_vimdiff()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_vimdiff() "{{{
   let kind = self.get('s:kind')
   let vimdiff = kind.action_table.vimdiff
   call self.assert_equal(type({}), type(vimdiff))
@@ -177,19 +177,19 @@ function! s:tc.test_kind_action_vimdiff()"{{{
 \   },
 \   b:diff_view_vim_diff_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_reset_hard()"{{{
-  function! giti#reset#hard(param)"{{{
+function! s:tc.setup_kind_action_reset_hard() "{{{
+  function! giti#reset#hard(param) "{{{
     let b:reset_hard_called_with = a:param
     return 'mocked giti#reset#hard'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_reset_hard()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_reset_hard() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/reset.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_reset_hard()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_reset_hard() "{{{
   let kind = self.get('s:kind')
   let reset_hard = kind.action_table.reset_hard
   call self.assert_equal(type({}), type(reset_hard))
@@ -209,9 +209,9 @@ function! s:tc.test_kind_action_reset_hard()"{{{
 \   { 'hash' : candidate.action__data.hash },
 \   b:reset_hard_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_action_yank_hash()"{{{
+function! s:tc.test_action_yank_hash() "{{{
   let kind = self.get('s:kind')
   let yank_hash = kind.action_table.yank_hash
   call self.assert_equal(type({}), type(yank_hash))
@@ -230,19 +230,19 @@ function! s:tc.test_action_yank_hash()"{{{
   call self.assert_not_equal(candidate.action__data.hash, @")
   call yank_hash.func(candidate)
   call self.assert_equal(candidate.action__data.hash, @")
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_changed_files()"{{{
-  function! giti#diff_tree#changed_files(param)"{{{
+function! s:tc.setup_kind_action_changed_files() "{{{
+  function! giti#diff_tree#changed_files(param) "{{{
     let b:changed_files_called_with = a:param
     return 'mocked giti#diff_tree#changed_files'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_changed_files()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_changed_files() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/diff_tree.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_changed_files()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_changed_files() "{{{
   let kind = self.get('s:kind')
   let changed_files = kind.action_table.changed_files
   call self.assert_equal(type({}), type(changed_files))
@@ -271,14 +271,14 @@ function! s:tc.test_kind_action_changed_files()"{{{
 \                        [[['giti/diff_tree/changed_files',
 \                           candidates[1].action__data.hash,
 \                           candidates[0].action__data.hash]], {'input' : ''}])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_kind_alias_table_has()"{{{
+function! s:tc.test_kind_alias_table_has() "{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table
   call self.assert_equal(table.di, 'diff')
   call self.assert_equal(table.vdi, 'vimdiff')
   call self.assert_equal(table.reset_hard, 'reset')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

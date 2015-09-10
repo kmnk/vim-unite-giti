@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#config#define()"{{{
+function! unite#kinds#giti#config#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/config',
@@ -24,7 +24,7 @@ let s:kind.action_table.yank_value = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.yank_value.func(candidate)"{{{
+function! s:kind.action_table.yank_value.func(candidate) "{{{
   if a:candidate.action__is_new
     return s:create_new_config(a:candidate)
   else
@@ -32,7 +32,7 @@ function! s:kind.action_table.yank_value.func(candidate)"{{{
     let @" = a:candidate.action__value
     return
   endif
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.run = 'yank_value'
 
 let s:kind.action_table.write = {
@@ -41,7 +41,7 @@ let s:kind.action_table.write = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.write.func(candidate)"{{{
+function! s:kind.action_table.write.func(candidate) "{{{
   let location = s:get_location(a:candidate.action__location)
   call giti#print(printf('write "%s" on %s', a:candidate.action__key, location))
   call giti#print(printf('current value: %s', a:candidate.action__value))
@@ -51,7 +51,7 @@ function! s:kind.action_table.write.func(candidate)"{{{
 \   'value'    : value,
 \   'location' : location,
 \ })
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.remove = {
 \ 'description' : 'remove this config',
@@ -59,7 +59,7 @@ let s:kind.action_table.remove = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.remove.func(candidates)"{{{
+function! s:kind.action_table.remove.func(candidates) "{{{
   for candidate in a:candidates
     let location = s:get_location(candidate.action__location)
     let res = giti#config#remove({
@@ -67,18 +67,18 @@ function! s:kind.action_table.remove.func(candidates)"{{{
 \     'location' : location,
 \   })
   endfor
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 
 " local functions {{{
-function! s:get_location(location)"{{{
+function! s:get_location(location) "{{{
   let default = 'local'
   return giti#config#is_valid_location(a:location) ? a:location
 \                                                  : default
-endfunction"}}}
+endfunction "}}}
 
-function! s:create_new_config(candidate)"{{{
+function! s:create_new_config(candidate) "{{{
   call giti#print('create new config "' . a:candidate.action__key . '"')
   let location = s:get_location(giti#input('location(default is "local") : '))
   let value    = giti#input('value : ')
@@ -87,7 +87,7 @@ function! s:create_new_config(candidate)"{{{
 \   'value'    : value,
 \   'location' : location,
 \ })
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

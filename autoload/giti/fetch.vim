@@ -9,13 +9,13 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#fetch#run(...)"{{{
+function! giti#fetch#run(...) "{{{
   let param = a:0 > 0 ? a:1 : {}
 
   let repository = exists('param.repository') ? param.repository : ''
 
   return giti#system(printf('fetch %s', repository))
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

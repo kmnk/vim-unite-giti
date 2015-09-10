@@ -9,13 +9,13 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#add#run(files)"{{{
+function! giti#add#run(files) "{{{
   return giti#system('add ' . join(a:files))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#add#patch(files)"{{{
+function! giti#add#patch(files) "{{{
   return giti#execute('! git add -p ' . join(a:files))
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

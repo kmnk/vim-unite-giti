@@ -1,11 +1,11 @@
 let s:tc = unittest#testcase#new('autoload/giti/reset.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_hard()"{{{
+function! s:tc.test_hard() "{{{
   call self.assert_equal(
 \   giti#reset#hard({
 \     'hash'  : 'hoge',
@@ -23,9 +23,9 @@ function! s:tc.test_hard()"{{{
 \                        {'command' : 'reset --hard hoge ', 'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#reset#head("", "")')
   call self.assert_throw('E119', 'call giti#reset#head()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.head()"{{{
+function! s:tc.head() "{{{
   call self.assert_equal(giti#reset#head({'files' : ['foo', 'bar']}),
 \                        'mocked_system')
   call self.assert_equal(b:system_called_with,
@@ -38,6 +38,6 @@ function! s:tc.head()"{{{
 \                        'reset HEAD .')
   call self.assert_throw('E118', 'call giti#reset#hard("", "")')
   call self.assert_throw('E119', 'call giti#reset#hard()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

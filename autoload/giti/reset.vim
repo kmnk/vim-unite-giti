@@ -9,31 +9,31 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#reset#reset(param)"{{{
+function! giti#reset#reset(param) "{{{
   let hash  = a:param.hash
   let files = exists('a:param.files') ? a:param.files : []
   return giti#system_with_specifics({
 \   'command'      : printf('reset %s %s', hash, join(files)),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#reset#hard(param)"{{{
+function! giti#reset#hard(param) "{{{
   let hash  = a:param.hash
   let files = exists('a:param.files') ? a:param.files : []
   return giti#system_with_specifics({
 \   'command'      : printf('reset --hard %s %s', hash, join(files)),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#reset#head(param)"{{{
+function! giti#reset#head(param) "{{{
   let files = exists('a:param.files') ? a:param.files : ['.']
   return giti#system_with_specifics({
 \   'command' : 'reset HEAD ' . join(files),
 \   'ignore_error' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

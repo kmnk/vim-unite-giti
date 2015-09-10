@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#remote#define()"{{{
+function! unite#kinds#giti#remote#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/remote',
@@ -24,7 +24,7 @@ let s:kind.action_table.run = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.run.func(candidate)"{{{
+function! s:kind.action_table.run.func(candidate) "{{{
   if has_key(a:candidate, 'action__is_new') && a:candidate.action__is_new
     let context = unite#get_context()
     let context.input = ''
@@ -36,7 +36,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
   else
     call giti#print(giti#fetch#run({'repository' : a:candidate.action__name}))
   endif
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.fetch = 'run'
 let s:kind.alias_table.default = 'run'
 
@@ -47,9 +47,9 @@ let s:kind.action_table.rm = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.rm.func(candidate)"{{{
+function! s:kind.action_table.rm.func(candidate) "{{{
   call giti#print(giti#remote#rm(a:candidate.action__name))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.delete = 'rm'
 
 let s:kind.action_table.rename = {
@@ -59,11 +59,11 @@ let s:kind.action_table.rename = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.rename.func(candidate)"{{{
+function! s:kind.action_table.rename.func(candidate) "{{{
   let arg = {'old' : a:candidate.action__name}
   let arg.new = giti#input('new name: ', a:candidate.action__name)
   call giti#print(giti#remote#rename(arg))
-endfunction"}}}
+endfunction "}}}
 "let s:kind.alias_table.alias_action = 'rename'
 
 " local functions {{{

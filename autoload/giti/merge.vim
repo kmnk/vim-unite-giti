@@ -9,7 +9,7 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#merge#run(param)"{{{
+function! giti#merge#run(param) "{{{
   if !exists('a:param.branch_name')
     throw 'branch_name required'
     return
@@ -29,7 +29,7 @@ function! giti#merge#run(param)"{{{
   return giti#system_with_specifics({
 \   'command' : printf('merge %s %s %s', squash, no_ff, branch_name)
 \ })
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

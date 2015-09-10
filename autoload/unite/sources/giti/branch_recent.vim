@@ -6,16 +6,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#branch_recent#define()"{{{
+function! unite#sources#giti#branch_recent#define() "{{{
   return [s:source, unite#sources#giti#branch#new#define()]
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/branch_recent',
 \ 'description' : 'display recent changed branches',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/branch_recent]')
   return map(giti#branch_recent#recent(), '{
 \   "word" : s:build_word(v:val),
@@ -24,9 +24,9 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__name" : v:val.name,
 \   "action__is_new" : 0,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
-function! s:source.change_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context) "{{{
   if !strlen(a:context.input)
     return []
   endif
@@ -43,17 +43,17 @@ function! s:source.change_candidates(args, context)"{{{
 \   "action__name" : a:context.input,
 \   "action__is_new" : 0,
 \ }]
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 let s:word_format = '%s(%s) %s| %s'
-function! s:build_word(val)"{{{
+function! s:build_word(val) "{{{
   return printf(s:word_format,
 \   a:val.name,
 \   a:val.objectname,
 \   a:val.relativedate,
 \   a:val.message)
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

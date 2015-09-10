@@ -1,11 +1,11 @@
 let s:tc = unittest#testcase#new('autoload/giti/pull.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call self.assert_equal(
 \   giti#pull#run({
 \     'repository' : 'hoge',
@@ -26,9 +26,9 @@ function! s:tc.test_run()"{{{
 \                        {'command' : 'pull  fuga', 'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#pull#run("", "")')
   call self.assert_throw('E119', 'call giti#pull#run()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_squash()"{{{
+function! s:tc.test_squash() "{{{
   call self.assert_equal(
 \   giti#pull#squash({
 \     'repository' : 'hoge',
@@ -53,9 +53,9 @@ function! s:tc.test_squash()"{{{
 \                         'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#pull#squash("", "")')
   call self.assert_throw('E119', 'call giti#pull#squash()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_rebase()"{{{
+function! s:tc.test_rebase() "{{{
   call self.assert_equal(
 \   giti#pull#rebase({
 \     'repository' : 'hoge',
@@ -80,6 +80,6 @@ function! s:tc.test_rebase()"{{{
 \                         'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#pull#rebase("", "")')
   call self.assert_throw('E119', 'call giti#pull#rebase()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

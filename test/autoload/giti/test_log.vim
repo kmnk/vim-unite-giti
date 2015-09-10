@@ -1,48 +1,48 @@
 let s:tc = unittest#testcase#new('autoload/giti/log.vim')
 
-function! s:tc.SETUP()"{{{
+function! s:tc.SETUP() "{{{
   let g:giti_log_default_line_count = 1234
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call self.assert_equal(giti#log#run(), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'log -1234 -- ')
   call self.assert_equal(giti#log#run('hoge'), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'log -1234 -- hoge')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_full()"{{{
+function! s:tc.test_full() "{{{
   call self.assert_equal(giti#log#full(), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'log -- ')
   call self.assert_equal(giti#log#full('hoge'), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'log -- hoge')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_line()"{{{
+function! s:tc.test_line() "{{{
   call self.assert_equal(giti#log#line(), 'mocked_system')
   call self.assert_equal(b:system_called_with,
 \                        'log --pretty=oneline --graph -- ')
   call self.assert_equal(giti#log#line('hoge'), 'mocked_system')
   call self.assert_equal(b:system_called_with,
 \                        'log --pretty=oneline --graph -- hoge')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_list()"{{{
-  function! giti#system(command)"{{{
+function! s:tc.setup_list() "{{{
+  function! giti#system(command) "{{{
     let b:system_called_with = a:command
     return '* | | :::aaaa:::bbbb:::cccc<cc@cc.cc>[cc/cc/cc cc:cc:cc(12345)]:::dddd<dd@dd.dd>[dd/dd/dd dd:dd:dd(12345)]:::eeee'
-  endfunction"}}}
+  endfunction "}}}
 endfunction
-function! s:tc.teardown_list()"{{{
-  function! giti#system(command)"{{{
+function! s:tc.teardown_list() "{{{
+  function! giti#system(command) "{{{
     let b:system_called_with = a:command
     return 'mocked_system'
-  endfunction"}}}
+  endfunction "}}}
 endfunction
-function! s:tc.test_list()"{{{
+function! s:tc.test_list() "{{{
   call self.assert_equal(giti#log#list(), [{
 \   'graph'       : '* | | ',
 \   'hash'        : 'aaaa',
@@ -79,6 +79,6 @@ function! s:tc.test_list()"{{{
 \   'log -1234 --graph --date=default --pretty=format:".\+" hoge',
 \   b:system_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

@@ -1,11 +1,11 @@
 let s:tc = unittest#testcase#new('arg/giti/push.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call self.assert_equal(
 \   giti#push#run({
 \     'repository' : 'hoge',
@@ -26,9 +26,9 @@ function! s:tc.test_run()"{{{
 \                        {'command' : 'push  fuga', 'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#push#run("", "")')
   call self.assert_throw('E119', 'call giti#push#run()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_set_upstream()"{{{
+function! s:tc.test_set_upstream() "{{{
   call self.assert_equal(
 \   giti#push#set_upstream({
 \     'repository' : 'hoge',
@@ -49,9 +49,9 @@ function! s:tc.test_set_upstream()"{{{
 \                        {'command' : 'push -u  fuga', 'with_confirm' : 1})
   call self.assert_throw('E118', 'call giti#push#set_upstream("", "")')
   call self.assert_throw('E119', 'call giti#push#set_upstream()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_delete_remote_branch()"{{{
+function! s:tc.test_delete_remote_branch() "{{{
   call self.assert_equal(
 \   giti#push#delete_remote_branch({
 \     'repository' : 'hoge',
@@ -75,6 +75,6 @@ function! s:tc.test_delete_remote_branch()"{{{
 
   call self.assert_throw('E118', 'call giti#push#delete_remote_branch("", "")')
   call self.assert_throw('E119', 'call giti#push#delete_remote_branch()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

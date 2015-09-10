@@ -13,33 +13,33 @@ endif
 let s:pretty_format = ":::%H:::%P:::%an<%ae>[%ad(%at)]:::%cn<%ce>[%cd(%at)]:::%s"
 " }}}
 
-function! giti#log#run(...)"{{{
+function! giti#log#run(...) "{{{
   let file = a:0 > 0 ? a:1 : ''
   return giti#system(printf('log -%d -- %s',
 \   g:giti_log_default_line_count, file
 \ ))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#log#full(...)"{{{
+function! giti#log#full(...) "{{{
   let file = a:0 > 0 ? a:1 : ''
   return giti#system(printf('log -- %s', file))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#log#line(...)"{{{
+function! giti#log#line(...) "{{{
   let file = a:0 > 0 ? a:1 : ''
   return giti#system(printf('log --pretty=oneline --graph -- %s', file))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#log#list(...)"{{{
+function! giti#log#list(...) "{{{
   let param = a:0 > 0 ? a:1 : {}
   return map(s:get_list(param), '
 \   s:build_log_data(v:val)
 \ ')
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 
-function! s:get_list(param)"{{{
+function! s:get_list(param) "{{{
   let line_count
 \   = exists('a:param.line_count') && a:param.line_count > 0
 \     ? a:param.line_count
@@ -54,9 +54,9 @@ function! s:get_list(param)"{{{
     return []
   endif
   return split(res, '\n')
-endfunction"}}}
+endfunction "}}}
 
-function! s:build_log_data(line)"{{{
+function! s:build_log_data(line) "{{{
   let splited = split(a:line, ':::')
 
   if 1 == len(splited)
@@ -73,9 +73,9 @@ function! s:build_log_data(line)"{{{
 \   'committer'   : s:build_user_data(remove(splited, 0)),
 \   'subject'     : remove(splited, 0),
 \ }
-endfunction"}}}
+endfunction "}}}
 
-function! s:build_user_data(line)"{{{
+function! s:build_user_data(line) "{{{
   let matches
 \   = matchlist(a:line, '^\(.\+\)<\(.\+\)>\[\(.\+\)(\(.\+\))]$')
   return {
@@ -84,7 +84,7 @@ function! s:build_user_data(line)"{{{
 \   'date' : matches[3],
 \   'time' : matches[4]
 \ }
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

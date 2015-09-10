@@ -6,24 +6,24 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! giti#blame#run(param)"{{{
+function! giti#blame#run(param) "{{{
   let file = a:param.file
   return split(giti#system(printf('blame %s', file)), '\n')
-endfunction"}}}
+endfunction "}}}
 
-function! giti#blame#format(lines)"{{{
+function! giti#blame#format(lines) "{{{
   return map(a:lines, 's:build_line(v:val)')
-endfunction"}}}
+endfunction "}}}
 
 " local functions
-function! s:build_line(line)"{{{
+function! s:build_line(line) "{{{
   let matches = matchlist(a:line, '^\([^ ]\+\) \((.\+)\) \(.\+\)$')
   return {
 \   'hash'   : matches[1],
 \   'detail' : matches[2],
 \   'line'   : matches[3],
 \ }
-endfunction"}}}
+endfunction "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

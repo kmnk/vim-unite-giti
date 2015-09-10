@@ -9,7 +9,7 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#rebase#run(param)"{{{
+function! giti#rebase#run(param) "{{{
   return giti#system_with_specifics({
 \   'command' : printf('rebase %s %s',
 \                 has_key(a:param, 'onto')
@@ -21,26 +21,26 @@ function! giti#rebase#run(param)"{{{
 \               ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#rebase#interactive(param)"{{{
+function! giti#rebase#interactive(param) "{{{
   return giti#execute(printf('! git rebase -i %s %s',
 \   has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
 \   has_key(a:param, 'upstream') ? a:param.upstream         : '',
 \ ))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#rebase#continue()"{{{
+function! giti#rebase#continue() "{{{
   return giti#system('rebase --continue')
-endfunction"}}}
+endfunction "}}}
 
-function! giti#rebase#skip()"{{{
+function! giti#rebase#skip() "{{{
   return giti#system('rebase --skip')
-endfunction"}}}
+endfunction "}}}
 
-function! giti#rebase#abort()"{{{
+function! giti#rebase#abort() "{{{
   return giti#system('rebase --abort')
-endfunction"}}}
+endfunction "}}}
 
 " local functionss {{{
 " }}}

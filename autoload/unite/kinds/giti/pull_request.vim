@@ -8,7 +8,7 @@ set cpo&vim
 
 function! unite#kinds#giti#pull_request#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/pull_request',
@@ -37,7 +37,7 @@ function! s:kind.action_table.run.func(candidate) "{{{
   else
     call giti#pull_request#run(base_repo, head_repo)
   endif
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

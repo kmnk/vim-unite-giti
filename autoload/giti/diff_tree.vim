@@ -29,7 +29,7 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#diff_tree#changed_files(param)"{{{
+function! giti#diff_tree#changed_files(param) "{{{
   let from = a:param.from
   let to   = a:param.to
 
@@ -43,7 +43,7 @@ function! giti#diff_tree#changed_files(param)"{{{
   endif
 
   return split(res, '\n')
-endfunction"}}}
+endfunction "}}}
 
 
 

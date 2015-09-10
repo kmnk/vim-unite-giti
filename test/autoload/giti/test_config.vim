@@ -1,38 +1,38 @@
 let s:tc = unittest#testcase#new('autoload/git/config.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.setup_list()"{{{
-  function! giti#system_with_specifics(command)"{{{
+function! s:tc.setup_list() "{{{
+  function! giti#system_with_specifics(command) "{{{
     let b:system_with_specifics_called_with = a:command
     return 'hoge=fuga'
-  endfunction"}}}
-endfunction"}}}
+  endfunction "}}}
+endfunction "}}}
 
-function! s:tc.test_list()"{{{
+function! s:tc.test_list() "{{{
   call self.assert_equal(giti#config#list(), [
 \   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'global'},
 \   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'system'},
 \   {'key' : 'hoge', 'value' : 'fuga', 'location' : 'local' },
 \ ])
   call self.assert_throw('E118', 'call giti#config#list("")')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_list_error()"{{{
-  function! giti#system_with_specifics(command)"{{{
+function! s:tc.setup_list_error() "{{{
+  function! giti#system_with_specifics(command) "{{{
     let b:system_with_specifics_called_with = a:command
     return 'mocked_system_with_specifics'
-  endfunction"}}}
-endfunction"}}}
+  endfunction "}}}
+endfunction "}}}
 
-function! s:tc.test_list_error()"{{{
+function! s:tc.test_list_error() "{{{
   call self.assert_throw('invalid config line', 'call giti#config#list()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_read()"{{{
+function! s:tc.test_read() "{{{
   call self.assert_equal(giti#config#read({'key' : 'hoge'}),
 \                        'mocked_system_with_specifics')
   call self.assert_equal(b:system_with_specifics_called_with,
@@ -46,9 +46,9 @@ function! s:tc.test_read()"{{{
 
   call self.assert_throw('E118', 'call giti#config#read("", "")')
   call self.assert_throw('E119', 'call giti#config#read()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_write()"{{{
+function! s:tc.test_write() "{{{
   call self.assert_equal(giti#config#write({'key' : 'hoge', 'value' : 'fuga piyo'}), 'mocked_system_with_specifics')
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
@@ -69,9 +69,9 @@ function! s:tc.test_write()"{{{
 
   call self.assert_throw('E118', 'call giti#config#write("", "")')
   call self.assert_throw('E119', 'call giti#config#write()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_remove()"{{{
+function! s:tc.test_remove() "{{{
   call self.assert_equal(giti#config#remove({'key' : 'hoge'}), 'mocked_system_with_specifics')
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
@@ -92,9 +92,9 @@ function! s:tc.test_remove()"{{{
 
   call self.assert_throw('E118', 'call giti#config#remove("", "")')
   call self.assert_throw('E119', 'call giti#config#remove()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_add()"{{{
+function! s:tc.test_add() "{{{
   call self.assert_equal(giti#config#add({'key' : 'hoge', 'value' : 'fuga piyo'}), 'mocked_system_with_specifics')
   call self.assert_equal(
 \   b:system_with_specifics_called_with,
@@ -115,9 +115,9 @@ function! s:tc.test_add()"{{{
 
   call self.assert_throw('E118', 'call giti#config#add("", "")')
   call self.assert_throw('E119', 'call giti#config#add()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_is_valid_location()"{{{
+function! s:tc.test_is_valid_location() "{{{
   call self.assert_equal(giti#config#is_valid_location('hoge'), '0')
   call self.assert_equal(giti#config#is_valid_location(''), '0')
   call self.assert_equal(giti#config#is_valid_location('local'), '1')
@@ -125,6 +125,6 @@ function! s:tc.test_is_valid_location()"{{{
   call self.assert_equal(giti#config#is_valid_location('system'), '1')
   call self.assert_throw('E118', 'call giti#config#is_valid_location("", "")')
   call self.assert_throw('E119', 'call giti#config#is_valid_location()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

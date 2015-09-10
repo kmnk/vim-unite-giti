@@ -1,48 +1,48 @@
 let s:tc = unittest#testcase#new('autoload/unite/kinds/giti/remote.vim',
 \                                unite#kinds#giti#remote#__context__())
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_define()"{{{
+function! s:tc.test_define() "{{{
   call self.assert_equal(
 \   type({}),
 \   type(unite#kinds#giti#remote#define()),
 \ )
   call self.assert_throw('E118', 'call self.call("unite#kinds#giti#remote#define", [""])')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.kind_should_have()"{{{
+function! s:tc.kind_should_have() "{{{
   let kind = self.get('s:kind')
   call self.assert_equal(type({}), type(kind))
   call self.assert_equal('giti/remote', kind.name)
   call self.assert_equal(type(''), type(kind.default_action))
   call self.assert_equal(type({}), type(kind.action_table))
   call self.assert_equal(type({}), type(kind.alias_table))
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_run()"{{{
-  function! giti#remote#add(param)"{{{
+function! s:tc.setup_kind_action_run() "{{{
+  function! giti#remote#add(param) "{{{
     let b:remote_add_called_with = a:param
     return 'mocked giti#remote#add'
-  endfunction"}}}
-  function! giti#fetch#run(param)"{{{
+  endfunction "}}}
+  function! giti#fetch#run(param) "{{{
     let b:fetch_run_called_with = a:param
     return 'mocked giti#fetch#run'
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'mocked giti#input'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_run()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_run() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/remote.vim'), '\n')
   execute 'source ' . paths[0]
   let paths = split(globpath(&rtp, 'autoload/giti/fetch.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_run()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_run() "{{{
   let kind = self.get('s:kind')
   let run = kind.action_table.run
   call self.assert_equal(type({}), type(run))
@@ -71,19 +71,19 @@ function! s:tc.test_kind_action_run()"{{{
 \   { 'repository' : candidate.action__name },
 \   b:fetch_run_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_rm()"{{{
-  function! giti#remote#rm(param)"{{{
+function! s:tc.setup_kind_action_rm() "{{{
+  function! giti#remote#rm(param) "{{{
     let b:remote_rm_called_with = a:param
     return 'mocked giti#remote#rm'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_rm()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_rm() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/remote.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_rm()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_rm() "{{{
   let kind = self.get('s:kind')
   let rm = kind.action_table.rm
   call self.assert_equal(type({}), type(rm))
@@ -97,22 +97,22 @@ function! s:tc.test_kind_action_rm()"{{{
   let candidate = {'action__name' : 'hoge'}
   call rm.func(candidate)
   call self.assert_equal(candidate.action__name, b:remote_rm_called_with)
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_rename()"{{{
-  function! giti#remote#rename(param)"{{{
+function! s:tc.setup_kind_action_rename() "{{{
+  function! giti#remote#rename(param) "{{{
     let b:remote_rename_called_with = a:param
     return 'mocked giti#remote#rename'
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'mocked giti#input'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_rename()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_rename() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/remote.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_rename()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_rename() "{{{
   let kind = self.get('s:kind')
   let rename = kind.action_table.rename
   call self.assert_equal(type({}), type(rename))
@@ -132,14 +132,14 @@ function! s:tc.test_kind_action_rename()"{{{
 \   },
 \   b:remote_rename_called_with
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_kind_alias_table_has()"{{{
+function! s:tc.test_kind_alias_table_has() "{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table
   call self.assert_equal(table.fetch, 'run')
   call self.assert_equal(table.default, 'run')
   call self.assert_equal(table.delete, 'rm')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

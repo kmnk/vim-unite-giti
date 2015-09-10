@@ -4,24 +4,24 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! unite#print_message(message)"{{{
+function! unite#print_message(message) "{{{
   return 'mocked unite#print_message'
-endfunction"}}}
+endfunction "}}}
 
-function! unite#custom_action(kind, name, action)"{{{
+function! unite#custom_action(kind, name, action) "{{{
   return 'mocked unite#custom_action'
-endfunction"}}}
+endfunction "}}}
 
-function! unite#get_context()"{{{
+function! unite#get_context() "{{{
   return {
 \   'input' : 'mocked unite#get_context'
 \ }
-endfunction"}}}
+endfunction "}}}
 
-function! unite#start(sources, context)"{{{
+function! unite#start(sources, context) "{{{
   let b:unite_start_called_with = [a:sources, a:context]
   return 'mocked unite#start'
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

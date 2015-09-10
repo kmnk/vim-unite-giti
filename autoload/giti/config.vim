@@ -9,11 +9,11 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#config#run()"{{{
+function! giti#config#run() "{{{
   call giti#config#list()
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#list()"{{{
+function! giti#config#list() "{{{
   " Note:
   "   The first s:get_list returl value should be checked while user might
   "   cancel the process (and then the return value will be 0)
@@ -47,9 +47,9 @@ function! giti#config#list()"{{{
 \     })
 \   ')
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#read(param)"{{{
+function! giti#config#read(param) "{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                           : ''
   return substitute(giti#system_with_specifics({
@@ -58,9 +58,9 @@ function! giti#config#read(param)"{{{
 \   ]),
 \   'ignore_error' : 1,
 \ }), '\n\+$', '', '')
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#write(param)"{{{
+function! giti#config#write(param) "{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
@@ -69,9 +69,9 @@ function! giti#config#write(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#remove(param)"{{{
+function! giti#config#remove(param) "{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                           : ''
   return giti#system_with_specifics({
@@ -80,9 +80,9 @@ function! giti#config#remove(param)"{{{
 \   ]),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#add(param)"{{{
+function! giti#config#add(param) "{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   return giti#system_with_specifics({
@@ -91,19 +91,19 @@ function! giti#config#add(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#config#is_valid_location(location)"{{{
+function! giti#config#is_valid_location(location) "{{{
   return a:location == ''       ? 0
 \      : a:location == 'local'  ? 1
 \      : a:location == 'global' ? 1
 \      : a:location == 'system' ? 1
 \      :                          0
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 
-function! s:get_list(param)"{{{
+function! s:get_list(param) "{{{
   let location = exists('a:param.location') ? '--' . a:param.location
 \                                         : ''
   let res = giti#system_with_specifics({
@@ -117,9 +117,9 @@ function! s:get_list(param)"{{{
     return
   endif
   return split(res, '\n')
-endfunction"}}}
+endfunction "}}}
 
-function! s:build_config_data(param)"{{{
+function! s:build_config_data(param) "{{{
   let line = a:param.line
 
   let splited = split(line, '=')
@@ -135,7 +135,7 @@ function! s:build_config_data(param)"{{{
 \   'value'    : splited[1],
 \   'location' : location,
 \ }
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

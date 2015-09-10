@@ -12,7 +12,7 @@ function! unite#sources#giti#pull_request#define() "{{{
   else
     return []
   endif
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
       \ 'name' : '',
@@ -35,7 +35,7 @@ function! s:source.gather_candidates(args, context) "{{{
   call insert(candidates, message_candidate, 0)
 
   return candidates
-endfunction"}}}
+endfunction "}}}
 
 function! s:enabled_hub_command() "{{{
   if !exists('s:enabled_hub')
@@ -43,7 +43,7 @@ function! s:enabled_hub_command() "{{{
   endif
 
   return s:enabled_hub
-endfunction"}}}
+endfunction "}}}
 
 function! s:define_source(base_or_head) "{{{
   let source = copy(s:source)
@@ -52,7 +52,7 @@ function! s:define_source(base_or_head) "{{{
   let source.source__base_or_head = a:base_or_head
 
   return source
-endfunction"}}}
+endfunction "}}}
 
 function! s:get_candidates(base_or_head, selected_repo) "{{{
   let branches = giti#branch#github_list_all()
@@ -65,7 +65,7 @@ function! s:get_candidates(base_or_head, selected_repo) "{{{
   call insert(candidates, message_candidate, 0)
 
   return candidates
-endfunction"}}}
+endfunction "}}}
 
 function! s:remote2candidate(branch, base_or_head, selected_repo) "{{{
   let name = a:branch.head_name
@@ -81,7 +81,7 @@ function! s:remote2candidate(branch, base_or_head, selected_repo) "{{{
         \ 'action__base_repo': base_repo,
         \ 'action__head_repo': head_repo
         \ }
-endfunction"}}}
+endfunction "}}}
 
 function! s:print_message(args, base_or_head) "{{{
   if empty(a:args)
@@ -93,7 +93,7 @@ function! s:print_message(args, base_or_head) "{{{
   endif
 
   call unite#print_message('[giti/pull_request] ' . message)
-endfunction"}}}
+endfunction "}}}
 
 " context getter {{{
 function! s:get_SID()
