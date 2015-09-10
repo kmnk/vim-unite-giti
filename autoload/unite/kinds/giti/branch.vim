@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#branch#define()"{{{
+function! unite#kinds#giti#branch#define() "{{{
   return [s:kind, unite#kinds#giti#branch#new#define()]
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/branch',
@@ -23,7 +23,7 @@ let s:kind.action_table.run = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.run.func(candidate)"{{{
+function! s:kind.action_table.run.func(candidate) "{{{
   if a:candidate.action__is_new
     let context = unite#get_context()
     let context.input = ''
@@ -31,7 +31,7 @@ function! s:kind.action_table.run.func(candidate)"{{{
   else
     call giti#print(giti#checkout#switch({'name' : a:candidate.action__name}))
   endif
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.switch = 'run'
 let s:kind.alias_table.sw = 'run'
 let s:kind.alias_table.new = 'run'
@@ -41,12 +41,12 @@ let s:kind.action_table.checkout_tracking = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.checkout_tracking.func(candidate)"{{{
+function! s:kind.action_table.checkout_tracking.func(candidate) "{{{
   call giti#print(giti#checkout#switch({
 \   'name' : a:candidate.action__name,
 \   'track' : 1,
 \ }))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.cot = 'checkout_tracking'
 
 let s:kind.action_table.checkout_no_tracking = {
@@ -54,12 +54,12 @@ let s:kind.action_table.checkout_no_tracking = {
 \ 'is_selectable' : 0,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.checkout_no_tracking.func(candidate)"{{{
+function! s:kind.action_table.checkout_no_tracking.func(candidate) "{{{
   call giti#print(giti#checkout#switch({
 \   'name' : a:candidate.action__name,
 \   'track' : 0,
 \ }))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.con = 'checkout_no_tracking'
 
 let s:kind.action_table.delete = {
@@ -67,7 +67,7 @@ let s:kind.action_table.delete = {
 \ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete.func(candidates)"{{{
+function! s:kind.action_table.delete.func(candidates) "{{{
   let args = map(copy(a:candidates), '
 \   {
 \     "branch"     : v:val.action__name,
@@ -76,7 +76,7 @@ function! s:kind.action_table.delete.func(candidates)"{{{
 \ ')
 
   call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.rm = 'delete'
 
 let s:kind.action_table.delete_force = {
@@ -84,7 +84,7 @@ let s:kind.action_table.delete_force = {
 \ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete_force.func(candidates)"{{{
+function! s:kind.action_table.delete_force.func(candidates) "{{{
   let args = map(copy(a:candidates), '
 \   {
 \     "branch"     : v:val.action__name,
@@ -93,14 +93,14 @@ function! s:kind.action_table.delete_force.func(candidates)"{{{
 \ ')
 
   call giti#print(giti#branch#delete_force(map(copy(args), 'v:val.branch')))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.delete_remote = {
 \ 'description' : 'delete this branch and remote',
 \ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete_remote.func(candidates)"{{{
+function! s:kind.action_table.delete_remote.func(candidates) "{{{
   let args = map(copy(a:candidates), '
 \   {
 \     "branch"     : v:val.action__name,
@@ -111,14 +111,14 @@ function! s:kind.action_table.delete_remote.func(candidates)"{{{
   call giti#print(giti#branch#delete(map(copy(args), 'v:val.branch')))
 
   call s:handle_delete_remote(args)
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.delete_remote_force = {
 \ 'description' : 'delete force this branch and remote',
 \ 'is_selectable' : 1,
 \ 'is_quit' : 1,
 \}
-function! s:kind.action_table.delete_remote_force.func(candidates)"{{{
+function! s:kind.action_table.delete_remote_force.func(candidates) "{{{
   let args = map(copy(a:candidates), '
 \   {
 \     "branch"     : v:val.action__name,
@@ -129,7 +129,7 @@ function! s:kind.action_table.delete_remote_force.func(candidates)"{{{
   call giti#print(giti#branch#delete_force(map(copy(args), 'v:val.branch')))
 
   call s:handle_delete_remote(args)
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.merge = {
 \ 'description' : 'merge this branch',
@@ -138,9 +138,9 @@ let s:kind.action_table.merge = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.merge.func(candidate)"{{{
+function! s:kind.action_table.merge.func(candidate) "{{{
   call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name }))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.merge_squash = {
 \ 'description' : 'merge squash this branch',
@@ -149,9 +149,9 @@ let s:kind.action_table.merge_squash = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.merge_squash.func(candidate)"{{{
+function! s:kind.action_table.merge_squash.func(candidate) "{{{
   call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name, 'squash' : 1 }))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.merge_no_ff = {
 \ 'description' : 'no fast forward merge this branch',
@@ -160,9 +160,9 @@ let s:kind.action_table.merge_no_ff = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.merge_no_ff.func(candidate)"{{{
+function! s:kind.action_table.merge_no_ff.func(candidate) "{{{
   call giti#print(giti#merge#run({ 'branch_name' : a:candidate.action__name, 'no_ff' : 1 }))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.rebase = {
 \ 'description' : 'rebase on this branch',
@@ -171,9 +171,9 @@ let s:kind.action_table.rebase = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.rebase.func(candidate)"{{{
+function! s:kind.action_table.rebase.func(candidate) "{{{
   call giti#print(giti#rebase#run({ 'upstream' : a:candidate.action__name }))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.rebase_interactive = {
 \ 'description' : 'rebase interactive on this branch',
@@ -182,25 +182,25 @@ let s:kind.action_table.rebase_interactive = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.rebase_interactive.func(candidate)"{{{
+function! s:kind.action_table.rebase_interactive.func(candidate) "{{{
   call giti#print(giti#rebase#interactive({ 'upstream' : a:candidate.action__name }))
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 
 " local functions {{{
-function! s:is_deleting_remote_confirmed(params)"{{{
+function! s:is_deleting_remote_confirmed(params) "{{{
   return giti#input('delete remote branches ? [y/n] : ') == 'y' ? 1 : 0
-endfunction"}}}
+endfunction "}}}
 
-function! s:get_repository(branch)"{{{
+function! s:get_repository(branch) "{{{
   return giti#config#read({
 \   'location' : 'local',
 \   'key'      : printf('branch.%s.remote', a:branch)
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! s:handle_delete_remote(params)"{{{
+function! s:handle_delete_remote(params) "{{{
   if len(a:params) > 0 && !giti#has_shell_error()
     let result = s:delete_remote(a:params)
     if type(result) == type([])
@@ -211,15 +211,15 @@ function! s:handle_delete_remote(params)"{{{
       call giti#print(result)
     endif
   endif
-endfunction"}}}
+endfunction "}}}
 
-function! s:delete_remote(params)"{{{
+function! s:delete_remote(params) "{{{
   if s:is_deleting_remote_confirmed(a:params)
     return giti#branch#delete_remote(a:params)
   else
     return 'canceled'
   endif
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

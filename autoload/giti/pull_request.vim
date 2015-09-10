@@ -9,7 +9,7 @@ function! giti#pull_request#run(base, head) "{{{
     let url = s:execute_command(command)
     return url
   endif
-endfunction"}}}
+endfunction "}}}
 
 function! s:execute_command(command) "{{{
   let old_dir = getcwd()
@@ -29,8 +29,8 @@ function! s:execute_command(command) "{{{
   if exists(result)
     return result
   endif
-endfunction"}}}
+endfunction "}}}
 
 function! s:execute(command) "{{{
   silent! noautocmd execute '!' . a:command
-endfunction"}}}
+endfunction "}}}

@@ -6,16 +6,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#branch_all#define()"{{{
+function! unite#sources#giti#branch_all#define() "{{{
   return [s:source, unite#sources#giti#branch#new#define()]
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/branch_all',
 \ 'description' : 'disp all branches',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/branch_all]')
   return map(sort(giti#branch#list_all(), 's:sort_by_is_current'), '{
 \   "word" : s:build_word(v:val),
@@ -24,9 +24,9 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__name" : v:val.name,
 \   "action__is_new" : 0,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
-function! s:source.change_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context) "{{{
   let g:candidates = a:context
   if !strlen(a:context.input)
     return []
@@ -47,22 +47,22 @@ function! s:source.change_candidates(args, context)"{{{
 \   "action__is_new" : 0,
 \ }
 \ ]
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 let s:word_format = '% 1s %s'
-function! s:build_word(val)"{{{
+function! s:build_word(val) "{{{
   return printf(s:word_format,
 \   a:val.is_current ? '*' : '',
 \   a:val.full_name,
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:sort_by_is_current(context1, context2)"{{{{
+function! s:sort_by_is_current(context1, context2) "{{{{
   return a:context1.is_current ? -1
 \      : a:context2.is_current ? +1
 \      :                         0
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

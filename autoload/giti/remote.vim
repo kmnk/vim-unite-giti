@@ -6,18 +6,18 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! giti#remote#show()"{{{
+function! giti#remote#show() "{{{
   let ret = giti#system('remote show')
   if type(ret) == 0
     " the operation has canceled
     return []
   endif
   return split(ret, "\n")
-endfunction"}}}
+endfunction "}}}
 
-function! giti#remote#show_verbose()"{{{
+function! giti#remote#show_verbose() "{{{
   return split(giti#system('remote --verbose show'), "\n")
-endfunction"}}}
+endfunction "}}}
 
 function! giti#remote#list_all() "{{{
   let remote_list = []
@@ -40,14 +40,14 @@ function! giti#remote#list_all() "{{{
   endfor
 
   return remote_list
-endfunction"}}}
+endfunction "}}}
 
 function! giti#remote#github_list() "{{{
   let remote_list = giti#remote#list_all()
   return filter(remote_list, 'v:val.is_github')
-endfunction"}}}
+endfunction "}}}
 
-function! giti#remote#add(param)"{{{
+function! giti#remote#add(param) "{{{
   if !has_key(a:param, 'name') || strlen(a:param.name) <= 0
     throw 'name required'
   endif
@@ -74,9 +74,9 @@ function! giti#remote#add(param)"{{{
 \   name,
 \   url
 \ ))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#remote#rename(param)"{{{
+function! giti#remote#rename(param) "{{{
   if !has_key(a:param, 'old') || strlen(a:param.old) <= 0
     throw 'old required'
   endif
@@ -90,9 +90,9 @@ function! giti#remote#rename(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#remote#rm(name)"{{{
+function! giti#remote#rm(name) "{{{
   if strlen(a:name) <= 0
     throw 'name required'
   endif
@@ -100,9 +100,9 @@ function! giti#remote#rm(name)"{{{
 \   'command' : printf('remote rm %s', a:name),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#remote#prune(param)"{{{
+function! giti#remote#prune(param) "{{{
   if !has_key(a:param, 'name') || strlen(a:param.name) <= 0
     throw 'name required'
   endif
@@ -114,7 +114,7 @@ function! giti#remote#prune(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

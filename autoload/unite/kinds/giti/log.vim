@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#log#define()"{{{
+function! unite#kinds#giti#log#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/log',
@@ -24,7 +24,7 @@ let s:kind.action_table.view = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.view.func(candidate)"{{{
+function! s:kind.action_table.view.func(candidate) "{{{
   if s:is_graph_only_line(a:candidate)
     call giti#print('graph only line')
     return
@@ -38,7 +38,7 @@ function! s:kind.action_table.view.func(candidate)"{{{
   call giti#print(printf('Committer:  %s <%s> - %s',
 \                        data.committer.name, data.committer.mail, data.committer.date))
   call giti#print(       'Subject:    ' . data.subject)
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.diff = {
 \ 'description' : 'git diff',
@@ -46,7 +46,7 @@ let s:kind.action_table.diff = {
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.diff.func(candidates)"{{{
+function! s:kind.action_table.diff.func(candidates) "{{{
   if s:is_graph_only_line(a:candidates[0])
 \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
     call giti#print('graph only line')
@@ -78,7 +78,7 @@ function! s:kind.action_table.diff.func(candidates)"{{{
 \   'filetype' : 'diff',
 \   'buftype'  : 'nofile',
 \ })
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.di = 'diff'
 
 let s:kind.action_table.revert = {
@@ -87,14 +87,14 @@ let s:kind.action_table.revert = {
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.revert.func(candidate)"{{{
+function! s:kind.action_table.revert.func(candidate) "{{{
   if s:is_graph_only_line(a:candidate)
     call giti#print('graph only line')
     return
   endif
 
   call giti#revert#run([a:candidate.action__data.hash])
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.vimdiff = {
 \ 'description' : 'git diff by vimdiff',
@@ -102,7 +102,7 @@ let s:kind.action_table.vimdiff = {
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.vimdiff.func(candidates)"{{{
+function! s:kind.action_table.vimdiff.func(candidates) "{{{
   if s:is_graph_only_line(a:candidates[0])
 \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
     call giti#print('graph only line')
@@ -129,7 +129,7 @@ function! s:kind.action_table.vimdiff.func(candidates)"{{{
 \   'from' : from,
 \   'to'   : to,
 \ })
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.vdi = 'vimdiff'
 
 let s:kind.action_table.reset = {
@@ -138,14 +138,14 @@ let s:kind.action_table.reset = {
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.reset.func(candidate)"{{{
+function! s:kind.action_table.reset.func(candidate) "{{{
   if s:is_graph_only_line(a:candidate)
     call giti#print('graph only line')
     return
   endif
 
   call giti#reset#reset({'hash' : a:candidate.action__data.hash})
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.reset_hard = {
 \ 'description' : 'git reset --hard this commit',
@@ -153,14 +153,14 @@ let s:kind.action_table.reset_hard = {
 \ 'is_quit' : 1,
 \ 'is_invalidate_cache' : 0,
 \}
-function! s:kind.action_table.reset_hard.func(candidate)"{{{
+function! s:kind.action_table.reset_hard.func(candidate) "{{{
   if s:is_graph_only_line(a:candidate)
     call giti#print('graph only line')
     return
   endif
 
   call giti#reset#hard({'hash' : a:candidate.action__data.hash})
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.yank_hash = {
 \ 'description' : 'yank hash of this commit',
@@ -169,9 +169,9 @@ let s:kind.action_table.yank_hash = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.yank_hash.func(candidate)"{{{
+function! s:kind.action_table.yank_hash.func(candidate) "{{{
   let @" = a:candidate.action__data.hash
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.changed_files = {
 \ 'description' : 'show changed files',
@@ -180,7 +180,7 @@ let s:kind.action_table.changed_files = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.changed_files.func(candidates)"{{{
+function! s:kind.action_table.changed_files.func(candidates) "{{{
   if s:is_graph_only_line(a:candidates[0])
 \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
     call giti#print('graph only line')
@@ -202,14 +202,14 @@ function! s:kind.action_table.changed_files.func(candidates)"{{{
   let context = unite#get_context()
   let context.input = ''
   return unite#start([['giti/diff_tree/changed_files', from, to]], context)
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 
 " local functions {{{
-function! s:is_graph_only_line(candidate)"{{{
+function! s:is_graph_only_line(candidate) "{{{
   return has_key(a:candidate.action__data, 'hash') ? 0 : 1
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

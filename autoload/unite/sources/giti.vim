@@ -6,7 +6,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#define()"{{{
+function! unite#sources#giti#define() "{{{
   let sources = []
   for command in s:get_commands()
     let source = call(s:to_define_func(command), [])
@@ -18,14 +18,14 @@ function! unite#sources#giti#define()"{{{
     unlet source
   endfor
   return add(sources, s:source)
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti',
 \ 'description' : 'disp giti sources',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti] giti sources')
   return map(s:get_commands(), '{
 \   "word"   : v:val,
@@ -33,10 +33,10 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "kind"   : "source",
 \   "action__source_name" : "giti/" . v:val,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:get_commands()"{{{
+function! s:get_commands() "{{{
   return map(
 \   split(
 \     globpath(&runtimepath, 'autoload/unite/sources/giti/*.vim'),
@@ -44,9 +44,9 @@ function! s:get_commands()"{{{
 \   ),
 \   'fnamemodify(v:val, ":t:r")'
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:to_define_func(command)"{{{
+function! s:to_define_func(command) "{{{
   return 'unite#sources#giti#' . a:command . '#define'
 endfunction}}}
 " }}}

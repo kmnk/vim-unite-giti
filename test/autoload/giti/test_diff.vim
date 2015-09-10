@@ -1,12 +1,12 @@
 let s:tc = unittest#testcase#new('autoload/giti/diff.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
   setlocal filetype=unittest
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call self.assert_equal(giti#diff#run({'files' : []}), 'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff -- ')
 
@@ -19,25 +19,25 @@ function! s:tc.test_run()"{{{
 
   call self.assert_throw('E118', 'call giti#diff#run("", "")')
   call self.assert_throw('E119', 'call giti#diff#run()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_run_nodiff()"{{{
-  function! giti#system(command)"{{{
+function! s:tc.setup_run_nodiff() "{{{
+  function! giti#system(command) "{{{
     let b:system_called_with = a:command
     return ''
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_run_nodiff()"{{{
-  function! giti#system(command)"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_run_nodiff() "{{{
+  function! giti#system(command) "{{{
     let b:system_called_with = a:command
     return 'mocked_system'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.test_run_nodiff()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.test_run_nodiff() "{{{
   call self.assert_not(giti#diff#run({'files' : []}))
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_cached()"{{{
+function! s:tc.test_cached() "{{{
   call self.assert_equal(giti#diff#cached({'files' : []}),
 \                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff --cached -- ')
@@ -52,9 +52,9 @@ function! s:tc.test_cached()"{{{
 
   call self.assert_throw('E118', 'call giti#diff#cached("", "")')
   call self.assert_throw('E119', 'call giti#diff#cached()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_head()"{{{
+function! s:tc.test_head() "{{{
   call self.assert_equal(giti#diff#head({'files' : []}),
 \                        'mocked_system')
   call self.assert_equal(b:system_called_with, 'diff HEAD -- ')
@@ -69,9 +69,9 @@ function! s:tc.test_head()"{{{
 
   call self.assert_throw('E118', 'call giti#diff#head("", "")')
   call self.assert_throw('E119', 'call giti#diff#head()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_specify()"{{{
+function! s:tc.test_specify() "{{{
   call self.assert_equal(giti#diff#specify({
 \   'from'  : 'foo',
 \   'to'    : 'bar',
@@ -107,16 +107,16 @@ function! s:tc.test_specify()"{{{
 
   call self.assert_throw('E118', 'call giti#diff#specify("", "")')
   call self.assert_throw('E119', 'call giti#diff#specify()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_view_git_diff()"{{{
+function! s:tc.test_view_git_diff() "{{{
   call self.assert(giti#diff#view_git_diff('hoge'))
   call self.assert_equal('setlocal buftype=nofile', b:execute_called_with)
   call self.assert_throw('E118', 'call giti#diff#view_git_diff("", "")')
   call self.assert_throw('E119', 'call giti#diff#view_git_diff()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_view_vim_diff()"{{{
+function! s:tc.test_view_vim_diff() "{{{
   call self.assert(giti#diff#view_vim_diff({
 \   'from' : 'hoge',
 \   'to'   : 'fuga',
@@ -125,6 +125,6 @@ function! s:tc.test_view_vim_diff()"{{{
   call self.assert_equal('setlocal buftype=nofile', b:execute_called_with)
   call self.assert_throw('E118', 'call giti#diff#view_vim_diff("", "")')
   call self.assert_throw('E119', 'call giti#diff#view_vim_diff()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

@@ -6,16 +6,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#status#define()"{{{
+function! unite#sources#giti#status#define() "{{{
   return s:source
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/status',
 \ 'description' : 'disp statuses',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/status] ')
   call unite#print_message('    ' . s:build_title())
   return add(map(giti#status#list(), '{
@@ -35,22 +35,22 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "action__paths" : ["./"],
 \   "action__line"  : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 let s:word_format = '%-12s%-12s %s'
-function! s:build_word(val)"{{{
+function! s:build_word(val) "{{{
   return printf(s:word_format,
 \   '[' . a:val.index . ']',
 \   '<' . a:val.work  . '>',
 \   a:val.description)
-endfunction"}}}
-function! s:build_title()"{{{
+endfunction "}}}
+function! s:build_title() "{{{
   return printf(s:word_format,
 \   'IndexStatus',
 \   'WorkStatus',
 \   'FilePath')
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

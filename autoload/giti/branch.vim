@@ -6,7 +6,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! giti#branch#list()"{{{
+function! giti#branch#list() "{{{
   let result = giti#system('branch')
   if type(result) == 0
     " canceled
@@ -16,9 +16,9 @@ function! giti#branch#list()"{{{
 \   split(result, '\n'),
 \   's:build_branch_data(v:val)'
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#list_all()"{{{
+function! giti#branch#list_all() "{{{
   let result = giti#system('branch -a')
   if type(result) == 0
     " canceled
@@ -28,7 +28,7 @@ function! giti#branch#list_all()"{{{
 \   split(result, '\n'),
 \   's:build_branch_data(v:val)'
 \ )
-endfunction"}}}
+endfunction "}}}
 
 function! giti#branch#github_list_all() "{{{
   let remotes = filter(giti#remote#github_list(), 'v:val.type == "(fetch)"')
@@ -56,14 +56,14 @@ function! giti#branch#github_list_all() "{{{
   endfor
 
   return github_branches
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#current_name()"{{{
+function! giti#branch#current_name() "{{{
   let current_branch = giti#branch#current()
   return has_key(current_branch, 'name') ? current_branch['name'] : 'master'
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#current()"{{{
+function! giti#branch#current() "{{{
   let result = giti#system('branch -a')
   if type(result) == 0
     " canceled
@@ -77,21 +77,21 @@ function! giti#branch#current()"{{{
 \   'v:val.is_current'
 \ )
   return len(branches) > 0 ? remove(branches, 0) : {}
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#delete(branches)"{{{
+function! giti#branch#delete(branches) "{{{
   return giti#system_with_specifics({
 \   'command' : 'branch -d ' . join(a:branches),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#delete_force(branches)"{{{
+function! giti#branch#delete_force(branches) "{{{
   return giti#system_with_specifics({
 \   'command' : 'branch -D ' . join(a:branches),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 
 function! giti#branch#delete_remote(params) abort "{{{
   if len(a:params) <= 0
@@ -107,25 +107,25 @@ function! giti#branch#delete_remote(params) abort "{{{
   endfor
 
   return results
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#create(branch)"{{{
+function! giti#branch#create(branch) "{{{
   return giti#checkout#create({'name' : a:branch})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#branch#switch(branch)"{{{
+function! giti#branch#switch(branch) "{{{
   return giti#checkout#switch({'name' : a:branch})
-endfunction"}}}
+endfunction "}}}
 
 " local function {{{
-function! s:build_branch_data(line)"{{{
+function! s:build_branch_data(line) "{{{
   return {
 \   'full_name'  : s:pickup_full_branch_name(a:line),
 \   'name'       : s:pickup_branch_name(a:line),
 \   'is_current' : s:is_current(a:line),
 \   'is_remote'  : s:is_remote(a:line),
 \ }
-endfunction"}}}
+endfunction "}}}
 
 function! s:pickup_full_branch_name(line)
   return substitute(a:line, '^*\?\s*\(.\+\)', '\1', '')
@@ -138,13 +138,13 @@ function! s:pickup_branch_name(line)
   return substitute(a:line, '^*\?\s*\%(remotes/\)\?\([^ ]\+\).*', '\1', '')
 endfunction
 
-function! s:is_current(line)"{{{
+function! s:is_current(line) "{{{
   return match(a:line, '^*\s*.\+$') < 0 ? 0 : 1
-endfunction"}}}
+endfunction "}}}
 
-function! s:is_remote(line)"{{{
+function! s:is_remote(line) "{{{
   return match(a:line, '^*\?\s*remotes/') < 0 ? 0 : 1
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

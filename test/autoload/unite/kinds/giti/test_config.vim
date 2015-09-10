@@ -1,42 +1,42 @@
 let s:tc = unittest#testcase#new('autoload/unite/kinds/giti/config.vim',
 \                                unite#kinds#giti#config#__context__())
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_define()"{{{
+function! s:tc.test_define() "{{{
   call self.assert_equal(
 \   type({}),
 \   type(unite#kinds#giti#config#define()),
 \ )
   call self.assert_throw('E118', 'call self.call("unite#kinds#giti#config#define", [""])')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.kind_should_have()"{{{
+function! s:tc.kind_should_have() "{{{
   let kind = self.get('s:kind')
   call self.assert_equal(type({}), type(kind))
   call self.assert_equal('giti/config', kind.name)
   call self.assert_equal(type(''), type(kind.default_action))
   call self.assert_equal(type({}), type(kind.action_table))
   call self.assert_equal(type({}), type(kind.alias_table))
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_yank_value()"{{{
-  function! giti#config#add(param)"{{{
+function! s:tc.setup_kind_action_yank_value() "{{{
+  function! giti#config#add(param) "{{{
     let b:config_add_called_with = a:param
     return 'mocked giti#config#add'
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'mocked giti#input'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_yank_value()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_yank_value() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_yank_value()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_yank_value() "{{{
   let kind = self.get('s:kind')
   let yank_value = kind.action_table.yank_value
   call self.assert_equal(type({}), type(yank_value))
@@ -61,22 +61,22 @@ function! s:tc.test_kind_action_yank_value()"{{{
 \                         'location' : 'local'
 \                        },
 \                        b:config_add_called_with)
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_write()"{{{
-  function! giti#config#write(param)"{{{
+function! s:tc.setup_kind_action_write() "{{{
+  function! giti#config#write(param) "{{{
     let b:config_write_called_with = a:param
     return 'mocked giti#config#write'
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'mocked giti#input'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_write()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_write() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_write()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_write() "{{{
   let kind = self.get('s:kind')
   let write = kind.action_table.write
   call self.assert_equal(type({}), type(write))
@@ -98,19 +98,19 @@ function! s:tc.test_kind_action_write()"{{{
 \   'location' : candidate.action__location,
 \ },
 \ b:config_write_called_with)
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_remove()"{{{
-  function! giti#config#remove(param)"{{{
+function! s:tc.setup_kind_action_remove() "{{{
+  function! giti#config#remove(param) "{{{
     let b:config_remove_called_with = a:param
     return 'mocked giti#config#remove'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_remove()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_remove() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_remove()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_remove() "{{{
   let kind = self.get('s:kind')
   let remove = kind.action_table.remove
   call self.assert_equal(type({}), type(remove))
@@ -130,12 +130,12 @@ function! s:tc.test_kind_action_remove()"{{{
 \   'location' : candidates[0].action__location,
 \ },
 \ b:config_remove_called_with)
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_kind_alias_table_has()"{{{
+function! s:tc.test_kind_alias_table_has() "{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table
   call self.assert_equal(table.run, 'yank_value')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

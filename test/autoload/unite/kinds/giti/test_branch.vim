@@ -1,39 +1,39 @@
 let s:tc = unittest#testcase#new('autoload/unite/kinds/giti/branch.vim',
 \                                unite#kinds#giti#branch#__context__())
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_define()"{{{
+function! s:tc.test_define() "{{{
   call self.assert_equal(
 \   type([]),
 \   type(unite#kinds#giti#branch#define()),
 \ )
   call self.assert_throw('E118', 'call self.call("unite#kinds#giti#branch#define", [""])')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.kind_should_have()"{{{
+function! s:tc.kind_should_have() "{{{
   let kind = self.get('s:kind')
   call self.assert_equal(type({}), type(kind))
   call self.assert_equal(type(''), type(kind.name))
   call self.assert_equal(type(''), type(kind.default_action))
   call self.assert_equal(type({}), type(kind.action_table))
   call self.assert_equal(type({}), type(kind.alias_table))
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_run()"{{{
-  function! giti#checkout#switch(param)"{{{
+function! s:tc.setup_kind_action_run() "{{{
+  function! giti#checkout#switch(param) "{{{
     let b:checkout_switch_called_with = a:param
     return 'mocked giti#checkout#switch'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_run()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_run() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_run()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_run() "{{{
   let kind = self.get('s:kind')
   let run = kind.action_table.run
   call self.assert_equal(type({}), type(run))
@@ -54,19 +54,19 @@ function! s:tc.test_kind_action_run()"{{{
   call self.assert_equal(run.func(candidate), 'mocked unite#start')
   call self.assert_equal(b:unite_start_called_with,
 \                        [[['giti/branch/new', candidate.action__name]], {'input' : ''}])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_checkout_tracking()"{{{
-  function! giti#checkout#switch(param)"{{{
+function! s:tc.setup_kind_action_checkout_tracking() "{{{
+  function! giti#checkout#switch(param) "{{{
     let b:checkout_switch_called_with = a:param
     return 'mocked giti#checkout#switch'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_checkout_tracking()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_checkout_tracking() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_checkout_tracking()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_checkout_tracking() "{{{
   let kind = self.get('s:kind')
   let checkout_tracking = kind.action_table.checkout_tracking
   call self.assert_equal(type({}), type(checkout_tracking))
@@ -83,19 +83,19 @@ function! s:tc.test_kind_action_checkout_tracking()"{{{
   call self.assert_equal(b:checkout_switch_called_with,
 \                        {'name' : candidate.action__name,
 \                         'track' : 1})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_checkout_no_tracking()"{{{
-  function! giti#checkout#switch(param)"{{{
+function! s:tc.setup_kind_action_checkout_no_tracking() "{{{
+  function! giti#checkout#switch(param) "{{{
     let b:checkout_switch_called_with = a:param
     return 'mocked giti#checkout#switch'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_checkout_no_tracking()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_checkout_no_tracking() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/checkout.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_checkout_no_tracking()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_checkout_no_tracking() "{{{
   let kind = self.get('s:kind')
   let checkout_no_tracking = kind.action_table.checkout_no_tracking
   call self.assert_equal(type({}), type(checkout_no_tracking))
@@ -112,35 +112,35 @@ function! s:tc.test_kind_action_checkout_no_tracking()"{{{
   call self.assert_equal(b:checkout_switch_called_with,
 \                        {'name' : candidate.action__name,
 \                         'track' : 0})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_delete()"{{{
-  function! giti#has_shell_error()"{{{
+function! s:tc.setup_kind_action_delete() "{{{
+  function! giti#has_shell_error() "{{{
     return 0
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'y'
-  endfunction"}}}
-  function! giti#branch#delete(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete(branches) "{{{
     let b:branch_delete_called_with = a:branches
     return 'mocked giti#branch#delete'
-  endfunction"}}}
-  function! giti#branch#delete_remote(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_remote(branches) "{{{
     let b:branch_delete_remote_called_with = a:branches
     return 'mocked giti#branch#delete_remote'
-  endfunction"}}}
-  function! giti#config#read(param)"{{{
+  endfunction "}}}
+  function! giti#config#read(param) "{{{
     return 'mocked giti#config#read'
-  endfunction"}}}
-endfunction"}}}
+  endfunction "}}}
+endfunction "}}}
 
-function! s:tc.teardown_kind_action_delete()"{{{
+function! s:tc.teardown_kind_action_delete() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
   execute 'source ' . paths[0]
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_delete()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_delete() "{{{
   let kind = self.get('s:kind')
   let delete = kind.action_table.delete
   call self.assert_equal(type({}), type(delete))
@@ -155,34 +155,34 @@ function! s:tc.test_kind_action_delete()"{{{
   call self.assert_equal(delete.func(candidates), 'mocked giti#branch#delete')
   call self.assert_equal(b:branch_delete_called_with,
 \                        [candidates[0].action__name])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_delete_force()"{{{
-  function! giti#has_shell_error()"{{{
+function! s:tc.setup_kind_action_delete_force() "{{{
+  function! giti#has_shell_error() "{{{
     return 0
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'y'
-  endfunction"}}}
-  function! giti#branch#delete_force(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_force(branches) "{{{
     let b:branch_delete_called_with = a:branches
     return 'mocked giti#branch#delete_force'
-  endfunction"}}}
-  function! giti#branch#delete_remote(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_remote(branches) "{{{
     let b:branch_delete_remote_called_with = a:branches
     return 'mocked giti#branch#delete_remote'
-  endfunction"}}}
-  function! giti#config#read(param)"{{{
+  endfunction "}}}
+  function! giti#config#read(param) "{{{
     return 'mocked giti#config#read'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_delete_force()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_delete_force() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
   execute 'source ' . paths[0]
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_delete_force()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_delete_force() "{{{
   let kind = self.get('s:kind')
   let delete_force = kind.action_table.delete_force
   call self.assert_equal(type({}), type(delete_force))
@@ -197,34 +197,34 @@ function! s:tc.test_kind_action_delete_force()"{{{
   call self.assert_equal('mocked giti#branch#delete_force', delete_force.func(candidates))
   call self.assert_equal(b:branch_delete_called_with,
 \                        [candidates[0].action__name])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_delete_remote()"{{{
-  function! giti#has_shell_error()"{{{
+function! s:tc.setup_kind_action_delete_remote() "{{{
+  function! giti#has_shell_error() "{{{
     return 0
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'y'
-  endfunction"}}}
-  function! giti#branch#delete(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete(branches) "{{{
     let b:branch_delete_called_with = a:branches
     return 'mocked giti#branch#delete'
-  endfunction"}}}
-  function! giti#branch#delete_remote(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_remote(branches) "{{{
     let b:branch_delete_remote_called_with = a:branches
     return 'mocked giti#branch#delete_remote'
-  endfunction"}}}
-  function! giti#config#read(param)"{{{
+  endfunction "}}}
+  function! giti#config#read(param) "{{{
     return 'mocked giti#config#read'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_delete_remote()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_delete_remote() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
   execute 'source ' . paths[0]
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_delete_remote()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_delete_remote() "{{{
   let kind = self.get('s:kind')
   let delete_remote = kind.action_table.delete_remote
   call self.assert_equal(type({}), type(delete_remote))
@@ -242,34 +242,34 @@ function! s:tc.test_kind_action_delete_remote()"{{{
   call self.assert_equal(b:branch_delete_remote_called_with,
 \                        [{'repository' : 'mocked giti#config#read',
 \                          'branch' : candidates[0].action__name}])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_delete_remote_force()"{{{
-  function! giti#has_shell_error()"{{{
+function! s:tc.setup_kind_action_delete_remote_force() "{{{
+  function! giti#has_shell_error() "{{{
     return 0
-  endfunction"}}}
-  function! giti#input(prompt, ...)"{{{
+  endfunction "}}}
+  function! giti#input(prompt, ...) "{{{
     return 'y'
-  endfunction"}}}
-  function! giti#branch#delete_force(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_force(branches) "{{{
     let b:branch_delete_called_with = a:branches
     return 'mocked giti#branch#delete_force'
-  endfunction"}}}
-  function! giti#branch#delete_remote(branches)"{{{
+  endfunction "}}}
+  function! giti#branch#delete_remote(branches) "{{{
     let b:branch_delete_remote_called_with = a:branches
     return 'mocked giti#branch#delete_remote'
-  endfunction"}}}
-  function! giti#config#read(param)"{{{
+  endfunction "}}}
+  function! giti#config#read(param) "{{{
     return 'mocked giti#config#read'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_delete_remote_force()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_delete_remote_force() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/branch.vim'), '\n')
   execute 'source ' . paths[0]
   let paths = split(globpath(&rtp, 'autoload/giti/config.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_delete_remote_force()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_delete_remote_force() "{{{
   let kind = self.get('s:kind')
   let delete_remote_force = kind.action_table.delete_remote_force
   call self.assert_equal(type({}), type(delete_remote_force))
@@ -287,19 +287,19 @@ function! s:tc.test_kind_action_delete_remote_force()"{{{
   call self.assert_equal(b:branch_delete_remote_called_with,
 \                        [{'repository' : 'mocked giti#config#read',
 \                          'branch' : candidates[0].action__name}])
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_merge()"{{{
-  function! giti#merge#run(param)"{{{
+function! s:tc.setup_kind_action_merge() "{{{
+  function! giti#merge#run(param) "{{{
     let b:merge_run_called_with = a:param
     return 'mocked giti#merge#run'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_merge()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_merge() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/merge.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_merge()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_merge() "{{{
   let kind = self.get('s:kind')
   let merge = kind.action_table.merge
   call self.assert_equal(type({}), type(merge))
@@ -316,19 +316,19 @@ function! s:tc.test_kind_action_merge()"{{{
   call merge.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#merge#run')
   call self.assert_equal(b:merge_run_called_with, {'branch_name' : candidate.action__name})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_merge_squash()"{{{
-  function! giti#merge#run(param)"{{{
+function! s:tc.setup_kind_action_merge_squash() "{{{
+  function! giti#merge#run(param) "{{{
     let b:merge_run_called_with = a:param
     return 'mocked giti#merge#run'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_merge_squash()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_merge_squash() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/merge.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_merge_squash()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_merge_squash() "{{{
   let kind = self.get('s:kind')
   let merge_squash = kind.action_table.merge_squash
   call self.assert_equal(type({}), type(merge_squash))
@@ -345,19 +345,19 @@ function! s:tc.test_kind_action_merge_squash()"{{{
   call merge_squash.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#merge#run')
   call self.assert_equal(b:merge_run_called_with, {'branch_name' : candidate.action__name, 'squash' : 1})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_rebase()"{{{
-  function! giti#rebase#run(param)"{{{
+function! s:tc.setup_kind_action_rebase() "{{{
+  function! giti#rebase#run(param) "{{{
     let b:rebase_run_called_with = a:param
     return 'mocked giti#rebase#run'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_rebase()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_rebase() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/rebase.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_rebase()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_rebase() "{{{
   let kind = self.get('s:kind')
   let rebase = kind.action_table.rebase
   call self.assert_equal(type({}), type(rebase))
@@ -374,19 +374,19 @@ function! s:tc.test_kind_action_rebase()"{{{
   call rebase.func(candidate)
   call self.assert_equal(b:print_called_with, 'mocked giti#rebase#run')
   call self.assert_equal(b:rebase_run_called_with, {'upstream' : candidate.action__name})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.setup_kind_action_rebase_interactive()"{{{
-  function! giti#rebase#interactive(param)"{{{
+function! s:tc.setup_kind_action_rebase_interactive() "{{{
+  function! giti#rebase#interactive(param) "{{{
     let b:rebase_interactive_run_called_with = a:param
     return 'mocked giti#rebase#interactive'
-  endfunction"}}}
-endfunction"}}}
-function! s:tc.teardown_kind_action_rebase_interactive()"{{{
+  endfunction "}}}
+endfunction "}}}
+function! s:tc.teardown_kind_action_rebase_interactive() "{{{
   let paths = split(globpath(&rtp, 'autoload/giti/rebase.vim'), '\n')
   execute 'source ' . paths[0]
-endfunction"}}}
-function! s:tc.test_kind_action_rebase_interactive()"{{{
+endfunction "}}}
+function! s:tc.test_kind_action_rebase_interactive() "{{{
   let kind = self.get('s:kind')
   let rebase_interactive = kind.action_table.rebase_interactive
   call self.assert_equal(type({}), type(rebase_interactive))
@@ -404,15 +404,15 @@ function! s:tc.test_kind_action_rebase_interactive()"{{{
   call self.assert_equal(b:print_called_with, 'mocked giti#rebase#interactive')
   call self.assert_equal(b:rebase_interactive_run_called_with,
 \                        {'upstream' : candidate.action__name})
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_kind_alias_table_has()"{{{
+function! s:tc.test_kind_alias_table_has() "{{{
   let kind = self.get('s:kind')
   let table = kind.alias_table
   call self.assert_equal(table.switch, 'run')
   call self.assert_equal(table.sw, 'run')
   call self.assert_equal(table.new, 'run')
   call self.assert_equal(table.rm, 'delete')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

@@ -6,16 +6,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#remote#define()"{{{
+function! unite#sources#giti#remote#define() "{{{
   return s:source
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/remote',
 \ 'description' : 'disp remotes',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/remote]')
   return map(giti#remote#show(), '{
 \   "word" : v:val,
@@ -23,9 +23,9 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "kind"   : "giti/remote",
 \   "action__name" : v:val,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
-function! s:source.change_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context) "{{{
   if !strlen(a:context.input)
     return []
   endif
@@ -36,7 +36,7 @@ function! s:source.change_candidates(args, context)"{{{
 \   "action__name" : a:context.input,
 \   "action__is_new" : 1,
 \ }]
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

@@ -9,31 +9,31 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#diff#run(param)"{{{
+function! giti#diff#run(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return s:run({'command' : 'diff', 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#diff#cached(param)"{{{
+function! giti#diff#cached(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return s:run({'command' : 'diff --cached', 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#diff#head(param)"{{{
+function! giti#diff#head(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return s:run({'command' : 'diff HEAD', 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#diff#specify(param)"{{{
+function! giti#diff#specify(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   let command
 \   = !exists('a:param.to') ? printf('diff %s', a:param.from)
 \   : a:param.to == ''      ? printf('diff %s', a:param.from)
 \   :                         printf('diff %s..%s', a:param.from, a:param.to)
   return s:run({'command' : command, 'files' : files})
-endfunction"}}}
+endfunction "}}}
 
-function! giti#diff#view_git_diff(diff)"{{{
+function! giti#diff#view_git_diff(diff) "{{{
   if !strlen(a:diff)
     call giti#print('no difference')
     return
@@ -44,9 +44,9 @@ function! giti#diff#view_git_diff(diff)"{{{
 \   'filetype' : 'diff',
 \   'buftype'  : 'nofile',
 \ })
-endfunction"}}}
+endfunction "}}}
 
-function! giti#diff#view_vim_diff(param)"{{{
+function! giti#diff#view_vim_diff(param) "{{{
   let file = a:param.file
   let from = a:param.from
   let to   = a:param.to
@@ -70,13 +70,13 @@ function! giti#diff#view_vim_diff(param)"{{{
   call giti#diffthis()
 
   return 1
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:run(param)"{{{
+function! s:run(param) "{{{
   let files = exists('a:param.files') ? a:param.files : []
   return giti#system(a:param.command . ' -- ' . join(files))
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 let &cpo = s:save_cpo

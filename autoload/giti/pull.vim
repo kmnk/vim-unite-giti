@@ -9,35 +9,35 @@ set cpo&vim
 " variables {{{
 " }}}
 
-function! giti#pull#run(param)"{{{
+function! giti#pull#run(param) "{{{
   let arg = a:param
   let arg.command = 'pull'
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#pull#squash(param)"{{{
+function! giti#pull#squash(param) "{{{
   let arg = a:param
   let arg.command = 'pull --squash'
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#pull#rebase(param)"{{{
+function! giti#pull#rebase(param) "{{{
   let arg = a:param
   let arg.command = 'pull --rebase'
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#pull#expressly()"{{{
+function! giti#pull#expressly() "{{{
   let arg = {}
   let arg.command = 'pull'
   let arg.repository = giti#input("repository: ")
   let arg.refspec    = giti#input("refspec: ")
   return s:run(arg)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 
-function! s:run(param)"{{{
+function! s:run(param) "{{{
   return giti#system_with_specifics({
 \   'command' : printf('%s %s %s',
 \     exists('a:param.command')    ? a:param.command    : '',
@@ -46,7 +46,7 @@ function! s:run(param)"{{{
 \   ),
 \   'with_confirm' : 1,
 \ })
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 let &cpo = s:save_cpo

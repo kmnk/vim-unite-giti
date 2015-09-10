@@ -1,11 +1,11 @@
 let s:tc = unittest#testcase#new('autoloda/giti/mv.vim')
 
-function! s:tc.SETUP()"{{{
-endfunction"}}}
-function! s:tc.TEARDOWN()"{{{
-endfunction"}}}
+function! s:tc.SETUP() "{{{
+endfunction "}}}
+function! s:tc.TEARDOWN() "{{{
+endfunction "}}}
 
-function! s:tc.test_run()"{{{
+function! s:tc.test_run() "{{{
   call giti#mv#run({
 \   'source'      : 'hoge',
 \   'destination' : 'fuga',
@@ -35,9 +35,9 @@ function! s:tc.test_run()"{{{
 
   call self.assert_throw('E118', 'call giti#mv#run("", "")')
   call self.assert_throw('E119', 'call giti#mv#run()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_force()"{{{
+function! s:tc.test_force() "{{{
   call giti#mv#force({
 \   'source'      : 'hoge',
 \   'destination' : 'fuga',
@@ -67,9 +67,9 @@ function! s:tc.test_force()"{{{
 
   call self.assert_throw('E118', 'call giti#mv#force("", "")')
   call self.assert_throw('E119', 'call giti#mv#force()')
-endfunction"}}}
+endfunction "}}}
 
-function! s:tc.test_verbose()"{{{
+function! s:tc.test_verbose() "{{{
   call giti#mv#verbose({
 \   'source'      : 'hoge',
 \   'destination' : 'fuga',
@@ -99,6 +99,6 @@ function! s:tc.test_verbose()"{{{
 
   call self.assert_throw('E118', 'call giti#mv#verbose("", "")')
   call self.assert_throw('E119', 'call giti#mv#verbose()')
-endfunction"}}}
+endfunction "}}}
 
 unlet s:tc

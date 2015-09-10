@@ -25,16 +25,16 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#diff_tree#changed_files#define()"{{{
+function! unite#sources#giti#diff_tree#changed_files#define() "{{{
   return s:source
-endfunction"}}}
+endfunction "}}}
 
 let s:source = {
 \ 'name' : 'giti/diff_tree/changed_files',
 \ 'description' : 'show changed files of specified commits',
 \}
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   call unite#print_message('[giti/diff_tree/changed_files]')
   let from = ''
   let to = ''
@@ -51,7 +51,7 @@ function! s:source.gather_candidates(args, context)"{{{
 \   "kind"   : "file",
 \   "action__path" : v:val,
 \ }')
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

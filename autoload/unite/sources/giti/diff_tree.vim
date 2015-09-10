@@ -25,9 +25,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#giti#diff_tree#define()"{{{
+function! unite#sources#giti#diff_tree#define() "{{{
   return [unite#sources#giti#diff_tree#changed_files#define()]
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

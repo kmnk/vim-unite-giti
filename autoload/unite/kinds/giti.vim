@@ -6,7 +6,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#define()"{{{
+function! unite#kinds#giti#define() "{{{
   call s:add_rm_action_on_file_kind()
   call s:add_mv_action_on_file_kind()
   let kinds = []
@@ -20,10 +20,10 @@ function! unite#kinds#giti#define()"{{{
     unlet kind
   endfor
   return kinds
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
-function! s:get_commands()"{{{
+function! s:get_commands() "{{{
   return map(
 \   split(
 \     globpath(&runtimepath, 'autoload/unite/kinds/giti/*.vim'),
@@ -31,13 +31,13 @@ function! s:get_commands()"{{{
 \   ),
 \   'fnamemodify(v:val, ":t:r")'
 \ )
-endfunction"}}}
+endfunction "}}}
 
-function! s:to_define_func(command)"{{{
+function! s:to_define_func(command) "{{{
   return 'unite#kinds#giti#' . a:command . '#define'
 endfunction}}}
 
-function! s:add_rm_action_on_file_kind()"{{{
+function! s:add_rm_action_on_file_kind() "{{{
   let git_rm = {
 \   'description'   : 'git rm selected files',
 \   'is_selectable' : 1,
@@ -46,9 +46,9 @@ function! s:add_rm_action_on_file_kind()"{{{
     return giti#rm#run({'files' : map(a:candidates, 'v:val.action__path')})
   endfunction
   call unite#custom_action('file', 'git_rm', git_rm)
-endfunction"}}}
+endfunction "}}}
 
-function! s:add_mv_action_on_file_kind()"{{{
+function! s:add_mv_action_on_file_kind() "{{{
   let git_mv = {
 \   'description'   : 'git mv selected file',
 \   'is_selectable' : 0,
@@ -69,7 +69,7 @@ function! s:add_mv_action_on_file_kind()"{{{
 \   })
   endfunction
   call unite#custom_action('file', 'git_mv', git_mv)
-endfunction"}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{

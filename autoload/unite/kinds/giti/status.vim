@@ -6,9 +6,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#giti#status#define()"{{{
+function! unite#kinds#giti#status#define() "{{{
   return s:kind
-endfunction"}}}
+endfunction "}}}
 
 let s:kind = {
 \ 'name' : 'giti/status',
@@ -25,9 +25,9 @@ let s:kind.action_table.add = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.add.func(candidates)"{{{
+function! s:kind.action_table.add.func(candidates) "{{{
   return giti#add#run(map(copy(a:candidates), 'v:val.action__path'))
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.stage = 'add'
 
 let s:kind.action_table.add_patch = {
@@ -36,9 +36,9 @@ let s:kind.action_table.add_patch = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.add_patch.func(candidates)"{{{
+function! s:kind.action_table.add_patch.func(candidates) "{{{
   return giti#add#patch(map(copy(a:candidates), 'v:val.action__path'))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.reset_head = {
 \ 'description' : "reset selected files' Index to HEAD",
@@ -46,9 +46,9 @@ let s:kind.action_table.reset_head = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.reset_head.func(candidates)"{{{
+function! s:kind.action_table.reset_head.func(candidates) "{{{
   return giti#reset#head({'files' : map(copy(a:candidates), 'v:val.action__path')})
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.reset = 'reset_head'
 let s:kind.alias_table.undo = 'reset_head'
 let s:kind.alias_table.unstage = 'reset_head'
@@ -57,7 +57,7 @@ let s:kind.action_table.commit = {
 \ 'description' : 'commit selected files',
 \ 'is_selectable' : 1,
 \}
-function! s:kind.action_table.commit.func(candidates)"{{{
+function! s:kind.action_table.commit.func(candidates) "{{{
   let files = []
   for candidate in a:candidates
     for path in candidate.action__paths
@@ -65,14 +65,14 @@ function! s:kind.action_table.commit.func(candidates)"{{{
     endfor
   endfor
   return giti#commit#run(files)
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.ci = 'commit'
 
 let s:kind.action_table.amend = {
 \ 'description' : 'amend selected files',
 \ 'is_selectable' : 1,
 \}
-function! s:kind.action_table.amend.func(candidates)"{{{
+function! s:kind.action_table.amend.func(candidates) "{{{
   let files = []
   for candidate in a:candidates
     for path in candidate.action__paths
@@ -80,7 +80,7 @@ function! s:kind.action_table.amend.func(candidates)"{{{
     endfor
   endfor
   return giti#commit#amend(files)
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.checkout = {
 \ 'description' : 'discard unstaged changes of selected files',
@@ -88,38 +88,38 @@ let s:kind.action_table.checkout = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.checkout.func(candidates)"{{{
+function! s:kind.action_table.checkout.func(candidates) "{{{
   return giti#checkout#run(map(copy(a:candidates), 'v:val.action__path'))
-endfunction"}}}
+endfunction "}}}
 
 let s:kind.action_table.diff = {
 \ 'description' : 'diff selected files',
 \ 'is_selectable' : 1,
 \}
-function! s:kind.action_table.diff.func(candidates)"{{{
+function! s:kind.action_table.diff.func(candidates) "{{{
   let diff = giti#diff#run({'files' : map(copy(a:candidates), 'v:val.action__path')})
   call giti#diff#view_git_diff(diff)
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.di = 'diff'
 
 let s:kind.action_table.diff_cached = {
 \ 'description' : 'diff --cached selected files',
 \ 'is_selectable' : 1,
 \}
-function! s:kind.action_table.diff_cached.func(candidates)"{{{
+function! s:kind.action_table.diff_cached.func(candidates) "{{{
   let diff = giti#diff#cached({'files' : map(copy(a:candidates), 'v:val.action__path')})
   call giti#diff#view_git_diff(diff)
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.dic = 'diff_cached'
 
 let s:kind.action_table.diff_head = {
 \ 'description' : 'diff HEAD selected files',
 \ 'is_selectable' : 1,
 \}
-function! s:kind.action_table.diff_head.func(candidates)"{{{
+function! s:kind.action_table.diff_head.func(candidates) "{{{
   let diff = giti#diff#head({'files' : map(copy(a:candidates), 'v:val.action__path')})
   call giti#diff#view_git_diff(diff)
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.dih = 'diff_head'
 
 let s:kind.action_table.vimdiff_head = {
@@ -129,13 +129,13 @@ let s:kind.action_table.vimdiff_head = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.vimdiff_head.func(candidate)"{{{
+function! s:kind.action_table.vimdiff_head.func(candidate) "{{{
   call giti#diff#view_vim_diff({
 \   'file' : a:candidate.action__path,
 \   'from' : 'HEAD',
 \   'to'   : '',
 \ })
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.vdih = 'vimdiff_head'
 let s:kind.alias_table.vdi  = 'vimdiff_head'
 
@@ -145,9 +145,9 @@ let s:kind.action_table.rm_cached = {
 \ 'is_quit' : 0,
 \ 'is_invalidate_cache' : 1,
 \}
-function! s:kind.action_table.rm_cached.func(candidates)"{{{
+function! s:kind.action_table.rm_cached.func(candidates) "{{{
   return giti#rm#cached({'files' : map(copy(a:candidates), 'v:val.action__path')})
-endfunction"}}}
+endfunction "}}}
 let s:kind.alias_table.rmc = 'rm_cached'
 
 let s:kind.action_table.ignore = {
@@ -157,13 +157,13 @@ let s:kind.action_table.ignore = {
 \ 'is_invalidate_cache' : 0,
 \ 'is_listed' : 1,
 \}
-function! s:kind.action_table.ignore.func(candidates)"{{{
+function! s:kind.action_table.ignore.func(candidates) "{{{
   call giti#add_ignore(
 \   map(copy(a:candidates), '
 \     fnamemodify(v:val.action__path, ":t")
 \   ')
 \ )
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 

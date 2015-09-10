@@ -10,11 +10,11 @@ set cpo&vim
 let s:edit_command = 'tabnew'
 " }}}
 
-function! giti#checkout#run(files)"{{{
+function! giti#checkout#run(files) "{{{
   return giti#system('checkout -- ' . join(a:files))
-endfunction"}}}
+endfunction "}}}
 
-function! giti#checkout#switch(param)"{{{
+function! giti#checkout#switch(param) "{{{
   let name = a:param.name
 
   let track = ''
@@ -25,9 +25,9 @@ function! giti#checkout#switch(param)"{{{
   endif
 
   return giti#system('checkout ' . track . ' ' . name)
-endfunction"}}}
+endfunction "}}}
 
-function! giti#checkout#create(param)"{{{
+function! giti#checkout#create(param) "{{{
   let name = a:param.name
 
   call giti#print('create new branch [' . name . ']')
@@ -47,7 +47,7 @@ function! giti#checkout#create(param)"{{{
   endif
 
   return giti#system('checkout -b ' . track . ' ' . name . ' ' . start_point)
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 " }}}

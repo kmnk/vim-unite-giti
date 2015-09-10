@@ -6,26 +6,26 @@ set runtimepath+=./test/mock/
 set runtimepath+=./
 
 " mock
-function! giti#system(command)"{{{
+function! giti#system(command) "{{{
   let b:system_called_with = a:command
   return 'mocked_system'
-endfunction"}}}
-function! giti#system_with_specifics(arg)"{{{
+endfunction "}}}
+function! giti#system_with_specifics(arg) "{{{
   let b:system_with_specifics_called_with = a:arg
   return 'mocked_system_with_specifics'
-endfunction"}}}
-function! giti#execute(command)"{{{
+endfunction "}}}
+function! giti#execute(command) "{{{
   let b:execute_called_with = a:command
   return 'mocked_execute'
-endfunction"}}}
-function! giti#put(string, ...)"{{{
+endfunction "}}}
+function! giti#put(string, ...) "{{{
   let b:put_called_with_list = [a:string, a:0 > 0 ? a:1 : '']
   return 'mocked_put'
-endfunction"}}}
-function! giti#diffthis()"{{{
+endfunction "}}}
+function! giti#diffthis() "{{{
   return 'mocked_diffthis'
-endfunction"}}}
-function! giti#print(string)"{{{
+endfunction "}}}
+function! giti#print(string) "{{{
   let b:print_called_with = a:string
   return 'mocked_print'
-endfunction"}}}
+endfunction "}}}
