@@ -32,7 +32,7 @@ endfunction "}}}
 " local functions {{{
 function! s:get_list(pattern)
   let res = giti#system_with_specifics({
-        \   'command': "grep -n -- '" . a:pattern . "'",
+        \   'command': "grep -qn -- '" . a:pattern . "'",
         \   'ignore_error': 1
         \ })
   if res == '' || type(res) == 0
