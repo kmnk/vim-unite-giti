@@ -31,8 +31,11 @@ endfunction "}}}
 
 " local functions {{{
 function! s:get_list(pattern)
-  let res = giti#system('grep -n -- ' . a:pattern)
-  if type(res) == 0
+  let res = giti#system_with_specifics({
+        \   'command': "grep -n -- '" . a:pattern . "'",
+        \   'ignore_error': 1
+        \ })
+  if res == '' || type(res) == 0
     return []
   endif
   return split(res, '\n')
