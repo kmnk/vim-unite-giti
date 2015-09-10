@@ -23,6 +23,8 @@
     - view remotes
 - giti/status
     - view status of current repository
+- giti/grep
+    - view grep results and jump to line
 
 
 ### Kinds

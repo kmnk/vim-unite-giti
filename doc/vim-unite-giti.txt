@@ -72,6 +72,10 @@ giti/status					*vim-unite-giti-sources-giti/status*
 	Every line has two statuses, IndexStatus and WorkStatus.
 	IndexStatus is status of index, and WorkStatus is of work tree.
 
+giti/grep					*vim-unite-giti-sources-giti/grep*
+
+	Input pattern and list results of "git grep $PATTERN$".
+
 ==========================================================================
 KINDS						*vim-unite-giti-kinds*
 
