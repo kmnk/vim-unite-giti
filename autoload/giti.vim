@@ -37,10 +37,10 @@ function! giti#system_with_specifics(param) "{{{
     return giti#system_with_specifics(a:param)
   endif
 
-  let a:param.command = s:trim(a:param.command)
+  let a:param.command = s:normalize_command(a:param.command)
 
   if exists('a:param.with_confirm') && a:param.with_confirm
-    if !giti#is_confirmed(a:param)
+    if !giti#is_confirmed(a:param.command)
       call giti#print('canceled')
       return
     endif
@@ -51,7 +51,7 @@ function! giti#system_with_specifics(param) "{{{
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
   else
-    return s:handle_error(ret, a:param)
+    return s:handle_shell_error(ret, a:param)
   endif
 endfunction "}}}
 
@@ -147,13 +147,17 @@ function! giti#input(prompt, ...) "{{{
   endif
 endfunction "}}}
 
-function! giti#is_confirmed(param) "{{{
-  let command = g:giti_git_command . ' ' . a:param.command
+" Summary: confirm before executing command, and return answer
+" Param: a:command to execute
+" Returns: if is confirmed then return true else return false
+function! giti#is_confirmed(command) "{{{
+  let command = g:giti_git_command . ' ' . a:command
   return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction "}}}
 
 " local functions {{{
-function! s:handle_error(res, param) "{{{
+
+function! s:handle_shell_error(res, param) "{{{
   if giti#has_shell_error()
     call giti#print('error occured on executing "git ' . a:param.command . '"')
     call giti#print(a:res)
@@ -163,8 +167,14 @@ function! s:handle_error(res, param) "{{{
   endif
 endfunction "}}}
 
-function! s:trim(string) "{{{
-  return substitute(a:string, '\s\+$', '', '')
+" Summary: normalize command for exexuting
+" Param: a:string to normalize command
+" Returns: normalized string
+function! s:normalize_command(string) "{{{
+  let result = a:string
+  let result = substitute(result, '\s\+$', '', '')
+  let result = substitute(result, '\s\{2,}', ' ', '')
+  return result
 endfunction "}}}
 " }}}
 
