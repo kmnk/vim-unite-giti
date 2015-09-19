@@ -7,15 +7,30 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
+let s:V = vital#of('giti')
+let s:G = s:V.import('VCS.Git')
+let s:GCore = s:V.import('VCS.Git.Core')
 " }}}
 
-function! giti#is_git_repository(...) "{{{
-  let path = a:0 > 0 ? a:1 : getcwd()
-  return finddir('.git', fnameescape(path) . ';') != '' ? 1 : 0
+" Summary: get vcs-git dictionary
+" Returns: vcs-git data dictionary
+function! giti#git() "{{{
+  return s:G.find(expand('%'))
 endfunction "}}}
 
+" Summary: is current directory included git repository ?
+" Param: target path
+" Returns: if included, returns true else returns false
+function! giti#is_git_repository(...) "{{{
+  let path = a:0 > 0 ? a:1 : getcwd()
+  return has_key(s:G.find(path), 'repository')
+endfunction "}}}
+
+" Summary: resolve relative path from repository root directory
+" Param: path to resolve
+" Returns: relative path from repository root directory
 function! giti#to_relative_path(absolute_path) "{{{
-  return substitute(a:absolute_path, getcwd() . '/\?\(.\+\)', '\1', '')
+  return s:GCore.get_relative_path(s:GCore.find_worktree(a:absolute_path), a:absolute_path)
 endfunction "}}}
 
 function! giti#system(command) "{{{
@@ -37,10 +52,10 @@ function! giti#system_with_specifics(param) "{{{
     return giti#system_with_specifics(a:param)
   endif
 
-  let a:param.command = s:trim(a:param.command)
+  let a:param.command = s:normalize_command(a:param.command)
 
   if exists('a:param.with_confirm') && a:param.with_confirm
-    if !giti#is_confirmed(a:param)
+    if !giti#is_confirmed(a:param.command)
       call giti#print('canceled')
       return
     endif
@@ -51,7 +66,7 @@ function! giti#system_with_specifics(param) "{{{
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
   else
-    return s:handle_error(ret, a:param)
+    return s:handle_shell_error(ret, a:param)
   endif
 endfunction "}}}
 
@@ -147,13 +162,16 @@ function! giti#input(prompt, ...) "{{{
   endif
 endfunction "}}}
 
-function! giti#is_confirmed(param) "{{{
-  let command = g:giti_git_command . ' ' . a:param.command
+" Summary: confirm before executing command, and return answer
+" Param: a:command to execute
+" Returns: if is confirmed then return true else return false
+function! giti#is_confirmed(command) "{{{
+  let command = g:giti_git_command . ' ' . a:command
   return giti#input('execute "' . command . '" ? [y/n] : ') == 'y' ? 1 : 0
 endfunction "}}}
 
 " local functions {{{
-function! s:handle_error(res, param) "{{{
+function! s:handle_shell_error(res, param) "{{{
   if giti#has_shell_error()
     call giti#print('error occured on executing "git ' . a:param.command . '"')
     call giti#print(a:res)
@@ -163,8 +181,14 @@ function! s:handle_error(res, param) "{{{
   endif
 endfunction "}}}
 
-function! s:trim(string) "{{{
-  return substitute(a:string, '\s\+$', '', '')
+" Summary: normalize command for exexuting
+" Param: a:string to normalize command
+" Returns: normalized string
+function! s:normalize_command(string) "{{{
+  let result = a:string
+  let result = substitute(result, '\s\+$', '', '')
+  let result = substitute(result, '\s\{2,}', ' ', '')
+  return result
 endfunction "}}}
 " }}}
 
