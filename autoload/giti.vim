@@ -7,15 +7,30 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " variables {{{
+let s:V = vital#of('giti')
+let s:G = s:V.import('VCS.Git')
+let s:GCore = s:V.import('VCS.Git.Core')
 " }}}
 
-function! giti#is_git_repository(...) "{{{
-  let path = a:0 > 0 ? a:1 : getcwd()
-  return finddir('.git', fnameescape(path) . ';') != '' ? 1 : 0
+" Summary: get vcs-git dictionary
+" Returns: vcs-git data dictionary
+function! giti#git() "{{{
+  return s:G.find(expand('%'))
 endfunction "}}}
 
+" Summary: is current directory included git repository ?
+" Param: target path
+" Returns: if included, returns true else returns false
+function! giti#is_git_repository(...) "{{{
+  let path = a:0 > 0 ? a:1 : getcwd()
+  return has_key(s:G.find(path), 'repository')
+endfunction "}}}
+
+" Summary: resolve relative path from repository root directory
+" Param: path to resolve
+" Returns: relative path from repository root directory
 function! giti#to_relative_path(absolute_path) "{{{
-  return substitute(a:absolute_path, getcwd() . '/\?\(.\+\)', '\1', '')
+  return s:GCore.get_relative_path(s:GCore.find_worktree(a:absolute_path), a:absolute_path)
 endfunction "}}}
 
 function! giti#system(command) "{{{
@@ -156,7 +171,6 @@ function! giti#is_confirmed(command) "{{{
 endfunction "}}}
 
 " local functions {{{
-
 function! s:handle_shell_error(res, param) "{{{
   if giti#has_shell_error()
     call giti#print('error occured on executing "git ' . a:param.command . '"')
