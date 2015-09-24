@@ -38,6 +38,12 @@ function! s:source.gather_candidates(args, context) "{{{
   let pattern = giti#input('Pattern:')
 
   call unite#print_message('[giti/grep]')
+
+  if strlen(pattern) == 0
+    call unite#print_error('cannot grep with empty pattern')
+    return []
+  endif
+
   return map(giti#grep#list(pattern), '{
         \ "word"         : s:build_word(v:val),
         \ "source"       : s:source.name,
