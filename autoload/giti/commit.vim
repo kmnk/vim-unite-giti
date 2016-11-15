@@ -23,8 +23,19 @@ endfunction "}}}
 
 " local functions {{{
 function! s:run(command, files) "{{{
-  call s:make_commit_editmsg(a:command, a:files)
-  call s:edit_commit_editmsg(a:command, a:files)
+  if has('nvim')
+    call s:commit(a:command, a:files)
+  else
+    call s:make_commit_editmsg(a:command, a:files)
+    call s:edit_commit_editmsg(a:command, a:files)
+  endif
+endfunction "}}}
+
+function! s:commit(command, files) "{{{
+  call giti#termopen_with_specifics({
+\   'command'     : a:command . ' -- ' . join(a:files),
+\   'startinsert' : 1,
+\ })
 endfunction "}}}
 
 function! s:make_commit_editmsg(command, files) "{{{

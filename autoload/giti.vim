@@ -70,6 +70,41 @@ function! giti#system_with_specifics(param) "{{{
   endif
 endfunction "}}}
 
+function! giti#termopen_with_specifics(param) "{{{
+  if !has('nvim')
+    echoerr 'termopen is not supported'
+  endif
+
+  if !giti#is_git_repository()
+    call giti#print('Not a git repository')
+    call giti#print('Specify directory of git repository (and change current directory of this window)')
+    call giti#print('current  : ' . getcwd())
+    let new_directory = giti#input('change to: ', getcwd())
+    if new_directory == ''
+      " Note 'redraw' is required to prevent 'Press ENTER or type...' message
+      redraw | call giti#print('cacneled')
+      return
+    endif
+    call giti#execute(printf('lcd %s', new_directory))
+    return giti#terminal_with_specifics(a:param)
+  endif
+
+  let a:param.command = s:normalize_command(a:param.command)
+
+  if exists('a:param.with_confirm') && a:param.with_confirm
+    if !giti#is_confirmed(a:param.command)
+      call giti#print('canceled')
+      return
+    endif
+  endif
+
+  let ret = termopen(g:giti_git_command . ' ' . a:param.command)
+
+  if exists('a:param.startinsert') && a:param.startinsert
+    startinsert
+  endif
+endfunction "}}}
+
 function! giti#dir() "{{{
   if !exists('b:giti_dir')
     let b:giti_dir = giti#system('rev-parse --git-dir')
