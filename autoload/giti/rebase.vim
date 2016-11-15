@@ -24,10 +24,20 @@ function! giti#rebase#run(param) "{{{
 endfunction "}}}
 
 function! giti#rebase#interactive(param) "{{{
-  return giti#execute(printf('! git rebase -i %s %s',
-\   has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
-\   has_key(a:param, 'upstream') ? a:param.upstream         : '',
-\ ))
+  if has('nvim')
+    return giti#termopen_with_specifics({
+\     'command'     : printf('rebase -i %s %s',
+\                       has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
+\                       has_key(a:param, 'upstream') ? a:param.upstream         : '',
+\                     ),
+\     'startinsert' : 1,
+\   })
+  else
+    return giti#execute(printf('! git rebase -i %s %s',
+\     has_key(a:param, 'onto')     ? '--onto ' . a:param.onto : '',
+\     has_key(a:param, 'upstream') ? a:param.upstream         : '',
+\   ))
+  endif
 endfunction "}}}
 
 function! giti#rebase#continue() "{{{
