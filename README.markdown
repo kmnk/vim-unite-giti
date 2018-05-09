@@ -1,3 +1,6 @@
+Now, I writing new plugin [gitn](https://github.com/kmnk/gitn) for using git on [denite.vim](https://github.com/Shougo/denite.nvim) .
+In the future, I implemnt all sources on giti to [gitn](https://github.com/kmnk/gitn) :)
+
 # vim-unite-giti
 
 *vim-unite-giti* is unite source for using git.
