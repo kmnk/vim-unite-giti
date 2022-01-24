@@ -35,7 +35,7 @@ endfunction "}}}
 
 function! s:to_define_func(command) "{{{
   return 'unite#kinds#giti#' . a:command . '#define'
-endfunction}}}
+endfunction "}}}
 
 function! s:add_rm_action_on_file_kind() "{{{
   let git_rm = {

@@ -48,7 +48,7 @@ endfunction "}}}
 
 function! s:to_define_func(command) "{{{
   return 'unite#sources#giti#' . a:command . '#define'
-endfunction}}}
+endfunction "}}}
 " }}}
 
 " context getter {{{
